@@ -25,8 +25,7 @@ export const messages = {
     },
     button: {
       search: '搜索',
-      audit_status_on: '通过',
-      audit_status_off: '不通过',
+      audit_status: '审核',
       status_on: '启用',
       status_off: '禁用'
     },
@@ -42,6 +41,13 @@ export const messages = {
       role_id: '权限',
       audit_status: '审核状态',
       status: '用户状态',
+    },
+    dialog: {
+      title: '审核',
+      content: '备注',
+      status: '审核结果',
+      status_on: '通过',
+      status_off: '不通过'
     }
   }
 }

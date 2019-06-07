@@ -53,11 +53,8 @@
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button v-if="row.audit_status == 0 || row.audit_status == 2" type="success" size="mini" @click="handleAuditStatus(row, 1)">
-            {{ $t('messages.users.button.audit_status_on') }}
-          </el-button>
-          <el-button v-if="row.audit_status == 1 || row.audit_status == 0" type="danger" size="mini" @click="handleAuditStatus(row, 2)">
-            {{ $t('messages.users.button.audit_status_off') }}
+          <el-button type="primary" size="mini" @click="handleAuditForm(row)">
+            {{ $t('messages.users.button.audit_status') }}
           </el-button>
           <el-button v-if="row.status == 0" size="mini" type="success" @click="handleStatus(row, 1)">
             {{ $t('messages.users.button.status_on') }}
@@ -70,11 +67,33 @@
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <el-dialog :title="$t('messages.users.dialog.title')" :visible.sync="auditFormVisible">
+      <el-form ref="dataForm" :model="auditForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item :label="$t('messages.users.dialog.status')" prop="resource">
+          <el-radio-group v-model="auditForm.status">
+            <el-radio :label="1">{{ $t('messages.users.dialog.status_on') }}</el-radio>
+            <el-radio :label="2">{{ $t('messages.users.dialog.status_off') }}</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item :label="$t('messages.users.dialog.content')">
+          <el-input type="textarea" v-model="auditForm.content"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="auditFormVisible = false">
+          Cancel
+        </el-button>
+        <el-button type="primary" @click="handleAuditStatus()">
+          Confirm
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { getList, updateStatus, updateAuditStatus } from '@/api/user'
+import { saveUserAuditLog } from '@/api/user_audit_log'
 import { getRoles } from '@/api/role'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
@@ -133,6 +152,13 @@ export default {
         role_id: undefined
       },
       roles: {},
+      auditFormVisible: false,
+      auditForm: {
+        user_id: 0,
+        content: '',
+        status: 2
+      },
+      row: {}
     }
   },
   created() {
@@ -180,19 +206,21 @@ export default {
 
       })
     },
-    handleAuditStatus(row, audit_status) {
-      this.$confirm(this.$t('messages.confirm.message'), this.$t('messages.confirm.title'), {
-        confirmButtonText: this.$t('messages.confirm.confirmButtonText'),
-        cancelButtonText: this.$t('messages.confirm.cancelButtonText'),
-        type: 'warning'
-      }).then(() => {
-        updateAuditStatus({audit_status: audit_status, id: row.id})
-        .then(() => {
-          row.audit_status = audit_status
-        })
-      }).catch(() => {
-
+    handleAuditStatus() {
+      let _this = this
+      saveUserAuditLog(this.auditForm)
+      .then(() => {
+        _this.row.audit_status = _this.auditForm.status
+        _this.auditFormVisible = false
       })
+    },
+    handleAuditForm(row) {
+      console.log(row)
+      this.row = row
+      this.auditForm.user_id = row.id
+      this.auditForm.status = Number(row.audit_status) || 2
+      this.auditForm.content = ''
+      this.auditFormVisible = true
     }
   }
 }
