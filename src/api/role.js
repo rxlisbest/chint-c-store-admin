@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import domain from '@/api/domain'
 
 export function getRoutes() {
   return request({
@@ -9,7 +10,7 @@ export function getRoutes() {
 
 export function getRoles() {
   return request({
-    url: '/roles',
+    url: domain + '/index/roles/index',
     method: 'get'
   })
 }
