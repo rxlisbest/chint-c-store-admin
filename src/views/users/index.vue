@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-input v-model="listQuery.name" :placeholder="$t('messages.users.input.search')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-select v-model="listQuery.role_id" :placeholder="$t('messages.users.select.role_id')" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id" />
+        <el-option v-for="(v, k) in roles" :key="k" :label="v" :value="k" />
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{$t('messages.users.button.search')}}
@@ -34,7 +34,7 @@
       </el-table-column>
       <el-table-column :label="$t('messages.users.column.role_id')" align="center">
         <template slot-scope="{ row }">
-          {{ row.role_id }}
+          {{ roles[row.role_id] }}
         </template>
       </el-table-column>
       <el-table-column :label="$t('messages.users.column.audit_status')" align="center">
@@ -132,7 +132,7 @@ export default {
         name: undefined,
         role_id: undefined
       },
-      roles: [],
+      roles: {},
     }
   },
   created() {
@@ -142,7 +142,11 @@ export default {
   methods: {
     getRoleList() {
       getRoles().then(response => {
-        this.roles = response.data
+        let roles = {}
+        response.data.forEach((v) => {
+          roles[v.id] = v.name
+        })
+        this.roles = roles
       })
     },
     getList() {
