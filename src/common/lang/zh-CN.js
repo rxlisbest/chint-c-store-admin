@@ -39,6 +39,7 @@ export const messages = {
       address: '地址',
       email: '邮箱',
       create_time: '注册时间',
+      role_id: '权限',
       audit_status: '审核状态',
       status: '用户状态',
     }
