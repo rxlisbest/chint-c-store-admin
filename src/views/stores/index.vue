@@ -5,9 +5,6 @@
       <el-select v-model="listQuery.role_id" :placeholder="$t('messages.users.select.role_id')" clearable class="filter-item" style="width: 130px">
         <el-option v-for="(v, k) in roles" :key="k" :label="v" :value="k" />
       </el-select>
-      <el-select v-model="listQuery.audit_status" :placeholder="$t('messages.users.select.audit_status')" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="(v, k) in audit_status" :key="k" :label="v" :value="k" />
-      </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{$t('messages.users.button.search')}}
       </el-button>
@@ -56,7 +53,7 @@
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button v-if="row.audit_status > 0" type="primary" size="mini" @click="handleAuditForm(row)">
+          <el-button type="primary" size="mini" @click="handleAuditForm(row)">
             {{ $t('messages.users.button.audit_status') }}
           </el-button>
           <el-button v-if="row.status == 0" size="mini" type="success" @click="handleStatus(row, 1)">
@@ -104,13 +101,12 @@ import Pagination from '@/components/Pagination' // secondary package based on e
 import { MessageBox, Message } from 'element-ui'
 
 export default {
-  name: 'users-index',
+  name: 'stores-index',
   components: { Pagination },
   directives: { waves },
   filters: {
     auditStatusFilter(status) {
       const statusMap = {
-        3: 'info',
         2: 'danger',
         1: 'success',
         0: 'info',
@@ -119,10 +115,9 @@ export default {
     },
     auditStatusTextFilter(status) {
       const statusMap = {
-        3: '未审核',
         2: '不通过',
         1: '通过',
-        0: '未提交',
+        0: '未审核',
       }
       return statusMap[status]
     },
@@ -146,6 +141,7 @@ export default {
   },
   data() {
     return {
+      module_id: 0,
       tableKey: 0,
       list: null,
       total: 0,
@@ -163,16 +159,11 @@ export default {
         content: '',
         status: 2
       },
-      row: {},
-      audit_status: {
-        0: '未提交',
-        3: '待审核',
-        1: '已通过',
-        2: '未通过',
-      }
+      row: {}
     }
   },
   created() {
+    this.module_id = this.$route.meta.module_id
     this.getRoleList()
     this.getList()
   },

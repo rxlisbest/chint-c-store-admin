@@ -142,6 +142,38 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/roles',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/roles/index'),
+        name: '权限管理',
+        meta: { title: '权限管理', icon: 'lock', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/stores',
+    component: Layout,
+    name: '专业市场',
+    meta: { title: '专业市场', icon: 'list', noCache: true },
+    children: [
+      {
+        path: 'index/2',
+        name: '一级经销商',
+        component: () => import('@/views/stores/index'),
+        meta: { title: '一级经销商', noCache: true, module_id: 2 }
+      },
+      {
+        path: 'index/3',
+        name: '二级经销商',
+        component: () => import('@/views/stores/index'),
+        meta: { title: '二级经销商', noCache: true }
+      }
+    ]
+  },
+  {
     path: '/permission',
     component: Layout,
     redirect: '/permission/page',

@@ -30,7 +30,8 @@ export const messages = {
       status_off: '禁用'
     },
     select: {
-      role_id: '权限'
+      role_id: '权限',
+      audit_status: '审核状态',
     },
     column: {
       name: '用户名',

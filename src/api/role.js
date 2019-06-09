@@ -3,7 +3,7 @@ import domain from '@/api/domain'
 
 export function getRoutes() {
   return request({
-    url: '/routes',
+    url: domain + '/index/modules/index',
     method: 'get'
   })
 }
@@ -15,9 +15,19 @@ export function getRoles() {
   })
 }
 
+export function getRoleModuleRelations(role_id) {
+  return request({
+    url: domain + '/index/role_module_relations/index',
+    method: 'get',
+    params: {
+      role_id: role_id
+    }
+  })
+}
+
 export function addRole(data) {
   return request({
-    url: '/role',
+    url: domain + '/index/roles/save',
     method: 'post',
     data
   })
@@ -25,7 +35,7 @@ export function addRole(data) {
 
 export function updateRole(id, data) {
   return request({
-    url: `/role/${id}`,
+    url: domain + `/index/roles/update/id/${id}`,
     method: 'put',
     data
   })
