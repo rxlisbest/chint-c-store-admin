@@ -166,6 +166,12 @@ export const asyncRoutes = [
         meta: { title: '一级经销商', noCache: true, module_id: 2 }
       },
       {
+        path: 'create/2',
+        name: '创建一级经销商',
+        component: () => import('@/views/stores/create'),
+        meta: { title: '创建一级经销商', noCache: true, module_id: 2 }
+      },
+      {
         path: 'index/3',
         name: '二级经销商',
         component: () => import('@/views/stores/index'),

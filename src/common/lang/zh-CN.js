@@ -1,4 +1,8 @@
 export const messages = {
+  title: {
+    success: '成功'
+  },
+  success: '操作成功',
   header: {
     title: '测试系统'
   },
@@ -49,6 +53,21 @@ export const messages = {
       status: '审核结果',
       status_on: '通过',
       status_off: '不通过'
+    }
+  },
+  stores: {
+    input: {
+      name: '名称',
+      cover_file_id: '封面',
+      area_code: '省市区',
+      phone: '联系电话',
+      address: '地址',
+      lat_lng: '坐标',
+      introduce: '简介',
+      business_scope: '经营范围'
+    },
+    button: {
+      submit: '保存'
     }
   }
 }

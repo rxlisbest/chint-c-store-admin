@@ -59,6 +59,15 @@ Object.keys(filters).forEach(key => {
 
 Vue.config.productionTip = false
 
+import VueAMap from 'vue-amap'
+Vue.use(VueAMap);
+VueAMap.initAMapApiLoader({
+  key: '124ac7da3c120c5129671386c225180f',
+  plugin: ['AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType'],
+  uiVersion: '1.0',
+  v: '1.4.4'
+});
+
 new Vue({
   el: '#app',
   i18n,
