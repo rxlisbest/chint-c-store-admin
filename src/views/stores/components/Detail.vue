@@ -61,7 +61,7 @@ import Upload from '@/components/Upload/SingleImage4'
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { validURL } from '@/utils/validate'
-import { saveStore, updateStore } from '@/api/store'
+import { saveStore, updateStore, readStore } from '@/api/store'
 import { searchUser } from '@/api/remote-search'
 import Warning from './Warning'
 import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
@@ -85,7 +85,7 @@ const defaultForm = {
 
 let id = 0;
 export default {
-  name: 'ArticleDetail',
+  name: 'Detail',
   components: { MDinput, Upload, Sticky, Warning, CommentDropdown, PlatformDropdown, SourceUrlDropdown },
   props: {
     isEdit: {
@@ -157,21 +157,6 @@ export default {
     }
   },
   computed: {
-    contentShortLength() {
-      return this.postForm.content_short.length
-    },
-    displayTime: {
-      // set and get is useful when the data
-      // returned by the back end api is different from the front end
-      // back end return => "2013-06-25 06:59:25"
-      // front end need timestamp => 1372114765000
-      get() {
-        return (+new Date(this.postForm.display_time))
-      },
-      set(val) {
-        this.postForm.display_time = new Date(val)
-      }
-    }
   },
   created() {
     this.center = [121.59996, 31.197646]
@@ -242,18 +227,8 @@ export default {
   },
   methods: {
     fetchData(id) {
-      fetchArticle(id).then(response => {
+      readStore(id).then(response => {
         this.postForm = response.data
-
-        // just for test
-        this.postForm.title += `   Article Id:${this.postForm.id}`
-        this.postForm.content_short += `   Article Id:${this.postForm.id}`
-
-        // set tagsview title
-        this.setTagsViewTitle()
-
-        // set page title
-        this.setPageTitle()
       }).catch(err => {
         console.log(err)
       })
@@ -269,36 +244,52 @@ export default {
     },
     submitForm() {
       this.loading = true
-      saveStore(this.postForm).then((response) => {
-        if (response.code == 1) {
-          this.$notify({
-            title: this.$t('messages.title.success'),
-            message: this.$t('messages.success'),
-            type: 'success',
-            duration: 2000
-          })
-        }
-        this.loading = false
-      }).catch(() => {
-        this.loading = false
-      })
-    },
-    draftForm() {
-      if (this.postForm.content.length === 0 || this.postForm.title.length === 0) {
-        this.$message({
-          message: '请填写必要的标题和内容',
-          type: 'warning'
+      if (this.isEdit) {
+        updateStore(this.postForm.id, this.postForm).then((response) => {
+          if (response.code == 1) {
+            this.$notify({
+              title: this.$t('messages.title.success'),
+              message: this.$t('messages.success'),
+              type: 'success',
+              duration: 2000
+            })
+          }
+          this.loading = false
+        }).catch(() => {
+          this.loading = false
         })
-        return
+      } else {
+        saveStore(this.postForm).then((response) => {
+          if (response.code == 1) {
+            this.$notify({
+              title: this.$t('messages.title.success'),
+              message: this.$t('messages.success'),
+              type: 'success',
+              duration: 2000
+            })
+          }
+          this.loading = false
+        }).catch(() => {
+          this.loading = false
+        })
       }
-      this.$message({
-        message: '保存成功',
-        type: 'success',
-        showClose: true,
-        duration: 1000
-      })
-      this.postForm.status = 'draft'
     },
+    // draftForm() {
+    //   if (this.postForm.content.length === 0 || this.postForm.title.length === 0) {
+    //     this.$message({
+    //       message: '请填写必要的标题和内容',
+    //       type: 'warning'
+    //     })
+    //     return
+    //   }
+    //   this.$message({
+    //     message: '保存成功',
+    //     type: 'success',
+    //     showClose: true,
+    //     duration: 1000
+    //   })
+    //   this.postForm.status = 'draft'
+    // },
     getRemoteUserList(query) {
       searchUser(query).then(response => {
         if (!response.data.items) return

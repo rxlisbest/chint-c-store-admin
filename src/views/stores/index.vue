@@ -23,78 +23,43 @@
       </el-table-column>
       <el-table-column :label="$t('messages.users.column.phone')" prop="phone" align="center">
       </el-table-column>
-      <el-table-column :label="$t('messages.users.column.email')" prop="email" align="center">
       </el-table-column>
       <el-table-column :label="$t('messages.users.column.address')" prop="address" align="center">
       </el-table-column>
       <el-table-column :label="$t('messages.users.column.create_time')" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('messages.users.column.role_id')" align="center">
         <template slot-scope="{ row }">
-          {{ roles[row.role_id] }}
+          {{ row.create_time }}
         </template>
       </el-table-column>
       <el-table-column :label="$t('messages.users.column.audit_status')" align="center">
         <template slot-scope="{ row }">
-          <el-tag :type="row.audit_status | auditStatusFilter">
-            {{ row.audit_status | auditStatusTextFilter }}
-          </el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('messages.users.column.status')" align="center">
         <template slot-scope="{ row }">
-          <el-tag :type="row.status | statusFilter">
-            {{ row.status | statusTextFilter }}
-          </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button type="primary" size="mini" @click="handleAuditForm(row)">
-            {{ $t('messages.users.button.audit_status') }}
-          </el-button>
-          <el-button v-if="row.status == 0" size="mini" type="success" @click="handleStatus(row, 1)">
-            {{ $t('messages.users.button.status_on') }}
-          </el-button>
-          <el-button v-if="row.status == 1" size="mini" type="danger" @click="handleStatus(row, 0)">
-            {{ $t('messages.users.button.status_off') }}
-          </el-button>
+          <router-link :to="'/stores/edit/' + row.id">
+            <el-button type="primary" size="small" icon="el-icon-edit">
+              Edit
+            </el-button>
+          </router-link>
         </template>
       </el-table-column>
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
-    <el-dialog :title="$t('messages.users.dialog.title')" :visible.sync="auditFormVisible">
-      <el-form ref="dataForm" :model="auditForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item :label="$t('messages.users.dialog.status')" prop="resource">
-          <el-radio-group v-model="auditForm.status">
-            <el-radio :label="1">{{ $t('messages.users.dialog.status_on') }}</el-radio>
-            <el-radio :label="2">{{ $t('messages.users.dialog.status_off') }}</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item :label="$t('messages.users.dialog.content')">
-          <el-input type="textarea" v-model="auditForm.content"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="auditFormVisible = false">
-          Cancel
-        </el-button>
-        <el-button type="primary" @click="handleAuditStatus()">
-          Confirm
-        </el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getList, updateStatus, updateAuditStatus } from '@/api/user'
-import { saveUserAuditLog } from '@/api/user_audit_log'
-import { getRoles } from '@/api/role'
+import { indexStore } from '@/api/store'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -104,41 +69,6 @@ export default {
   name: 'stores-index',
   components: { Pagination },
   directives: { waves },
-  filters: {
-    auditStatusFilter(status) {
-      const statusMap = {
-        2: 'danger',
-        1: 'success',
-        0: 'info',
-      }
-      return statusMap[status]
-    },
-    auditStatusTextFilter(status) {
-      const statusMap = {
-        2: '不通过',
-        1: '通过',
-        0: '未审核',
-      }
-      return statusMap[status]
-    },
-    statusFilter(status) {
-      const statusMap = {
-        1: 'success',
-        0: 'danger',
-      }
-      return statusMap[status]
-    },
-    statusTextFilter(status) {
-      const statusMap = {
-        1: '启用',
-        0: '禁用',
-      }
-      return statusMap[status]
-    },
-    typeFilter(type) {
-      return calendarTypeKeyValue[type]
-    }
-  },
   data() {
     return {
       module_id: 0,
@@ -164,22 +94,12 @@ export default {
   },
   created() {
     this.module_id = this.$route.meta.module_id
-    this.getRoleList()
     this.getList()
   },
   methods: {
-    getRoleList() {
-      getRoles().then(response => {
-        let roles = {}
-        response.data.forEach((v) => {
-          roles[v.id] = v.name
-        })
-        this.roles = roles
-      })
-    },
     getList() {
       this.listLoading = true
-      getList(this.listQuery).then(response => {
+      indexStore(this.listQuery).then(response => {
         this.list = response.data.data
         this.total = response.data.total
         this.listQuery.limit = Number(response.data.per_page)

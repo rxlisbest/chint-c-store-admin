@@ -172,6 +172,13 @@ export const asyncRoutes = [
         meta: { title: '创建一级经销商', noCache: true, module_id: 2 }
       },
       {
+        path: 'edit/:id(\\d+)',
+        component: () => import('@/views/stores/edit'),
+        name: 'Edit一级经销商',
+        meta: { title: 'Edit一级经销商', noCache: true, activeMenu: '/stores/index/2' },
+        hidden: true
+      },
+      {
         path: 'index/3',
         name: '二级经销商',
         component: () => import('@/views/stores/index'),
