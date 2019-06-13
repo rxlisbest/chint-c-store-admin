@@ -2,7 +2,7 @@
   <div class="createPost-container">
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
 
-      <sticky :z-index="10" :class-name="'sub-navbar '+postForm.status">
+      <sticky :z-index="10" :class-name="'sub-navbar '+ postForm.status">
         <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
           {{ $t('messages.stores.button.submit') }}
         </el-button>
@@ -22,21 +22,22 @@
           <Upload v-model="postForm.cover_file_id" />
         </el-form-item>
 
+        <el-form-item style="margin-bottom: 40px;" label-width="72px" :label="$t('messages.stores.input.phone')">
+          <el-input v-model="postForm.phone" :rows="3" type="textarea" class="article-textarea" autosize placeholder="Please enter the content" />
+        </el-form-item>
+
         <el-form-item style="margin-bottom: 40px;" label-width="72px" :label="$t('messages.stores.input.area_code')">
           <el-cascader
             :options="area_options"
-            @active-item-change="handleItemChange"
+            @active-item-change="handleAreaItemChange"
+            @change="handleAreaChange"
             :props="area_props"
             v-model="postForm.area_code"
           ></el-cascader>
         </el-form-item>
 
-        <el-form-item style="margin-bottom: 40px;" label-width="72px" :label="$t('messages.stores.input.phone')">
-          <el-input v-model="postForm.phone" :rows="3" type="textarea" class="article-textarea" autosize placeholder="Please enter the content" />
-        </el-form-item>
-
         <el-form-item style="margin-bottom: 40px;" label-width="72px" :label="$t('messages.stores.input.address')">
-          <el-input v-model="postForm.address" :rows="3" type="textarea" class="article-textarea" autosize placeholder="Please enter the content" />
+          <el-input v-model="postForm.address" :rows="3" type="textarea" class="article-textarea" autosize placeholder="Please enter the content" @blur="resetMap" />
         </el-form-item>
 
         <el-form-item style="margin-bottom: 40px;" label-width="72px" :label="$t('messages.stores.input.lat_lng')">
@@ -64,16 +65,16 @@ import { validURL } from '@/utils/validate'
 import { saveStore, updateStore, readStore } from '@/api/store'
 import { searchUser } from '@/api/remote-search'
 import Warning from './Warning'
-import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 import { lazyAMapApiLoaderInstance } from 'vue-amap'
 import { MessageBox, Message } from 'element-ui'
 
+import { indexArea } from '@/api/area'
 
 const defaultForm = {
   name: '',
   module_id: 0,
   cover_file_id: undefined,
-  area_code: undefined,
+  area_code: [],
   location: '',
   lat: '',
   lng: '',
@@ -86,7 +87,7 @@ const defaultForm = {
 let id = 0;
 export default {
   name: 'Detail',
-  components: { MDinput, Upload, Sticky, Warning, CommentDropdown, PlatformDropdown, SourceUrlDropdown },
+  components: { MDinput, Upload, Sticky, Warning },
   props: {
     isEdit: {
       type: Boolean,
@@ -135,28 +136,16 @@ export default {
       },
       tempRoute: {},
       area_props: {
-        value: 'value',
-        label: 'label',
-        children: 'cities'
+        value: 'code',
+        label: 'name',
+        children: 'children'
       },
-      area_options: [{
-        value: 1,
-        label: '江苏',
-        cities: [
-          {
-            value: 3,
-            label: '江苏1',
-            cities: []
-          }
-        ]
-      }, {
-        value: 2,
-        label: '浙江',
-        cities: []
-      }]
+      area_options: []
     }
   },
   computed: {
+  },
+  watch: {
   },
   created() {
     this.center = [121.59996, 31.197646]
@@ -176,31 +165,40 @@ export default {
     let _this = this
     setTimeout(function(){
       lazyAMapApiLoaderInstance.load().then(() => {
+        if (_this.isEdit) {
+          this.map = new AMap.Map('amap-demo1', {
+            center: [_this.postForm.lng, _this.postForm.lat],
+            zoom: 16
+          })
+        } else {
+          this.map = new AMap.Map('amap-demo1', {
+            resizeEnable: true,
+            zoom: 16
+          });
+          AMap.plugin('AMap.Geolocation', function() {
+            var geolocation = new AMap.Geolocation({
+              enableHighAccuracy: true,//是否使用高精度定位，默认:true
+              timeout: 10000,          //超过10秒后停止定位，默认：5s
+              buttonPosition:'RB',    //定位按钮的停靠位置
+              buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+              zoomToAccuracy: true,   //定位成功后是否自动调整地图视野到定位点
+            });
+            setTimeout(() => {
+              map.addControl(geolocation);
+            }, 0)
+            geolocation.getCurrentPosition(function(status,result){
+              if(status=='complete'){
+                onComplete(result)
+              }else{
+                onError(result)
+              }
+            });
+          });
+        }
         // this.map = new AMap.Map('amap-demo1', {
         //   center: [121.59996, 31.197646],
         //   zoom: 16
         // })
-        this.map = new AMap.Map('amap-demo1', {
-          resizeEnable: true,
-          zoom: 16
-        });
-        AMap.plugin('AMap.Geolocation', function() {
-          var geolocation = new AMap.Geolocation({
-            enableHighAccuracy: true,//是否使用高精度定位，默认:true
-            timeout: 10000,          //超过10秒后停止定位，默认：5s
-            buttonPosition:'RB',    //定位按钮的停靠位置
-            buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-            zoomToAccuracy: true,   //定位成功后是否自动调整地图视野到定位点
-          });
-          map.addControl(geolocation);
-          geolocation.getCurrentPosition(function(status,result){
-            if(status=='complete'){
-              onComplete(result)
-            }else{
-              onError(result)
-            }
-          });
-        });
         //解析定位结果
         function onComplete(data) {
         }
@@ -210,6 +208,13 @@ export default {
         }
 
         let map = _this.map = this.map
+        if (_this.isEdit) {
+          var marker = new AMap.Marker({
+            icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+            position: [_this.postForm.lng, _this.postForm.lat]
+          });
+          map.add(marker)
+        }
         this.map.on('click', function(e) {
           var marker = new AMap.Marker({
             icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
@@ -224,11 +229,13 @@ export default {
         });
       })
     }, 1000)
+    this.initArea()
   },
   methods: {
     fetchData(id) {
       readStore(id).then(response => {
         this.postForm = response.data
+        this.initEditArea()
       }).catch(err => {
         console.log(err)
       })
@@ -296,19 +303,115 @@ export default {
         this.userListOptions = response.data.items.map(v => v.name)
       })
     },
-    handleItemChange(val, label) {
-      console.log('active item:', val);
-      setTimeout(_ => {
-        if (val.indexOf('江苏') > -1 && !this.options2[0].cities.length) {
-          this.options2[0].cities = [{
-            label: '南京'
-          }];
-        } else if (val.indexOf('浙江') > -1 && !this.options2[1].cities.length) {
-          this.options2[1].cities = [{
-            label: '杭州'
-          }];
+    handleAreaChange(val) {
+      this.getAreaName(val)
+    },
+    handleAreaItemChange(val) {
+      let _this = this
+      let params = {}
+      params.code = val[val.length - 1]
+      indexArea(params).then(res => {
+        _this.setAreaChildren(val[val.length - 1], res.data)
+      }).catch(err => {
+
+      })
+    },
+    initArea() {
+      let _this = this
+      indexArea().then(res => {
+        let data = res.data
+        data.forEach((v, k) => {
+          data[k].children = []
+        })
+        _this.area_options = data
+      }).catch(err => {
+
+      })
+    },
+    initEditArea() {
+      let _this = this
+      if (_this.postForm.area_code && _this.postForm.area_code.length == 3) {
+        let params = {}
+        params.code = _this.postForm.area_code[0]
+        indexArea(params).then(res => {
+          _this.setAreaChildren(_this.postForm.area_code[0], res.data)
+          params.code = _this.postForm.area_code[1]
+          indexArea(params).then(res => {
+            _this.setAreaChildren(_this.postForm.area_code[1], res.data)
+          }).catch(err => {
+
+          })
+        }).catch(err => {
+
+        })
+      }
+    },
+    setAreaChildren(code, children) {
+      let _this = this
+      let area_options = this.area_options
+      _this.area_options.forEach((v, k) => {
+        // console.log(v)
+        if (v.code == code) {
+          children.forEach((vv, kk) => {
+            children[kk].children = []
+          })
+          _this.area_options[k].children = children
+        } else {
+          v.children.forEach((vv, kk) => {
+            if (vv.code == code) {
+              _this.area_options[k].children[kk].children = children
+            }
+          })
         }
-      }, 300);
+      })
+    },
+    getAreaName(value) {
+      let _this = this
+      let area_options = this.area_options
+      let name = []
+      _this.area_options.forEach((v, k) => {
+        // console.log(v)
+        if (v.code == value[0]) {
+          name.push(v.name)
+          v.children.forEach((vv, kk) => {
+            if (vv.code == value[1]) {
+              name.push(vv.name)
+              vv.children.forEach((vvv, kkk) => {
+                if (vvv.code == value[2]) {
+                  name.push(vvv.name)
+                }
+                return true
+              })
+            }
+            return true
+          })
+        }
+        return true
+      })
+      return name
+    },
+    resetMap() {
+      let _this = this
+      let area_code = this.getAreaName(this.postForm.area_code)
+      area_code = area_code.join(' ')
+      let address = area_code + ' ' + this.postForm.address
+
+      lazyAMapApiLoaderInstance.load().then(() => {
+        AMap.plugin('AMap.Geocoder', function() {
+          let geocoder = new AMap.Geocoder()
+          let marker = new AMap.Marker()
+          geocoder.getLocation(address, (status, result) => {
+            if (status === 'complete'&&result.geocodes.length) {
+              let lnglat = result.geocodes[0].location
+              // this.map.add(marker)
+              marker.setPosition(lnglat)
+              _this.map.setFitView(marker)
+            } else {
+              log.error('根据地址查询位置失败')
+            }
+          })
+        })
+      })
     }
   }
 }

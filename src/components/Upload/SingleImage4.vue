@@ -36,8 +36,8 @@ export default {
   name: 'SingleImageUpload3',
   props: {
     value: {
-      type: String,
-      default: ''
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -82,7 +82,7 @@ export default {
       let data = {}
       data.key = response.data
       saveFile(data).then((r) => {
-        _this.emitInput(r.data)
+        _this.emitInput(Number(r.data))
       })
     },
     beforeUpload(file) {
