@@ -3,6 +3,9 @@ export const messages = {
     success: '成功'
   },
   success: '操作成功',
+  button: {
+    search: '搜索'
+  },
   header: {
     title: '测试系统'
   },
@@ -65,6 +68,12 @@ export const messages = {
       lat_lng: '坐标',
       introduce: '简介',
       business_scope: '经营范围'
+    },
+    column: {
+      name: '名称',
+      phone: '联系方式',
+      address: '地址',
+      create_time: '创建时间'
     },
     button: {
       submit: '保存'

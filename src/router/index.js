@@ -172,6 +172,20 @@ export const asyncRoutes = [
         meta: { title: '创建一级经销商', noCache: true, module_id: 2 }
       },
       {
+        path: 'images/:store_id(\\d+)',
+        component: () => import('@/views/store-images/index'),
+        name: 'images',
+        meta: { title: 'images', noCache: true, activeMenu: '/stores/index/2' },
+        hidden: true
+      },
+      {
+        path: 'incomes/:store_id(\\d+)',
+        component: () => import('@/views/store-incomes/index'),
+        name: 'images',
+        meta: { title: 'images', noCache: true, activeMenu: '/stores/index/2' },
+        hidden: true
+      },
+      {
         path: 'edit/:id(\\d+)',
         component: () => import('@/views/stores/edit'),
         name: 'Edit一级经销商',
