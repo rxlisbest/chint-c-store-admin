@@ -42,7 +42,7 @@
           </router-link>
           <router-link :to="'/stores/incomes/' + row.id">
             <el-button type="primary" size="small" icon="el-icon-edit">
-              incomes
+              images
             </el-button>
           </router-link>
         </template>
@@ -87,13 +87,13 @@ export default {
     }
   },
   created() {
-    const store_id = this.store_id = this.$route.params && this.$route.params.store_id
+    this.module_id = this.$route.meta.module_id
     this.getList()
   },
   methods: {
     getList() {
       this.listLoading = true
-      indexStoreIncome(this.listQuery).then(response => {
+      indexStore(this.listQuery).then(response => {
         this.list = response.data.data
         this.total = response.data.total
         this.listQuery.limit = Number(response.data.per_page)

@@ -1,8 +1,19 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.name" :placeholder="$t('messages.stores.input.name')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-date-picker
+        class="filter-item"
+        v-model="listQuery.month"
+        type="monthrange"
+        value-format="timestamp"
+        range-separator="至"
+        start-placeholder="开始月份"
+        end-placeholder="结束月份">
+      </el-date-picker>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+        {{$t('messages.button.search')}}
+      </el-button>
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleAdd">
         {{$t('messages.button.search')}}
       </el-button>
     </div>
@@ -16,17 +27,12 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column :label="$t('messages.stores.column.name')" prop="name" align="center">
-      </el-table-column>
-      <el-table-column :label="$t('messages.stores.column.phone')" prop="phone" align="center">
-      </el-table-column>
-      </el-table-column>
-      <el-table-column :label="$t('messages.stores.column.address')" prop="address" align="center">
-      </el-table-column>
       <el-table-column :label="$t('messages.stores.column.create_time')" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ scope.row.month | parseTime('{y}-{m}') }}</span>
         </template>
+      </el-table-column>
+      <el-table-column :label="$t('messages.stores.column.address')" prop="money" align="center">
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
@@ -35,60 +41,88 @@
               Edit
             </el-button>
           </router-link>
-          <router-link :to="'/stores/images/' + row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">
-              images
-            </el-button>
-          </router-link>
+          <el-button size="mini" type="danger" @click="handleEdit(row)">
+            edit
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+
+    <el-dialog :title="$t('messages.users.dialog.title')" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" :model="dialogForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item :label="$t('messages.users.dialog.status')" prop="resource">
+          <el-date-picker
+            v-model="dialogForm.month"
+            type="month"
+            value-format="timestamp"
+            placeholder="选择月">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item :label="$t('messages.users.dialog.content')">
+          <el-input-number v-model="dialogForm.money" :precision="2" :step="0.1" :max="10"></el-input-number>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">
+          Cancel
+        </el-button>
+        <el-button type="primary" @click="handleDialogForm()">
+          Confirm
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { indexStore } from '@/api/store'
+import { indexStoreIncome, saveStoreIncome, updateStoreIncome } from '@/api/store_income'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 import { MessageBox, Message } from 'element-ui'
 
+const listQuery = {
+        page: 1,
+        limit: undefined,
+        month: [],
+        store_id: undefined
+      }
 export default {
   name: 'stores-index',
   components: { Pagination },
   directives: { waves },
   data() {
     return {
-      module_id: 0,
       tableKey: 0,
       list: null,
       total: 0,
       listLoading: true,
-      listQuery: {
-        page: 1,
-        limit: undefined,
-        name: undefined
+      listQuery: Object.assign({}, listQuery),
+      dialogFormVisible: false,
+      dialogForm: {
+        store_id: 0,
+        month: undefined,
+        money: 0.00
       },
-      roles: {},
-      auditFormVisible: false,
-      auditForm: {
-        user_id: 0,
-        content: '',
-        status: 2
-      },
+      id: 0,
       row: {}
     }
   },
   created() {
-    this.module_id = this.$route.meta.module_id
+    const store_id = this.dialogForm.store_id = this.listQuery.store_id = this.$route.params && this.$route.params.store_id
     this.getList()
   },
   methods: {
     getList() {
+      let listQuery = JSON.parse(JSON.stringify(this.listQuery))
+      if (listQuery.month.length == 2) {
+        listQuery.month[0] = listQuery.month[0] / 1000
+        listQuery.month[1] = listQuery.month[1] / 1000
+      }
       this.listLoading = true
-      indexStore(this.listQuery).then(response => {
+      indexStoreIncome(listQuery).then(response => {
         this.list = response.data.data
         this.total = response.data.total
         this.listQuery.limit = Number(response.data.per_page)
@@ -103,36 +137,42 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },
-    handleStatus(row, status) {
-      this.$confirm(this.$t('messages.confirm.message'), this.$t('messages.confirm.title'), {
-        confirmButtonText: this.$t('messages.confirm.confirmButtonText'),
-        cancelButtonText: this.$t('messages.confirm.cancelButtonText'),
-        type: 'warning'
-      }).then(() => {
-        updateStatus({status: status, id: row.id})
+    handleEdit(row) {
+      this.dialogForm.month = row.month * 1000
+      this.dialogForm.money = row.money
+      this.dialogFormVisible = true
+      this.id = row.id
+    },
+    handleDialogForm() {
+      let data = {}
+      data.store_id = this.dialogForm.store_id
+      data.month = this.dialogForm.month / 1000
+      data.money = this.dialogForm.money
+      if (this.id > 0) {
+        updateStoreIncome(this.id, data)
         .then(() => {
-          row.status = status
+          this.getList()
+          this.dialogFormVisible = false
         })
-      }).catch(() => {
-
-      })
+      } else {
+        saveStoreIncome(data)
+        .then(() => {
+          this.getList()
+          this.dialogFormVisible = false
+        })
+      }
     },
-    handleAuditStatus() {
-      let _this = this
-      saveUserAuditLog(this.auditForm)
-      .then(() => {
-        _this.row.audit_status = _this.auditForm.status
-        _this.auditFormVisible = false
-      })
-    },
-    handleAuditForm(row) {
-      console.log(row)
-      this.row = row
-      this.auditForm.user_id = row.id
-      this.auditForm.status = Number(row.audit_status) || 2
-      this.auditForm.content = ''
-      this.auditFormVisible = true
+    handleAdd() {
+      this.dialogForm.month = undefined
+      this.dialogForm.money = 0.00
+      this.dialogFormVisible = true
+      this.id = 0
     }
   }
 }
 </script>
+<style scoped>
+  .el-date-editor .el-range-separator{
+    width: 10% !important;
+  }
+</style>
