@@ -11,6 +11,9 @@ import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
+import store1Router from './modules/store1'
+import store2Router from './modules/store2'
+import store3Router from './modules/store3'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -153,53 +156,9 @@ export const asyncRoutes = [
       }
     ]
   },
-  {
-    path: '/stores',
-    component: Layout,
-    name: '专业市场',
-    meta: { title: '专业市场', icon: 'list', noCache: true },
-    children: [
-      {
-        path: 'index/2',
-        name: '一级经销商',
-        component: () => import('@/views/stores/index'),
-        meta: { title: '一级经销商', noCache: true, module_id: 2 }
-      },
-      {
-        path: 'create/2',
-        name: '创建一级经销商',
-        component: () => import('@/views/stores/create'),
-        meta: { title: '创建一级经销商', noCache: true, module_id: 2 }
-      },
-      {
-        path: 'images/:store_id(\\d+)',
-        component: () => import('@/views/store-images/index'),
-        name: 'images',
-        meta: { title: 'images', noCache: true, activeMenu: '/stores/index/2' },
-        hidden: true
-      },
-      {
-        path: 'incomes/:store_id(\\d+)',
-        component: () => import('@/views/store-incomes/index'),
-        name: 'images',
-        meta: { title: 'images', noCache: true, activeMenu: '/stores/index/2' },
-        hidden: true
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/stores/edit'),
-        name: 'Edit一级经销商',
-        meta: { title: 'Edit一级经销商', noCache: true, activeMenu: '/stores/index/2' },
-        hidden: true
-      },
-      {
-        path: 'index/3',
-        name: '二级经销商',
-        component: () => import('@/views/stores/index'),
-        meta: { title: '二级经销商', noCache: true }
-      }
-    ]
-  },
+  store1Router,
+  store2Router,
+  store3Router,
   {
     path: '/permission',
     component: Layout,

@@ -5,6 +5,11 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{$t('messages.button.search')}}
       </el-button>
+      <router-link :to="'/stores/module_id/' + module_id + '/create'">
+        <el-button class="filter-item" type="primary" icon="el-icon-edit">
+          create
+        </el-button>
+      </router-link>
     </div>
 
     <el-table
@@ -30,7 +35,7 @@
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <router-link :to="'/stores/edit/' + row.id">
+          <router-link :to="'/stores/module_id/' + module_id +'/edit/' + row.id">
             <el-button type="primary" size="small" icon="el-icon-edit">
               Edit
             </el-button>
@@ -72,6 +77,7 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
+        module_id: 0,
         page: 1,
         limit: undefined,
         name: undefined
@@ -87,7 +93,7 @@ export default {
     }
   },
   created() {
-    this.module_id = this.$route.meta.module_id
+    this.module_id = this.listQuery.module_id = this.$route.meta.module_id
     this.getList()
   },
   methods: {
