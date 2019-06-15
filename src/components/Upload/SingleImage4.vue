@@ -16,10 +16,10 @@
         将文件拖到此处，或<em>点击上传</em>
       </div>
     </el-upload>
-    <div class="image-preview image-app-preview">
+    <div class="image-preview image-app-preview" :style="(previewWidth > 0? 'width:' + previewWidth + 'px;': '') + (previewHeight > 0? 'height:' + previewHeight + 'px;' + 'line-height:' + previewHeight + 'px;': '')">
       <div v-show="imageUrl.length>1" class="image-preview-wrapper">
         <img :src="imageUrl">
-        <div class="image-preview-action">
+        <div class="image-preview-action" :style="(previewHeight > 0? 'line-height:' + previewHeight + 'px;': '')">
           <i class="el-icon-delete" @click="rmImage" />
         </div>
       </div>
@@ -33,9 +33,17 @@ import { getToken } from '@/utils/auth'
 import { saveFile, getInfo } from '@/api/file'
 
 export default {
-  name: 'SingleImageUpload3',
+  name: 'SingleImageUpload4',
   props: {
     value: {
+      type: Number,
+      default: undefined
+    },
+    previewWidth: {
+      type: Number,
+      default: 0
+    },
+    previewHeight: {
       type: Number,
       default: 0
     }
@@ -45,7 +53,7 @@ export default {
       imageUrl: '',
       domain: domain,
       tempUrl: '',
-      dataObj: { name: 'test.png' },
+      dataObj: { name: '' },
       headers: {
         'Authorization': 'Bearer ' + getToken()
       }
@@ -60,7 +68,7 @@ export default {
   },
   methods: {
     rmImage() {
-      this.emitInput('')
+      this.emitInput(0)
     },
     emitInput(val) {
       this.$emit('input', val)

@@ -1,41 +1,95 @@
 <template>
-  <div class="createPost-container">
-    <div class="createPost-main-container">
-      <Upload v-model="file_id" style="width: 500px; float: left;" />
-      <el-carousel v-if="list.length > 0" :interval="2000" class="phone" height="800px">
-        <el-carousel-item v-for="v in list" class="phone-item">
-          <div class="image-preview image-app-preview">
-            <div class="image-preview-wrapper">
-              <img :src="v.file_url">
-              <div class="image-preview-action" @click="deleteStoreImage(v)">
-                <i class="el-icon-delete" />
-              </div>
-            </div>
-          </div>
-        </el-carousel-item>
-      </el-carousel>
+  <div class="app-container">
+    <div class="filter-container">
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" @click="handleAdd">
+        {{$t('messages.button.create')}}
+      </el-button>
     </div>
+
+    <el-table
+      :key="tableKey"
+      v-loading="listLoading"
+      :data="list"
+      border
+      fit
+      highlight-current-row
+      style="width: 100%;"
+    >
+      <el-table-column :label="$t('messages.stores.column.create_time')" align="center" width="180px">
+        <template slot-scope="scope">
+          <img width="96" height="160" :src="scope.row.file_url" />
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('messages.stores.column.address')" prop="url" align="center">
+      </el-table-column>
+      <el-table-column :label="$t('messages.stores.column.address')" prop="sort" align="center">
+      </el-table-column>
+      <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
+        <template slot-scope="{row}">
+          <el-button size="mini" type="primary" @click="handleEdit(row)" icon="el-icon-edit" style="width: 70px;">
+            {{ $t('messages.button.edit') }}
+          </el-button>
+          <el-button size="mini" type="danger" @click="deleteStoreImage(row)" style="width: 70px;">
+            <i class="el-icon-close" />
+            {{ $t('messages.button.delete') }}
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <el-dialog :title="$t('messages.users.dialog.title')" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" :model="dialogForm" label-position="left" label-width="70px" style="margin-left:50px;">
+        <el-form-item prop="image_uri" label-width="72px" :label="$t('messages.stores.input.cover_file_id')" style="margin-bottom: 30px;">
+          <Upload v-model="dialogForm.file_id" :previewWidth="192" :previewHeight="320" />
+        </el-form-item>
+        <el-form-item :label="$t('messages.users.dialog.content')">
+          <el-input v-model="dialogForm.url"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('messages.users.dialog.content')">
+          <el-input-number v-model="dialogForm.sort" :min="0" :max="100"></el-input-number>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">
+          Cancel
+        </el-button>
+        <el-button type="primary" @click="saveStoreImage()">
+          Confirm
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import Upload from '@/components/Upload/SingleImageNoPreview'
-import { indexStoreImage, saveStoreImage, readStoreImage, deleteStoreImage } from '@/api/store_image'
+import Upload from '@/components/Upload/SingleImage4'
+import { indexStoreImage, saveStoreImage, readStoreImage, deleteStoreImage, updateStoreImage } from '@/api/store_image'
 import { MessageBox, Message } from 'element-ui'
+import waves from '@/directive/waves' // waves directive
 
 let id = 0;
 export default {
-  name: 'Detail',
+  name: 'StoreImages',
   components: { Upload },
+  directives: { waves },
   props: {
   },
   data() {
     return {
+      tableKey: 0,
       store_id: 0,
       list: [],
       file_id: 0,
-      loading: false,
-      tempRoute: {}
+      listLoading: false,
+      dialogFormVisible: false,
+      dialogForm: {
+        store_id: 0,
+        file_id: undefined,
+        url: '',
+        sort: 0
+      },
+      id: 0,
+      row: {}
     }
   },
   computed: {
@@ -46,7 +100,7 @@ export default {
     }
   },
   created() {
-    const store_id = this.store_id = this.$route.params && this.$route.params.store_id
+    const store_id = this.store_id = this.dialogForm.store_id = this.$route.params && this.$route.params.store_id
     this.indexStoreImage(this.store_id)
     // Why need to make a copy of this.$route here?
     // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
@@ -64,19 +118,17 @@ export default {
       })
     },
     saveStoreImage() {
-      let data = {store_id: this.store_id, file_id: this.file_id}
-      saveStoreImage(data).then(res => {
-        this.readStoreImage(res.data)
-      }).catch(err => {
-
-      })
-    },
-    readStoreImage(id) {
-      readStoreImage(id).then(res => {
-        this.list.push(res.data)
-      }).catch(err => {
-
-      })
+      if (this.id > 0) {
+        updateStoreImage(this.id, this.dialogForm).then(res => {
+          this.indexStoreImage(this.store_id)
+          this.dialogFormVisible = false
+        })
+      } else {
+        saveStoreImage(this.dialogForm).then(res => {
+          this.indexStoreImage(this.store_id)
+          this.dialogFormVisible = false
+        })
+      }
     },
     deleteStoreImage(image) {
       this.$confirm(this.$t('messages.confirm.message'), this.$t('messages.confirm.title'), {
@@ -88,6 +140,20 @@ export default {
           this.indexStoreImage(this.store_id)
         })
       })
+    },
+    handleEdit(row) {
+      this.dialogForm.file_id = row.file_id
+      this.dialogForm.url = row.url
+      this.dialogForm.sort = row.sort
+      this.dialogFormVisible = true
+      this.id = row.id
+    },
+    handleAdd() {
+      this.dialogForm.file_id = 0
+      this.dialogForm.url = ''
+      this.dialogForm.sort = 0
+      this.dialogFormVisible = true
+      this.id = 0
     }
   }
 }
