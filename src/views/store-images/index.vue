@@ -1,22 +1,26 @@
 <template>
   <div class="createPost-container">
     <div class="createPost-main-container">
-      <Upload v-model="file_id" />
-      <div class="image-preview image-app-preview" v-for="v in list">
-        <div class="image-preview-wrapper">
-          <img :src="v.file_url">
-          <div class="image-preview-action">
-            <i class="el-icon-delete" />
+      <Upload v-model="file_id" style="width: 500px; float: left;" />
+      <el-carousel v-if="list.length > 0" :interval="2000" class="phone" height="800px">
+        <el-carousel-item v-for="v in list" class="phone-item">
+          <div class="image-preview image-app-preview">
+            <div class="image-preview-wrapper">
+              <img :src="v.file_url">
+              <div class="image-preview-action" @click="deleteStoreImage(v)">
+                <i class="el-icon-delete" />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </el-carousel-item>
+      </el-carousel>
     </div>
   </div>
 </template>
 
 <script>
 import Upload from '@/components/Upload/SingleImageNoPreview'
-import { indexStoreImage, saveStoreImage, readStoreImage } from '@/api/store_image'
+import { indexStoreImage, saveStoreImage, readStoreImage, deleteStoreImage } from '@/api/store_image'
 import { MessageBox, Message } from 'element-ui'
 
 let id = 0;
@@ -73,6 +77,17 @@ export default {
       }).catch(err => {
 
       })
+    },
+    deleteStoreImage(image) {
+      this.$confirm(this.$t('messages.confirm.message'), this.$t('messages.confirm.title'), {
+        confirmButtonText: this.$t('messages.confirm.confirmButtonText'),
+        cancelButtonText: this.$t('messages.confirm.cancelButtonText'),
+        type: 'warning'
+      }).then(() => {
+        deleteStoreImage(image.id).then(res => {
+          this.indexStoreImage(this.store_id)
+        })
+      })
     }
   }
 }
@@ -81,7 +96,7 @@ export default {
 <style lang="scss" scoped>
 @import "~@/styles/mixin.scss";
 .amap-wrapper{
-  height: 300px;
+  height: 800px;
   margin-bottom: 40px;
 }
 .createPost-container {
@@ -119,8 +134,8 @@ export default {
   }
 }
 .image-preview {
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   position: relative;
   border: 1px dashed #d9d9d9;
   float: left;
@@ -149,7 +164,7 @@ export default {
     transition: opacity .3s;
     cursor: pointer;
     text-align: center;
-    line-height: 200px;
+    line-height: 800px;
     .el-icon-delete {
       font-size: 36px;
     }
@@ -161,8 +176,8 @@ export default {
   }
 }
 .image-app-preview {
-  width: 320px;
-  height: 180px;
+  // width: 320px;
+  // height: 180px;
   position: relative;
   border: 1px dashed #d9d9d9;
   float: left;
@@ -175,5 +190,17 @@ export default {
     line-height: 64px;
     color: #fff;
   }
+}
+.phone {
+  float: left;
+  width: 480px;
+  height: 800px;
+}
+.el-carousel__container {
+  height: 800px !important;
+}
+.phone-item {
+  width: 480px;
+  height: 800px;
 }
 </style>

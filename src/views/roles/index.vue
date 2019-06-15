@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddRole">New Role</el-button>
+    <!-- <el-button type="primary" @click="handleAddRole">New Role</el-button> -->
 
     <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
       <el-table-column align="center" label="Role Key" width="220">
@@ -15,8 +15,10 @@
       </el-table-column>
       <el-table-column align="center" label="Operations">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">Edit</el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)">Delete</el-button>
+          <el-button type="primary" size="small" @click="handleEdit(scope)" icon="el-icon-edit" style="width: 80px;">
+            {{ $t('messages.button.edit') }}
+          </el-button>
+          <!-- <el-button type="danger" size="small" @click="handleDelete(scope)">Delete</el-button> -->
         </template>
       </el-table-column>
     </el-table>

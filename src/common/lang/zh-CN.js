@@ -4,7 +4,10 @@ export const messages = {
   },
   success: '操作成功',
   button: {
-    search: '搜索'
+    search: '搜索',
+    create: '新建',
+    edit: '编辑',
+    delete: '删除'
   },
   header: {
     title: '测试系统'
@@ -76,7 +79,9 @@ export const messages = {
       create_time: '创建时间'
     },
     button: {
-      submit: '保存'
+      submit: '保存',
+      images: '品牌形象',
+      incomes : '运营状况'
     }
   }
 }

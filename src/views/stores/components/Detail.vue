@@ -259,7 +259,10 @@ export default {
               title: this.$t('messages.title.success'),
               message: this.$t('messages.success'),
               type: 'success',
-              duration: 2000
+              duration: 2000,
+              onClose: () => {
+                this.$router.go(-1)
+              }
             })
           }
           this.loading = false
@@ -273,7 +276,10 @@ export default {
               title: this.$t('messages.title.success'),
               message: this.$t('messages.success'),
               type: 'success',
-              duration: 2000
+              duration: 2000,
+              onClose: () => {
+                this.$router.go(-1)
+              }
             })
           }
           this.loading = false

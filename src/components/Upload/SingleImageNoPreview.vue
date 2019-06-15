@@ -90,7 +90,7 @@ export default {
   position: relative;
   @include clearfix;
   .image-uploader {
-    width: 35%;
+    width: 360px;
     float: left;
   }
 }

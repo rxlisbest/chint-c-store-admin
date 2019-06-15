@@ -2,12 +2,12 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input v-model="listQuery.name" :placeholder="$t('messages.stores.input.name')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+      <el-button v-waves class="filter-item" icon="el-icon-search" @click="handleFilter">
         {{$t('messages.button.search')}}
       </el-button>
       <router-link :to="'/stores/module_id/' + module_id + '/create'">
-        <el-button class="filter-item" type="primary" icon="el-icon-edit">
-          create
+        <el-button class="filter-item" type="primary" icon="el-icon-plus">
+          {{ $t('messages.button.create') }}
         </el-button>
       </router-link>
     </div>
@@ -33,21 +33,22 @@
           <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="Actions" align="center" width="380" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <router-link :to="'/stores/module_id/' + module_id +'/edit/' + row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">
-              Edit
+            <el-button type="primary" size="mini" icon="el-icon-edit" style="width: 70px;">
+              {{ $t('messages.button.edit') }}
             </el-button>
           </router-link>
-          <router-link :to="'/stores/images/' + row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">
-              images
+          <router-link :to="'/stores/module_id/' + module_id +'/images/' + row.id">
+            <el-button type="primary" size="mini" icon="el-icon-picture" style="width: 90px;">
+              {{ $t('messages.stores.button.images') }}
             </el-button>
           </router-link>
-          <router-link :to="'/stores/incomes/' + row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">
-              images
+          <router-link :to="'/stores/module_id/' + module_id +'/incomes/' + row.id">
+            <el-button type="primary" size="mini" style="width: 90px;">
+              <svg-icon icon-class="chart" />
+              {{ $t('messages.stores.button.incomes') }}
             </el-button>
           </router-link>
         </template>

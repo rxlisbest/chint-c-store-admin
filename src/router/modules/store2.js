@@ -27,6 +27,20 @@ export default {
         hidden: true
       },
       {
+        path: 'module_id/14/images/:store_id(\\d+)',
+        component: () => import('@/views/store-images/index'),
+        name: '品牌形象',
+        meta: { title: '品牌形象', noCache: true, activeMenu: '/stores/module_id/14', roles: [2, 14] },
+        hidden: true
+      },
+      {
+        path: 'module_id/14/incomes/:store_id(\\d+)',
+        component: () => import('@/views/store-incomes/index'),
+        name: '运营状况',
+        meta: { title: '运营状况', noCache: true, activeMenu: '/stores/module_id/14', roles: [2, 14] },
+        hidden: true
+      },
+      {
         path: 'index/15',
         name: '二级经销商',
         component: () => import('@/views/stores/index'),

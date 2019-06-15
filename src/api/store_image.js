@@ -31,3 +31,10 @@ export function updateStoreImage(id, data) {
     data
   })
 }
+
+export function deleteStoreImage(id) {
+  return request({
+    url: domain + `/index/store_images/delete/id/${id}`,
+    method: 'delete'
+  })
+}

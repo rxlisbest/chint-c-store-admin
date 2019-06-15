@@ -13,8 +13,8 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{$t('messages.button.search')}}
       </el-button>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleAdd">
-        {{$t('messages.button.search')}}
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" @click="handleAdd">
+        {{$t('messages.button.create')}}
       </el-button>
     </div>
 
@@ -36,13 +36,8 @@
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <router-link :to="'/stores/edit/' + row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">
-              Edit
-            </el-button>
-          </router-link>
-          <el-button size="mini" type="danger" @click="handleEdit(row)">
-            edit
+          <el-button size="mini" type="primary" @click="handleEdit(row)" icon="el-icon-edit" style="width: 70px;">
+            {{ $t('messages.button.edit') }}
           </el-button>
         </template>
       </el-table-column>
@@ -117,7 +112,7 @@ export default {
   methods: {
     getList() {
       let listQuery = JSON.parse(JSON.stringify(this.listQuery))
-      if (listQuery.month.length == 2) {
+      if (listQuery.month !== null && listQuery.month.length == 2) {
         listQuery.month[0] = listQuery.month[0] / 1000
         listQuery.month[1] = listQuery.month[1] / 1000
       }
