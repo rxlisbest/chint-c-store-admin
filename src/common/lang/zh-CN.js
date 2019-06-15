@@ -83,5 +83,19 @@ export const messages = {
       images: '品牌形象',
       incomes : '运营状况'
     }
+  },
+  store_images: {
+    column: {
+      file_url: '预览',
+      url: '链接',
+      sort: '排序号',
+      file_id: '图片'
+    }
+  },
+  store_incomes: {
+    column: {
+      month: '月份',
+      money: '金额'
+    }
   }
 }

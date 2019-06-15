@@ -8,7 +8,7 @@
       <el-select v-model="listQuery.audit_status" :placeholder="$t('messages.users.select.audit_status')" clearable class="filter-item" style="width: 130px">
         <el-option v-for="(v, k) in audit_status" :key="k" :label="v" :value="k" />
       </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+      <el-button v-waves class="filter-item" icon="el-icon-search" @click="handleFilter">
         {{$t('messages.users.button.search')}}
       </el-button>
     </div>

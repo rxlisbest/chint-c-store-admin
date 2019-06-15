@@ -15,14 +15,14 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column :label="$t('messages.stores.column.create_time')" align="center" width="180px">
+      <el-table-column :label="$t('messages.store_images.column.file_url')" align="center" width="180px">
         <template slot-scope="scope">
           <img width="96" height="160" :src="scope.row.file_url" />
         </template>
       </el-table-column>
-      <el-table-column :label="$t('messages.stores.column.address')" prop="url" align="center">
+      <el-table-column :label="$t('messages.store_images.column.url')" prop="url" align="center">
       </el-table-column>
-      <el-table-column :label="$t('messages.stores.column.address')" prop="sort" align="center">
+      <el-table-column :label="$t('messages.store_images.column.sort')" prop="sort" align="center" width="180px">
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
@@ -39,13 +39,13 @@
 
     <el-dialog :title="$t('messages.users.dialog.title')" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :model="dialogForm" label-position="left" label-width="70px" style="margin-left:50px;">
-        <el-form-item prop="image_uri" label-width="72px" :label="$t('messages.stores.input.cover_file_id')" style="margin-bottom: 30px;">
+        <el-form-item prop="image_uri" label-width="72px" :label="$t('messages.store_images.column.file_id')" style="margin-bottom: 30px;">
           <Upload v-model="dialogForm.file_id" :previewWidth="192" :previewHeight="320" />
         </el-form-item>
-        <el-form-item :label="$t('messages.users.dialog.content')">
+        <el-form-item :label="$t('messages.store_images.column.url')">
           <el-input v-model="dialogForm.url"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('messages.users.dialog.content')">
+        <el-form-item :label="$t('messages.store_images.column.sort')">
           <el-input-number v-model="dialogForm.sort" :min="0" :max="100"></el-input-number>
         </el-form-item>
       </el-form>

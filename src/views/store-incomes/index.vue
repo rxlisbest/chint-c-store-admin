@@ -10,7 +10,7 @@
         start-placeholder="开始月份"
         end-placeholder="结束月份">
       </el-date-picker>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+      <el-button v-waves class="filter-item" icon="el-icon-search" @click="handleFilter">
         {{$t('messages.button.search')}}
       </el-button>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-plus" @click="handleAdd">
@@ -27,12 +27,12 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column :label="$t('messages.stores.column.create_time')" align="center">
+      <el-table-column :label="$t('messages.store_incomes.column.month')" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.month | parseTime('{y}-{m}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('messages.stores.column.address')" prop="money" align="center">
+      <el-table-column :label="$t('messages.store_incomes.column.money')" prop="money" align="center">
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">

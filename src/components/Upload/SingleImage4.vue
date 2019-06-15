@@ -37,7 +37,7 @@ export default {
   props: {
     value: {
       type: Number,
-      default: undefined
+      default: 0
     },
     previewWidth: {
       type: Number,
@@ -60,6 +60,9 @@ export default {
     }
   },
   computed: {
+  },
+  created() {
+    this.getInfo()
   },
   watch: {
     value(val) {
