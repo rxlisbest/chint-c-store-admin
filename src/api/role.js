@@ -8,7 +8,7 @@ export function getRoutes() {
   })
 }
 
-export function getRoles() {
+export function indexRoles() {
   return request({
     url: domain + '/index/roles/index',
     method: 'get'

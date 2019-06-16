@@ -51,7 +51,7 @@
 <script>
 import path from 'path'
 import { deepClone } from '@/utils'
-import { getRoutes, getRoles, addRole, deleteRole, updateRole, getRoleModuleRelations } from '@/api/role'
+import { getRoutes, indexRoles, addRole, deleteRole, updateRole, getRoleModuleRelations } from '@/api/role'
 
 const defaultRole = {
   id: 0,
@@ -91,7 +91,7 @@ export default {
       this.routes = this.generateRoutes(res.data)
     },
     async getRoles() {
-      const res = await getRoles()
+      const res = await indexRoles()
       console.log(res)
       this.rolesList = res.data
     },
@@ -146,7 +146,6 @@ export default {
           d.id = v.module_id
           module_id.push(d)
         }
-        console.log(module_id)
         _this.$nextTick(() => {
           const routes = this.generateRoutes(this.role.routes)
           this.$refs.tree.setCheckedNodes(module_id)
