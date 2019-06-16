@@ -10,7 +10,7 @@ export function getRoutes() {
 
 export function indexRoles() {
   return request({
-    url: domain + '/index/roles/index',
+    url: domain + '/index/tt/index',
     method: 'get'
   })
 }
