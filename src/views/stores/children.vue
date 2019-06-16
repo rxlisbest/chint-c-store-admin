@@ -1,11 +1,14 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
+      {{ store.name }}
+    </div>
+    <div class="filter-container">
       <el-input v-model="listQuery.name" :placeholder="$t('messages.stores.input.name')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-button v-waves class="filter-item" icon="el-icon-search" @click="handleFilter">
         {{$t('messages.button.search')}}
       </el-button>
-      <router-link :to="'/stores/' + parent_module_id + '/module_id/' + module_id + '/create'">
+      <router-link :to="'/stores/' + parent_module_id + '/module_id/' + module_id + '/create?parent_id=' + parent_id">
         <el-button class="filter-item" type="primary" icon="el-icon-plus">
           {{ $t('messages.button.create') }}
         </el-button>
@@ -35,26 +38,20 @@
       </el-table-column>
       <el-table-column label="Actions" align="center" width="380" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <router-link :to="'/stores/' + parent_module_id + '/module_id/' + module_id +'/edit/' + row.id">
+          <router-link :to="'/stores/' + parent_module_id + '/module_id/' + row.module_id +'/edit/' + row.id">
             <el-button type="primary" size="mini" icon="el-icon-edit" style="width: 70px;">
               {{ $t('messages.button.edit') }}
             </el-button>
           </router-link>
-          <router-link v-if="parent_module_id != 0" :to="'/stores/' + parent_module_id + '/module_id/' + module_id +'/images/' + row.id">
+          <router-link :to="'/stores/' + parent_module_id + '/module_id/' + row.module_id +'/images/' + row.id">
             <el-button type="primary" size="mini" icon="el-icon-picture" style="width: 90px;">
               {{ $t('messages.stores.button.images') }}
             </el-button>
           </router-link>
-          <router-link v-if="parent_module_id != 0" :to="'/stores/' + parent_module_id + '/module_id/' + module_id +'/incomes/' + row.id">
+          <router-link :to="'/stores/' + parent_module_id + '/module_id/' + row.module_id +'/incomes/' + row.id">
             <el-button type="primary" size="mini" style="width: 90px;">
               <svg-icon icon-class="chart" />
               {{ $t('messages.stores.button.incomes') }}
-            </el-button>
-          </router-link>
-          <router-link v-if="parent_module_id == 0" :to="'/stores/' + parent_module_id + '/module_id/' + module_id +'/children/' + row.id">
-            <el-button type="warning" size="mini" style="width: 70px;">
-              <svg-icon icon-class="tree-table" />
-              {{ $t('messages.stores.button.children') }}
             </el-button>
           </router-link>
         </template>
@@ -66,7 +63,7 @@
 </template>
 
 <script>
-import { indexStore } from '@/api/store'
+import { indexStore, readStore } from '@/api/store'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -78,6 +75,7 @@ export default {
   directives: { waves },
   data() {
     return {
+      parent_id: 0,
       parent_module_id: 0,
       module_id: 0,
       tableKey: 0,
@@ -85,29 +83,36 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
+        parent_id: undefined,
         module_id: undefined,
         page: 1,
         limit: undefined,
         name: undefined
       },
-      roles: {},
-      auditFormVisible: false,
-      auditForm: {
-        user_id: 0,
-        content: '',
-        status: 2
+      store: {
+        'name': ''
       },
+      roles: {},
       row: {}
     }
   },
   created() {
     this.parent_module_id = this.$route.meta.parent_module_id
     if (this.$route.meta.module_id !== undefined) {
-      this.module_id = this.listQuery.module_id = this.$route.meta.module_id
+      this.module_id = this.$route.meta.module_id
+    }
+    if (this.$route.params && this.$route.params.id) {
+      this.parent_id = this.listQuery.parent_id = this.$route.params && this.$route.params.id
     }
     this.getList()
+    this.readStore()
   },
   methods: {
+    readStore() {
+      readStore(this.parent_id).then(res => {
+        this.store = res.data
+      })
+    },
     getList() {
       this.listLoading = true
       indexStore(this.listQuery).then(response => {
@@ -138,22 +143,6 @@ export default {
       }).catch(() => {
 
       })
-    },
-    handleAuditStatus() {
-      let _this = this
-      saveUserAuditLog(this.auditForm)
-      .then(() => {
-        _this.row.audit_status = _this.auditForm.status
-        _this.auditFormVisible = false
-      })
-    },
-    handleAuditForm(row) {
-      console.log(row)
-      this.row = row
-      this.auditForm.user_id = row.id
-      this.auditForm.status = Number(row.audit_status) || 2
-      this.auditForm.content = ''
-      this.auditFormVisible = true
     }
   }
 }

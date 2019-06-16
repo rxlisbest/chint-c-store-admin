@@ -65,6 +65,7 @@ export const messages = {
     input: {
       name: '名称',
       cover_file_id: '封面',
+      location_file_id: '底图',
       area_code: '省市区',
       phone: '联系电话',
       address: '地址',
@@ -81,7 +82,8 @@ export const messages = {
     button: {
       submit: '保存',
       images: '品牌形象',
-      incomes : '运营状况'
+      incomes : '运营状况',
+      children : '下级'
     }
   },
   store_images: {

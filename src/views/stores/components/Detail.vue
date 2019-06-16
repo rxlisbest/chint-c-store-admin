@@ -1,6 +1,6 @@
 <template>
   <div class="createPost-container">
-    <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
+    <el-form ref="postForm" :model="postForm" class="form-container">
 
       <sticky :z-index="10" :class-name="'sub-navbar '+ postForm.status">
         <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
@@ -18,9 +18,26 @@
           </MDinput>
         </el-form-item>
 
-        <el-form-item prop="image_uri" label-width="72px" :label="$t('messages.stores.input.cover_file_id')" style="margin-bottom: 30px;">
+        <el-form-item v-if="parent_id > 0 || isEdit && postForm.parent_id > 0" prop="cover_file_id" label-width="72px" :label="$t('messages.stores.input.cover_file_id')" style="margin-bottom: 30px;">
+          <el-select v-model="postForm.module_id" placeholder="请选择">
+            <el-option
+              v-for="item in module_options"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item style="margin-bottom: 40px;" prop="title">
+        </el-form-item>
+        <el-form-item prop="cover_file_id" label-width="72px" :label="$t('messages.stores.input.cover_file_id')" style="margin-bottom: 30px;">
           <Upload v-model="postForm.cover_file_id" />
         </el-form-item>
+
+        <!-- <el-form-item v-if="module_id == 1" prop="location_file_id" label-width="72px" :label="$t('messages.stores.input.location_file_id')" style="margin-bottom: 30px;">
+          <Upload v-model="postForm.location_file_id" />
+        </el-form-item> -->
 
         <el-form-item style="margin-bottom: 40px;" label-width="72px" :label="$t('messages.stores.input.phone')">
           <el-input v-model="postForm.phone" :rows="3" type="textarea" class="article-textarea" autosize placeholder="Please enter the content" />
@@ -69,11 +86,14 @@ import { lazyAMapApiLoaderInstance } from 'vue-amap'
 import { MessageBox, Message } from 'element-ui'
 
 import { indexArea } from '@/api/area'
+import { indexModule } from '@/api/module'
 
 const defaultForm = {
   name: '',
-  module_id: 0,
+  module_id: undefined,
+  parent_id: 0,
   cover_file_id: undefined,
+  // location_file_id: undefined,
   area_code: [],
   location: '',
   lat: '',
@@ -95,52 +115,23 @@ export default {
     }
   },
   data() {
-    const validateRequire = (rule, value, callback) => {
-      if (value === '') {
-        this.$message({
-          message: rule.field + '为必传项',
-          type: 'error'
-        })
-        callback(new Error(rule.field + '为必传项'))
-      } else {
-        callback()
-      }
-    }
-    const validateSourceUri = (rule, value, callback) => {
-      if (value) {
-        if (validURL(value)) {
-          callback()
-        } else {
-          this.$message({
-            message: '外链url填写不正确',
-            type: 'error'
-          })
-          callback(new Error('外链url填写不正确'))
-        }
-      } else {
-        callback()
-      }
-    }
     return {
+      module_id: 0,
+      parent_id: 0,
       map: undefined,
       zoom: 16,
       center: [121.59996, 31.197646],
       postForm: Object.assign({}, defaultForm),
       loading: false,
       userListOptions: [],
-      rules: {
-        image_uri: [{ validator: validateRequire }],
-        title: [{ validator: validateRequire }],
-        content: [{ validator: validateRequire }],
-        source_uri: [{ validator: validateSourceUri, trigger: 'blur' }]
-      },
       tempRoute: {},
       area_props: {
         value: 'code',
         label: 'name',
         children: 'children'
       },
-      area_options: []
+      area_options: [],
+      module_options: []
     }
   },
   computed: {
@@ -155,7 +146,14 @@ export default {
     } else {
       this.postForm = Object.assign({}, defaultForm)
     }
-    this.module_id = this.postForm.module_id = this.$route.meta.module_id
+
+    this.module_id = this.$route.meta.module_id
+    if (this.$route.query && this.$route.query.parent_id) {
+      this.parent_id = this.postForm.parent_id = this.$route.query && this.$route.query.parent_id
+      this.indexModule(this.parent_id)
+    } else {
+      this.postForm.module_id = this.module_id
+    }
 
     // Why need to make a copy of this.$route here?
     // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
@@ -233,9 +231,20 @@ export default {
     this.initArea()
   },
   methods: {
+    indexModule(parent_id){
+      indexModule({parent_id: parent_id}).then(response => {
+        console.log(response.data)
+        this.module_options = response.data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     fetchData(id) {
       readStore(id).then(response => {
         this.postForm = response.data
+        if (this.postForm.parent_id > 0) {
+          this.indexModule(this.postForm.parent_id)
+        }
         this.initEditArea()
       }).catch(err => {
         console.log(err)
