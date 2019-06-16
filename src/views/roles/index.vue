@@ -90,12 +90,11 @@ export default {
       this.serviceRoutes = res.data
       this.routes = this.generateRoutes(res.data)
     },
-    async getRoles() {
-      const res = await indexRoles()
-      console.log(res)
-      this.rolesList = res.data
+    getRoles() {
+      indexRoles().then(res => {
+        this.rolesList = res.data
+      })
     },
-
     // Reshape the routes structure so that it looks the same as the sidebar
     generateRoutes(list = [], parent_id = 0) {
       let data = []
