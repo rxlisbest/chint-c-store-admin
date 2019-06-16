@@ -5,7 +5,7 @@
       <el-button v-waves class="filter-item" icon="el-icon-search" @click="handleFilter">
         {{$t('messages.button.search')}}
       </el-button>
-      <router-link :to="'/stores/module_id/' + module_id + '/create'">
+      <router-link :to="'/stores/' + parent_module_id + '/module_id/' + module_id + '/create'">
         <el-button class="filter-item" type="primary" icon="el-icon-plus">
           {{ $t('messages.button.create') }}
         </el-button>
@@ -35,17 +35,17 @@
       </el-table-column>
       <el-table-column label="Actions" align="center" width="380" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <router-link :to="'/stores/module_id/' + module_id +'/edit/' + row.id">
+          <router-link :to="'/stores/' + parent_module_id + '/module_id/' + module_id +'/edit/' + row.id">
             <el-button type="primary" size="mini" icon="el-icon-edit" style="width: 70px;">
               {{ $t('messages.button.edit') }}
             </el-button>
           </router-link>
-          <router-link :to="'/stores/module_id/' + module_id +'/images/' + row.id">
+          <router-link :to="'/stores/' + parent_module_id + '/module_id/' + module_id +'/images/' + row.id">
             <el-button type="primary" size="mini" icon="el-icon-picture" style="width: 90px;">
               {{ $t('messages.stores.button.images') }}
             </el-button>
           </router-link>
-          <router-link :to="'/stores/module_id/' + module_id +'/incomes/' + row.id">
+          <router-link :to="'/stores/' + parent_module_id + '/module_id/' + module_id +'/incomes/' + row.id">
             <el-button type="primary" size="mini" style="width: 90px;">
               <svg-icon icon-class="chart" />
               {{ $t('messages.stores.button.incomes') }}
@@ -72,6 +72,7 @@ export default {
   directives: { waves },
   data() {
     return {
+      parent_module_id: 0,
       module_id: 0,
       tableKey: 0,
       list: null,
@@ -94,6 +95,7 @@ export default {
     }
   },
   created() {
+    this.parent_module_id = this.$route.meta.parent_module_id
     this.module_id = this.listQuery.module_id = this.$route.meta.module_id
     this.getList()
   },
