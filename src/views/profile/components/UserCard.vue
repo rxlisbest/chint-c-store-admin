@@ -6,68 +6,64 @@
 
     <div class="user-profile">
       <div class="box-center">
-        <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false">
-          <div>Hello</div>
-          {{ user.role }}
+        <pan-thumb :image="user.headimg_url" :height="'100px'" :width="'100px'" :hoverable="false">
         </pan-thumb>
       </div>
-      <div class="box-center">
-        <div class="user-name text-center">{{ user.name }}</div>
-        <div class="user-role text-center text-muted">{{ user.role | uppercaseFirst }}</div>
-      </div>
     </div>
-
-    <div class="user-bio">
-      <div class="user-education user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>Education</span></div>
-        <div class="user-bio-section-body">
-          <div class="text-muted">
-            JS in Computer Science from the University of Technology
-          </div>
-        </div>
-      </div>
-
-      <div class="user-skills user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>Skills</span></div>
-        <div class="user-bio-section-body">
-          <div class="progress-item">
-            <span>Vue</span>
-            <el-progress :percentage="70" />
-          </div>
-          <div class="progress-item">
-            <span>JavaScript</span>
-            <el-progress :percentage="18" />
-          </div>
-          <div class="progress-item">
-            <span>Css</span>
-            <el-progress :percentage="12" />
-          </div>
-          <div class="progress-item">
-            <span>ESLint</span>
-            <el-progress :percentage="100" status="success" />
-          </div>
-        </div>
-      </div>
-    </div>
+    <Upload v-model="user.headimg_file_id" />
+    <el-button size="small" type="primary" @click="updateHeadimg()">保存</el-button>
   </el-card>
 </template>
 
 <script>
 import PanThumb from '@/components/PanThumb'
+import Upload from '@/components/Upload/SingleImageButton'
+import { saveFile, getInfo } from '@/api/file'
+import { getInfo as readUser, updateHeadimg } from '@/api/user'
 
 export default {
-  components: { PanThumb },
-  props: {
-    user: {
-      type: Object,
-      default: () => {
-        return {
-          name: '',
-          email: '',
-          avatar: '',
-          roles: ''
-        }
+  components: { PanThumb, Upload },
+  data() {
+    return {
+      user: {
+        headimg_url: '',
+        headimg_file_id: 0
       }
+    }
+  },
+  watch: {
+    'user.headimg_file_id': function (curVal, oldVal) {
+      console.log(curVal)
+      this.getInfo()
+    }
+  },
+  created() {
+    this.readUser()
+  },
+  methods: {
+    async readUser() {
+      const res = await readUser()
+      this.user.headimg_url = res.data.headimg_url
+      this.user.headimg_file_id = res.data.headimg_file_id
+    },
+    getInfo() {
+      let _this = this
+      console.log(this.user.headimg_file_id)
+      if (this.user.headimg_file_id > 0) {
+        getInfo(this.user.headimg_file_id).then((res) => {
+          let url = res.data.domain + res.data.key
+          this.user.headimg_url = url
+        })
+      }
+    },
+    async updateHeadimg() {
+      const res = await updateHeadimg(this.user)
+      this.$notify({
+        title: this.$t('messages.title.success'),
+        message: this.$t('messages.success'),
+        type: 'success',
+        duration: 2000
+      })
     }
   }
 }

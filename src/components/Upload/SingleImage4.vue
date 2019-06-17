@@ -28,9 +28,10 @@
 </template>
 
 <script>
-import domain from '@/api/domain'
 import { getToken } from '@/utils/auth'
 import { saveFile, getInfo } from '@/api/file'
+
+const domain = process.env.VUE_APP_BASE_API
 
 export default {
   name: 'SingleImageUpload4',

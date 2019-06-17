@@ -97,7 +97,7 @@
 <script>
 import { getList, updateStatus, updateAuditStatus } from '@/api/user'
 import { saveUserAuditLog } from '@/api/user_audit_log'
-import { getRoles } from '@/api/role'
+import { indexRoles } from '@/api/role'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -178,7 +178,7 @@ export default {
   },
   methods: {
     getRoleList() {
-      getRoles().then(response => {
+      indexRoles().then(response => {
         let roles = {}
         response.data.forEach((v) => {
           roles[v.id] = v.name

@@ -7,7 +7,8 @@ export const messages = {
     search: '搜索',
     create: '新建',
     edit: '编辑',
-    delete: '删除'
+    delete: '删除',
+    submit: '保存'
   },
   header: {
     title: '测试系统'
@@ -98,6 +99,12 @@ export const messages = {
     column: {
       month: '月份',
       money: '金额'
+    }
+  },
+  profile: {
+    input: {
+      password: '密码',
+      confirm_password: '确认密码'
     }
   }
 }
