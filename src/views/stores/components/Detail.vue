@@ -18,7 +18,7 @@
           </MDinput>
         </el-form-item>
 
-        <el-form-item v-if="parent_id > 0 || isEdit && postForm.parent_id > 0" prop="cover_file_id" label-width="72px" :label="$t('messages.stores.input.cover_file_id')" style="margin-bottom: 30px;">
+        <el-form-item v-if="parent_id > 0 || isEdit && postForm.parent_id > 0" prop="cover_file_id" label-width="72px" :label="$t('messages.stores.input.module_id')" style="margin-bottom: 30px;">
           <el-select v-model="postForm.module_id" placeholder="请选择">
             <el-option
               v-for="item in module_options"

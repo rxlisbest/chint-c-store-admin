@@ -65,6 +65,7 @@ export const messages = {
   stores: {
     input: {
       name: '名称',
+      module_id: '分类',
       cover_file_id: '封面',
       location_file_id: '底图',
       area_code: '省市区',

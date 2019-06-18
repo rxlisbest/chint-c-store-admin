@@ -1,8 +1,32 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
-      {{ store.name }}
-    </div>
+    <el-card class="box-card" shadow="never">
+      <div slot="header" class="clearfix">
+        <span>专业市场</span>
+      </div>
+      <div class="text item">
+        <el-row>
+          <el-col :span="2">{{$t('messages.stores.input.name')}}</el-col>
+          <el-col :span="22">{{ store.name }}</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="2">{{$t('messages.stores.input.phone')}}</el-col>
+          <el-col :span="22">{{ store.phone }}</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="2">{{$t('messages.stores.input.address')}}</el-col>
+          <el-col :span="22">{{ store.address }}</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="2">{{$t('messages.stores.input.introduce')}}</el-col>
+          <el-col :span="22">{{ store.introduce }}</el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="2">{{$t('messages.stores.input.business_scope')}}</el-col>
+          <el-col :span="22">{{ store.business_scope }}</el-col>
+        </el-row>
+      </div>
+    </el-card>
     <div class="filter-container">
       <el-input v-model="listQuery.name" :placeholder="$t('messages.stores.input.name')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-button v-waves class="filter-item" icon="el-icon-search" @click="handleFilter">
@@ -147,3 +171,15 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .filter-container {
+    margin-top: 20px;
+  }
+  .el-row {
+    margin-bottom: 10px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+</style>
