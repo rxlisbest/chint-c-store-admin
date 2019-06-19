@@ -2,6 +2,11 @@ export const messages = {
   title: {
     success: '成功'
   },
+  nav: {
+    profile: '个人中心',
+    dashboard: '工作台',
+    logout: '退出登录',
+  },
   success: '操作成功',
   button: {
     search: '搜索',

@@ -14,6 +14,7 @@ import nestedRouter from './modules/nested'
 import store1Router from './modules/store1'
 import store2Router from './modules/store2'
 import store3Router from './modules/store3'
+import statisticRouter from './modules/statistic'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -159,6 +160,7 @@ export const asyncRoutes = [
   store1Router,
   store2Router,
   store3Router,
+  statisticRouter,
   {
     path: '/permission',
     component: Layout,

@@ -30,3 +30,11 @@ export function updateStore(id, data) {
     data
   })
 }
+
+export function statisticCreate(query) {
+  return request({
+    url: '/index/stores/statisticCreate',
+    method: 'get',
+    params: query
+  })
+}
