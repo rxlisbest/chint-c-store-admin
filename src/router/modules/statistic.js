@@ -20,9 +20,16 @@ export default {
             meta: { title: '新增统计', noCache: true, parent_module_id: 0, module_id: 1, roles: [1]}
           },
           {
+            path: 'children/create',
+            name: '新增统计',
+            component: () => import('@/views/stores/statistics/create'),
+            meta: { title: '新增统计', noCache: true, parent_module_id: 1, module_id: 0, activeMenu: '/stores/0/module_id/1', roles: [1]},
+            hidden: true
+          },
+          {
             path: 'now',
             name: '现有统计',
-            component: () => import('@/views/stores/index'),
+            component: () => import('@/views/stores/statistics/now'),
             meta: { title: '现有统计', noCache: true, parent_module_id: 0, module_id: 1, roles: [1]}
           }
         ]
@@ -43,7 +50,7 @@ export default {
           {
             path: 'now',
             name: '现有统计',
-            component: () => import('@/views/stores/index'),
+            component: () => import('@/views/stores/statistics/now'),
             meta: { title: '现有统计', noCache: true, parent_module_id: 2, module_id: 0, roles: [2]}
           }
         ]
@@ -64,7 +71,7 @@ export default {
           {
             path: 'now',
             name: '现有统计',
-            component: () => import('@/views/stores/index'),
+            component: () => import('@/views/stores/statistics/now'),
             meta: { title: '现有统计', noCache: true, parent_module_id: 3, module_id: 0, roles: [3]}
           }
         ]

@@ -90,7 +90,8 @@ export const messages = {
       submit: '保存',
       images: '品牌形象',
       incomes : '运营状况',
-      children : '下级'
+      children : '下级',
+      statistic: '统计'
     }
   },
   store_images: {

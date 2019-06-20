@@ -150,7 +150,7 @@ export default {
     this.module_id = this.$route.meta.module_id
     if (this.$route.query && this.$route.query.parent_id) {
       this.parent_id = this.postForm.parent_id = this.$route.query && this.$route.query.parent_id
-      this.indexModule(this.parent_id)
+      this.indexModule(this.module_id)
     } else {
       this.postForm.module_id = this.module_id
     }
@@ -233,7 +233,6 @@ export default {
   methods: {
     indexModule(parent_id){
       indexModule({parent_id: parent_id}).then(response => {
-        console.log(response.data)
         this.module_options = response.data
       }).catch(err => {
         console.log(err)
@@ -243,7 +242,7 @@ export default {
       readStore(id).then(response => {
         this.postForm = response.data
         if (this.postForm.parent_id > 0) {
-          this.indexModule(this.postForm.parent_id)
+          this.indexModule(1)
         }
         this.initEditArea()
       }).catch(err => {

@@ -57,6 +57,12 @@
               {{ $t('messages.stores.button.children') }}
             </el-button>
           </router-link>
+          <router-link v-if="parent_module_id == 0" :to="'/statistics/module_id/' + module_id + '/children/create?parent_id=' + row.id">
+            <el-button type="success" size="mini" style="width: 70px;">
+              <svg-icon icon-class="chart" />
+              {{ $t('messages.stores.button.statistic') }}
+            </el-button>
+          </router-link>
         </template>
       </el-table-column>
     </el-table>

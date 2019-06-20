@@ -25,6 +25,7 @@ import { statisticCreate } from '@/api/store'
 const query = {
 	parent_module_id: 0,
 	module_id: 0,
+  parent_id: 0,
 	month: []
 }
 const chartData = {
@@ -43,6 +44,7 @@ export default {
   created() {
     this.query.parent_module_id = this.$route.meta.parent_module_id
     this.query.module_id = this.$route.meta.module_id
+    this.query.parent_id = this.$route.params && this.$route.query.parent_id
   	this.statisticCreate()
   },
   methods: {
