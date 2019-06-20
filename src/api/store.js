@@ -38,3 +38,11 @@ export function statisticCreate(query) {
     params: query
   })
 }
+
+export function statisticNow(query) {
+  return request({
+    url: '/index/stores/statisticNow',
+    method: 'get',
+    params: query
+  })
+}

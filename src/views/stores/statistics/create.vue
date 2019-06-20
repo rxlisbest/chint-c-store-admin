@@ -33,7 +33,7 @@ const chartData = {
   xData: []
 }
 export default {
-  name: 'statistic',
+  name: 'statistic-create',
   components: { Chart },
   data() {
     return {

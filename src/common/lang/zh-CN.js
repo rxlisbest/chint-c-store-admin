@@ -91,7 +91,8 @@ export const messages = {
       images: '品牌形象',
       incomes : '运营状况',
       children : '下级',
-      statistic: '统计'
+      statistic_create: '新增统计',
+      statistic_now: '现有统计'
     }
   },
   store_images: {

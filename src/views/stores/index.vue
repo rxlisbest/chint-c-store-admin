@@ -58,9 +58,15 @@
             </el-button>
           </router-link>
           <router-link v-if="parent_module_id == 0" :to="'/statistics/module_id/' + module_id + '/children/create?parent_id=' + row.id">
-            <el-button type="success" size="mini" style="width: 70px;">
+            <el-button type="success" size="mini" style="width: 90px;">
               <svg-icon icon-class="chart" />
-              {{ $t('messages.stores.button.statistic') }}
+              {{ $t('messages.stores.button.statistic_create') }}
+            </el-button>
+          </router-link>
+          <router-link v-if="parent_module_id == 0" :to="'/statistics/module_id/' + module_id + '/children/now?parent_id=' + row.id">
+            <el-button type="success" size="mini" style="width: 90px;">
+              <svg-icon icon-class="chart" />
+              {{ $t('messages.stores.button.statistic_now') }}
             </el-button>
           </router-link>
         </template>
