@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Vue Element Admin',
+  title: '正泰C-Store终端建设平台',
 
   /**
    * @type {boolean} true | false

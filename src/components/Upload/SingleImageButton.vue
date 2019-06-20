@@ -9,7 +9,7 @@
       :action="domain + '/index/files/upload'"
       :before-upload="beforeUpload"
     >
-    <el-button size="small" type="primary">点击上传</el-button>
+    <el-button size="small" type="default">点击上传</el-button>
     </el-upload>
   </div>
 </template>

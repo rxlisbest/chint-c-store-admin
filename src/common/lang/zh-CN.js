@@ -113,6 +113,10 @@ export const messages = {
     input: {
       password: '密码',
       confirm_password: '确认密码'
+    },
+    title: {
+      about_me: '关于我',
+      account: '账号'
     }
   }
 }

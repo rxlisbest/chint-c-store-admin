@@ -1,7 +1,7 @@
 <template>
   <el-card style="margin-bottom:20px;">
     <div slot="header" class="clearfix">
-      <span>About me</span>
+      <span>{{ $t('messages.profile.title.about_me') }}</span>
     </div>
 
     <div class="user-profile">
@@ -10,8 +10,10 @@
         </pan-thumb>
       </div>
     </div>
-    <Upload v-model="user.headimg_file_id" />
-    <el-button size="small" type="primary" @click="updateHeadimg()">保存</el-button>
+    <Upload class="upload" v-model="user.headimg_file_id" />
+    <div class="submit-div">
+      <el-button class="submit" size="small" type="primary" @click="updateHeadimg()">{{ $t('messages.button.submit') }}</el-button>
+    </div>
   </el-card>
 </template>
 
@@ -70,6 +72,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .submit-div {
+    width: 100%;
+    text-align: center;
+    margin-top: 6px;
+  }
+  .submit {
+    margin: 0 auto;
+    width: 80px;
+  }
+  .upload {
+    margin-top: 20px;
+  }
  .box-center {
    margin: 0 auto;
    display: table;

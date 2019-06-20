@@ -27,6 +27,12 @@ export default {
             hidden: true
           },
           {
+            path: 'now',
+            name: '现有统计',
+            component: () => import('@/views/stores/statistics/now'),
+            meta: { title: '现有统计', noCache: true, parent_module_id: 0, module_id: 1, roles: [1]}
+          },
+          {
             path: 'children/now',
             name: '现有统计',
             component: () => import('@/views/stores/statistics/now'),
