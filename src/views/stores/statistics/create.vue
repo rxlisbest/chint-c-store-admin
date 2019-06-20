@@ -41,7 +41,8 @@ export default {
     }
   },
   created() {
-    this.query.parent_module_id = 3
+    this.query.parent_module_id = this.$route.meta.parent_module_id
+    this.query.module_id = this.$route.meta.module_id
   	this.statisticCreate()
   },
   methods: {
