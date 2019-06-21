@@ -39,6 +39,10 @@
           <Upload v-model="postForm.location_file_id" />
         </el-form-item> -->
 
+        <el-form-item style="margin-bottom: 40px;" label-width="72px" :label="$t('messages.stores.input.business_hours')">
+          <el-input v-model="postForm.business_hours" :rows="3" type="textarea" class="article-textarea" autosize placeholder="Please enter the content" />
+        </el-form-item>
+
         <el-form-item style="margin-bottom: 40px;" label-width="72px" :label="$t('messages.stores.input.phone')">
           <el-input v-model="postForm.phone" :rows="3" type="textarea" class="article-textarea" autosize placeholder="Please enter the content" />
         </el-form-item>
@@ -99,6 +103,7 @@ const defaultForm = {
   lat: '',
   lng: '',
   phone: '',
+  business_hours: '',
   address: '',
   introduce: '',
   business_scope: ''

@@ -47,7 +47,7 @@
 
     <el-dialog :title="$t('messages.users.dialog.title')" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :model="dialogForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item :label="$t('messages.users.dialog.status')" prop="resource">
+        <el-form-item :label="$t('messages.store_incomes.column.month')" prop="resource">
           <el-date-picker
             v-model="dialogForm.month"
             type="month"
@@ -55,8 +55,8 @@
             placeholder="选择月">
           </el-date-picker>
         </el-form-item>
-        <el-form-item :label="$t('messages.users.dialog.content')">
-          <el-input-number v-model="dialogForm.money" :precision="2" :step="0.1" :max="10"></el-input-number>
+        <el-form-item :label="$t('messages.store_incomes.column.money')">
+          <el-input-number v-model="dialogForm.money" :precision="2" :step="1"></el-input-number>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

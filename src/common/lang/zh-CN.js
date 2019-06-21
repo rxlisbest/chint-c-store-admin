@@ -72,6 +72,7 @@ export const messages = {
       name: '名称',
       module_id: '分类',
       cover_file_id: '封面',
+      business_hours: '营业时间',
       location_file_id: '底图',
       area_code: '省市区',
       phone: '联系电话',
