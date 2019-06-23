@@ -40,7 +40,7 @@
               {{ $t('messages.button.edit') }}
             </el-button>
           </router-link>
-          <router-link v-if="parent_module_id != 0" :to="'/stores/' + parent_module_id + '/module_id/' + module_id +'/images/' + row.id">
+          <router-link :to="'/stores/' + parent_module_id + '/module_id/' + module_id +'/images/' + row.id">
             <el-button type="primary" size="mini" icon="el-icon-picture" style="width: 90px;">
               {{ $t('messages.stores.button.images') }}
             </el-button>
