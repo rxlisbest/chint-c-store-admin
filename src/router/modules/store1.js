@@ -32,6 +32,13 @@ export default {
         hidden: true
       },
       {
+        path: 'module_id/1/images/:store_id(\\d+)',
+        component: () => import('@/views/store-images/index'),
+        name: '品牌形象',
+        meta: { title: '品牌形象', noCache: true, activeMenu: '/stores/0/module_id/1', roles: [1] },
+        hidden: true
+      },
+      {
         path: 'module_id/4',
         name: '一级经销商',
         component: () => import('@/views/stores/index'),
