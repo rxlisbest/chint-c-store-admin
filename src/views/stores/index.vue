@@ -69,6 +69,10 @@
               {{ $t('messages.stores.button.statistic_now') }}
             </el-button>
           </router-link>
+          <el-button size="mini" type="danger" @click="deleteStore(row)" style="width: 70px;">
+            <i class="el-icon-close" />
+            {{ $t('messages.button.delete') }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -78,7 +82,7 @@
 </template>
 
 <script>
-import { indexStore } from '@/api/store'
+import { indexStore, deleteStore } from '@/api/store'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -166,6 +170,17 @@ export default {
       this.auditForm.status = Number(row.audit_status) || 2
       this.auditForm.content = ''
       this.auditFormVisible = true
+    },
+    deleteStore(image) {
+      this.$confirm(this.$t('messages.confirm.message'), this.$t('messages.confirm.title'), {
+        confirmButtonText: this.$t('messages.confirm.confirmButtonText'),
+        cancelButtonText: this.$t('messages.confirm.cancelButtonText'),
+        type: 'warning'
+      }).then(() => {
+        deleteStore(image.id).then(res => {
+          this.getList()
+        })
+      })
     }
   }
 }

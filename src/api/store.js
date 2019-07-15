@@ -31,6 +31,13 @@ export function updateStore(id, data) {
   })
 }
 
+export function deleteStore(id) {
+  return request({
+    url: `/index/stores/delete/id/${id}`,
+    method: 'delete'
+  })
+}
+
 export function statisticCreate(query) {
   return request({
     url: '/index/stores/statisticCreate',
