@@ -5,7 +5,7 @@ export const messages = {
   nav: {
     profile: '个人中心',
     dashboard: '工作台',
-    logout: '退出登录',
+    logout: '退出登录'
   },
   success: '操作成功',
   button: {
@@ -22,13 +22,13 @@ export const messages = {
     message: '确定执行此操作？',
     title: '提醒',
     confirmButtonText: '确定',
-    cancelButtonText: '取消',
+    cancelButtonText: '取消'
   },
   login: {
     title: '测试系统',
     input: {
       phone: '手机号码',
-      password: '密码',
+      password: '密码'
     },
     button: {
       submit: '登录'
@@ -37,7 +37,7 @@ export const messages = {
   users: {
     title: '测试系统',
     input: {
-      search: '用户名',
+      search: '用户名'
     },
     button: {
       search: '搜索',
@@ -47,7 +47,7 @@ export const messages = {
     },
     select: {
       role_id: '权限',
-      audit_status: '审核状态',
+      audit_status: '审核状态'
     },
     column: {
       name: '用户名',
@@ -57,7 +57,7 @@ export const messages = {
       create_time: '注册时间',
       role_id: '权限',
       audit_status: '审核状态',
-      status: '用户状态',
+      status: '用户状态'
     },
     dialog: {
       title: '审核',
@@ -78,6 +78,8 @@ export const messages = {
       phone: '联系电话',
       address: '地址',
       lat_lng: '坐标',
+      range_edit: '开始编辑范围',
+      range_save: '保存编辑范围',
       introduce: '简介',
       business_scope: '经营范围'
     },
@@ -90,8 +92,8 @@ export const messages = {
     button: {
       submit: '保存',
       images: '品牌形象',
-      incomes : '运营状况',
-      children : '下级',
+      incomes: '运营状况',
+      children: '下级',
       statistic_create: '新增统计',
       statistic_now: '现有统计'
     }
