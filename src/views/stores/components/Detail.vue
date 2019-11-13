@@ -24,7 +24,7 @@
         </el-form-item>
 
         <el-form-item
-          v-if="parent_id > 0 || isEdit && postForm.parent_id > 0"
+          v-if="parent_id > 0 || isEdit && postForm.parent_id > 0 || display_module"
           prop="cover_file_id"
           label-width="72px"
           :label="$t('messages.stores.input.module_id')"
@@ -36,7 +36,21 @@
               :key="item.id"
               :label="item.name"
               :value="item.id"
+              v-if="item.is_group == 0"
             />
+            <el-option-group
+              v-for="item in module_options"
+              :key="item.id"
+              :label="item.name"
+              v-if="item.is_group == 1"
+            >
+              <el-option
+                v-for="child in item.children"
+                :key="child.id"
+                :label="child.name"
+                :value="child.id"
+              ></el-option>
+            </el-option-group>
           </el-select>
         </el-form-item>
 
@@ -120,7 +134,7 @@
           :label="$t('messages.stores.input.lat_lng')"
         >
           <div id="amap-demo1" class="amap-wrapper" />
-          <div class="range-edit">
+          <div class="range-edit" v-if="!(parent_id > 0 || isEdit && postForm.parent_id > 0 || display_module)">
             <div
               class="range-edit-button"
               style="margin-bottom: 5px"
@@ -168,41 +182,41 @@
 </template>
 
 <script>
-import Upload from '@/components/Upload/SingleImage4'
-import MDinput from '@/components/MDinput'
-import Sticky from '@/components/Sticky' // 粘性header组件
+import Upload from "@/components/Upload/SingleImage4";
+import MDinput from "@/components/MDinput";
+import Sticky from "@/components/Sticky"; // 粘性header组件
 // import { validURL } from '@/utils/validate'
-import { saveStore, updateStore, readStore } from '@/api/store'
-import { searchUser } from '@/api/remote-search'
-import Warning from './Warning'
-import { lazyAMapApiLoaderInstance } from 'vue-amap'
-import { Message } from 'element-ui'
+import { saveStore, updateStore, readStore } from "@/api/store";
+import { searchUser } from "@/api/remote-search";
+import Warning from "./Warning";
+import { lazyAMapApiLoaderInstance } from "vue-amap";
+import { Message } from "element-ui";
 
-import { indexArea } from '@/api/area'
-import { indexModule } from '@/api/module'
-import { Decimal } from 'decimal.js'
+import { indexArea } from "@/api/area";
+import { indexModule } from "@/api/module";
+import { Decimal } from "decimal.js";
 
 const defaultForm = {
-  name: '',
+  name: "",
   module_id: undefined,
   parent_id: 0,
   cover_file_id: undefined,
   // location_file_id: undefined,
   area_code: [],
-  location: '',
-  lat: '',
-  lng: '',
-  phone: '',
-  business_hours: '',
-  address: '',
-  introduce: '',
-  business_scope: '',
+  location: "",
+  lat: "",
+  lng: "",
+  phone: "",
+  business_hours: "",
+  address: "",
+  introduce: "",
+  business_scope: "",
   range: []
-}
+};
 
 // const id = 0
 export default {
-  name: 'Detail',
+  name: "Detail",
   components: { MDinput, Upload, Sticky },
   props: {
     isEdit: {
@@ -213,6 +227,7 @@ export default {
   data() {
     return {
       module_id: 0,
+      parent_module_id: 0,
       parent_id: 0,
       map: undefined,
       polyEditor: undefined,
@@ -223,72 +238,83 @@ export default {
       userListOptions: [],
       tempRoute: {},
       area_props: {
-        value: 'code',
-        label: 'name',
-        children: 'children'
+        value: "code",
+        label: "name",
+        children: "children"
       },
       area_options: [],
-      module_options: []
-    }
+      module_options: [],
+      display_module: false
+    };
   },
   computed: {},
   watch: {},
   created() {
-    this.center = [121.59996, 31.197646]
+    this.center = [121.59996, 31.197646];
     if (this.isEdit) {
-      const id = this.$route.params && this.$route.params.id
-      this.fetchData(id)
+      const id = this.$route.params && this.$route.params.id;
+      this.fetchData(id);
     } else {
-      this.postForm = Object.assign({}, defaultForm)
+      this.postForm = Object.assign({}, defaultForm);
     }
 
-    this.module_id = this.$route.meta.module_id
-    if (this.$route.query && this.$route.query.parent_id) {
+    this.module_id = this.$route.meta.module_id;
+    console.log(this.$route.meta.parent_module_id)
+    if (this.$route.meta.parent_module_id == 21) {
+      this.display_module = true
+      this.indexModule(this.$route.meta.parent_module_id);
+    }
+    if (
+      this.$route.query &&
+      this.$route.query.parent_id &&
+      this.$route.query.parent_module_id
+    ) {
       this.parent_id = this.postForm.parent_id =
-        this.$route.query && this.$route.query.parent_id
-      this.indexModule(this.module_id)
+        this.$route.query && this.$route.query.parent_id;
+      this.parent_module_id = this.$route.query.parent_module_id;
+      this.indexModule(this.parent_module_id);
     } else {
-      this.postForm.module_id = this.module_id
+      this.postForm.module_id = this.module_id;
     }
 
     // Why need to make a copy of this.$route here?
     // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
     // https://github.com/PanJiaChen/vue-element-admin/issues/1221
-    this.tempRoute = Object.assign({}, this.$route)
+    this.tempRoute = Object.assign({}, this.$route);
   },
   mounted() {
-    const _this = this
+    const _this = this;
     setTimeout(function() {
       lazyAMapApiLoaderInstance.load().then(() => {
         if (_this.isEdit) {
-          this.map = new AMap.Map('amap-demo1', {
+          this.map = new AMap.Map("amap-demo1", {
             center: [_this.postForm.lng, _this.postForm.lat],
             zoom: 16
-          })
+          });
         } else {
-          this.map = new AMap.Map('amap-demo1', {
+          this.map = new AMap.Map("amap-demo1", {
             resizeEnable: true,
             zoom: 16
-          })
-          AMap.plugin('AMap.Geolocation', function() {
+          });
+          AMap.plugin("AMap.Geolocation", function() {
             var geolocation = new AMap.Geolocation({
               enableHighAccuracy: true, // 是否使用高精度定位，默认:true
               timeout: 10000, // 超过10秒后停止定位，默认：5s
-              buttonPosition: 'RB', // 定位按钮的停靠位置
+              buttonPosition: "RB", // 定位按钮的停靠位置
               buttonOffset: new AMap.Pixel(10, 20), // 定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
               zoomToAccuracy: true // 定位成功后是否自动调整地图视野到定位点
-            })
+            });
             setTimeout(() => {
-              map.addControl(geolocation)
-            }, 0)
+              map.addControl(geolocation);
+            }, 0);
             geolocation.getCurrentPosition(function(status, result) {
-              if (status == 'complete') {
-                onComplete(result)
+              if (status == "complete") {
+                onComplete(result);
               } else {
-                onError(result)
+                onError(result);
               }
-            })
-          })
+            });
+          });
         }
         // this.map = new AMap.Map('amap-demo1', {
         //   center: [121.59996, 31.197646],
@@ -298,117 +324,117 @@ export default {
         function onComplete(data) {}
         // 解析定位错误信息
         function onError(data) {
-          Message(data.message)
+          Message(data.message);
         }
 
-        const map = (_this.map = this.map)
+        const map = (_this.map = this.map);
 
         if (_this.isEdit) {
           var marker = new AMap.Marker({
-            icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
+            icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
             position: [_this.postForm.lng, _this.postForm.lat]
-          })
-          map.add(marker)
+          });
+          map.add(marker);
           _this.setRange(
             _this.map,
             _this.postForm.lng,
             _this.postForm.lat,
             _this.postForm.range
-          )
+          );
         }
 
-        this.map.on('click', function(e) {
+        this.map.on("click", function(e) {
           var marker = new AMap.Marker({
-            icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
+            icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
             position: [e.lnglat.getLng(), e.lnglat.getLat()]
-          })
-          map.clearMap()
-          map.add(marker)
-          const lng = e.lnglat.getLng()
-          const lat = e.lnglat.getLat()
-          _this.postForm.lng = lng
-          _this.postForm.lat = lat
+          });
+          map.clearMap();
+          map.add(marker);
+          const lng = e.lnglat.getLng();
+          const lat = e.lnglat.getLat();
+          _this.postForm.lng = lng;
+          _this.postForm.lat = lat;
 
-          _this.setRange(map, lng, lat)
-        })
-      })
-    }, 1000)
-    this.initArea()
+          _this.setRange(map, lng, lat);
+        });
+      });
+    }, 1000);
+    this.initArea();
   },
   methods: {
     indexModule(parent_id) {
       indexModule({ parent_id: parent_id })
         .then(response => {
-          this.module_options = response.data
+          this.module_options = response.data;
         })
         .catch(err => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     },
     fetchData(id) {
       readStore(id)
         .then(response => {
-          this.postForm = response.data
+          this.postForm = response.data;
           if (this.postForm.parent_id > 0) {
-            this.indexModule(1)
+            this.indexModule(1);
           }
-          this.initEditArea()
+          this.initEditArea();
         })
         .catch(err => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     },
     setTagsViewTitle() {
-      const title = 'Edit Article'
+      const title = "Edit Article";
       const route = Object.assign({}, this.tempRoute, {
         title: `${title}-${this.postForm.id}`
-      })
-      this.$store.dispatch('tagsView/updateVisitedView', route)
+      });
+      this.$store.dispatch("tagsView/updateVisitedView", route);
     },
     setPageTitle() {
-      const title = 'Edit Article'
-      document.title = `${title} - ${this.postForm.id}`
+      const title = "Edit Article";
+      document.title = `${title} - ${this.postForm.id}`;
     },
     submitForm() {
-      this.loading = true
+      this.loading = true;
       if (this.isEdit) {
         updateStore(this.postForm.id, this.postForm)
           .then(response => {
             if (response.code == 1) {
               this.$notify({
-                title: this.$t('messages.title.success'),
-                message: this.$t('messages.success'),
-                type: 'success',
+                title: this.$t("messages.title.success"),
+                message: this.$t("messages.success"),
+                type: "success",
                 duration: 2000,
                 onClose: () => {
-                  this.$router.go(-1)
+                  this.$router.go(-1);
                 }
-              })
+              });
             }
-            this.loading = false
+            this.loading = false;
           })
           .catch(() => {
-            this.loading = false
-          })
+            this.loading = false;
+          });
       } else {
         saveStore(this.postForm)
           .then(response => {
             if (response.code == 1) {
               this.$notify({
-                title: this.$t('messages.title.success'),
-                message: this.$t('messages.success'),
-                type: 'success',
+                title: this.$t("messages.title.success"),
+                message: this.$t("messages.success"),
+                type: "success",
                 duration: 2000,
                 onClose: () => {
-                  this.$router.go(-1)
+                  this.$router.go(-1);
                 }
-              })
+              });
             }
-            this.loading = false
+            this.loading = false;
           })
           .catch(() => {
-            this.loading = false
-          })
+            this.loading = false;
+          });
       }
     },
     // draftForm() {
@@ -429,177 +455,177 @@ export default {
     // },
     getRemoteUserList(query) {
       searchUser(query).then(response => {
-        if (!response.data.items) return
-        this.userListOptions = response.data.items.map(v => v.name)
-      })
+        if (!response.data.items) return;
+        this.userListOptions = response.data.items.map(v => v.name);
+      });
     },
     handleAreaChange(val) {
-      this.getAreaName(val)
+      this.getAreaName(val);
     },
     handleAreaItemChange(val) {
-      const _this = this
-      const params = {}
-      params.code = val[val.length - 1]
+      const _this = this;
+      const params = {};
+      params.code = val[val.length - 1];
       indexArea(params)
         .then(res => {
-          _this.setAreaChildren(val[val.length - 1], res.data)
+          _this.setAreaChildren(val[val.length - 1], res.data);
         })
-        .catch(err => {})
+        .catch(err => {});
     },
     initArea() {
-      const _this = this
+      const _this = this;
       indexArea()
         .then(res => {
-          const data = res.data
+          const data = res.data;
           data.forEach((v, k) => {
-            data[k].children = []
-          })
-          _this.area_options = data
+            data[k].children = [];
+          });
+          _this.area_options = data;
         })
-        .catch(err => {})
+        .catch(err => {});
     },
     initEditArea() {
-      const _this = this
+      const _this = this;
       if (_this.postForm.area_code && _this.postForm.area_code.length == 3) {
-        const params = {}
-        params.code = _this.postForm.area_code[0]
+        const params = {};
+        params.code = _this.postForm.area_code[0];
         indexArea(params)
           .then(res => {
-            _this.setAreaChildren(_this.postForm.area_code[0], res.data)
-            params.code = _this.postForm.area_code[1]
+            _this.setAreaChildren(_this.postForm.area_code[0], res.data);
+            params.code = _this.postForm.area_code[1];
             indexArea(params)
               .then(res => {
-                _this.setAreaChildren(_this.postForm.area_code[1], res.data)
+                _this.setAreaChildren(_this.postForm.area_code[1], res.data);
               })
-              .catch(err => {})
+              .catch(err => {});
           })
-          .catch(err => {})
+          .catch(err => {});
       }
     },
     setAreaChildren(code, children) {
-      const _this = this
-      const area_options = this.area_options
+      const _this = this;
+      const area_options = this.area_options;
       _this.area_options.forEach((v, k) => {
         // console.log(v)
         if (v.code == code) {
           children.forEach((vv, kk) => {
-            children[kk].children = []
-          })
-          _this.area_options[k].children = children
+            children[kk].children = [];
+          });
+          _this.area_options[k].children = children;
         } else {
           v.children.forEach((vv, kk) => {
             if (vv.code == code) {
-              _this.area_options[k].children[kk].children = children
+              _this.area_options[k].children[kk].children = children;
             }
-          })
+          });
         }
-      })
+      });
     },
     getAreaName(value) {
-      const _this = this
-      const area_options = this.area_options
-      const name = []
+      const _this = this;
+      const area_options = this.area_options;
+      const name = [];
       _this.area_options.forEach((v, k) => {
         // console.log(v)
         if (v.code == value[0]) {
-          name.push(v.name)
+          name.push(v.name);
           v.children.forEach((vv, kk) => {
             if (vv.code == value[1]) {
-              name.push(vv.name)
+              name.push(vv.name);
               vv.children.forEach((vvv, kkk) => {
                 if (vvv.code == value[2]) {
-                  name.push(vvv.name)
+                  name.push(vvv.name);
                 }
-                return true
-              })
+                return true;
+              });
             }
-            return true
-          })
+            return true;
+          });
         }
-        return true
-      })
-      return name
+        return true;
+      });
+      return name;
     },
     resetMap() {
-      const _this = this
-      let area_code = this.getAreaName(this.postForm.area_code)
-      area_code = area_code.join(' ')
-      const address = area_code + ' ' + this.postForm.address
+      const _this = this;
+      let area_code = this.getAreaName(this.postForm.area_code);
+      area_code = area_code.join(" ");
+      const address = area_code + " " + this.postForm.address;
 
       lazyAMapApiLoaderInstance.load().then(() => {
-        AMap.plugin('AMap.Geocoder', function() {
-          const geocoder = new AMap.Geocoder()
-          const marker = new AMap.Marker()
+        AMap.plugin("AMap.Geocoder", function() {
+          const geocoder = new AMap.Geocoder();
+          const marker = new AMap.Marker();
           geocoder.getLocation(address, (status, result) => {
-            if (status === 'complete' && result.geocodes.length) {
-              const lnglat = result.geocodes[0].location
+            if (status === "complete" && result.geocodes.length) {
+              const lnglat = result.geocodes[0].location;
               // this.map.add(marker)
-              marker.setPosition(lnglat)
-              _this.map.setFitView(marker)
+              marker.setPosition(lnglat);
+              _this.map.setFitView(marker);
             } else {
               // log.error('根据地址查询位置失败')
             }
-          })
-        })
-      })
+          });
+        });
+      });
     },
     setRange(map, lng, lat, range) {
-      const _this = this
-      lng = new Decimal(lng)
-      lat = new Decimal(lat)
+      const _this = this;
+      lng = new Decimal(lng);
+      lat = new Decimal(lat);
       if (!range) {
         range = [
           [lng.minus(0.0002).toFixed(6), lat.minus(0.0002).toFixed(6)],
           [lng.minus(0.0002).toFixed(6), lat.add(0.0002).toFixed(6)],
           [lng.add(0.0002).toFixed(6), lat.add(0.0002).toFixed(6)],
           [lng.add(0.0002).toFixed(6), lat.minus(0.0002).toFixed(6)]
-        ]
+        ];
       }
 
-      _this.postForm.range = range
+      _this.postForm.range = range;
       // 画范围
-      var path = Object.assign([], range)
+      var path = Object.assign([], range);
 
       var polygon = new AMap.Polygon({
         path: path,
-        strokeColor: '#FF33FF',
+        strokeColor: "#FF33FF",
         strokeWeight: 6,
         strokeOpacity: 0.2,
         fillOpacity: 0.4,
-        fillColor: '#1791fc',
+        fillColor: "#1791fc",
         zIndex: 50
-      })
+      });
 
-      map.add(polygon)
-      map.setFitView([polygon])
-      var polyEditor = new AMap.PolyEditor(map, polygon)
+      map.add(polygon);
+      map.setFitView([polygon]);
+      var polyEditor = new AMap.PolyEditor(map, polygon);
 
-      polyEditor.on('addnode', function(event) {
-        console.log('触发事件：addnode')
-      })
+      polyEditor.on("addnode", function(event) {
+        console.log("触发事件：addnode");
+      });
 
-      polyEditor.on('adjust', function(event) {
-        console.log('触发事件：adjust')
-      })
+      polyEditor.on("adjust", function(event) {
+        console.log("触发事件：adjust");
+      });
 
-      polyEditor.on('removenode', function(event) {
-        console.log('触发事件：removenode')
-      })
+      polyEditor.on("removenode", function(event) {
+        console.log("触发事件：removenode");
+      });
 
-      polyEditor.on('end', function(event) {
-        console.log('触发事件： end')
+      polyEditor.on("end", function(event) {
+        console.log("触发事件： end");
         // event.target 即为编辑后的多边形对象
-        const rangeArr = event.target.toString().split(';')
-        const range = new Array()
+        const rangeArr = event.target.toString().split(";");
+        const range = new Array();
         rangeArr.forEach((v, k) => {
-          range.push(v.split(','))
-        })
-        _this.postForm.range = range
-      })
-      this.polyEditor = polyEditor
+          range.push(v.split(","));
+        });
+        _this.postForm.range = range;
+      });
+      this.polyEditor = polyEditor;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

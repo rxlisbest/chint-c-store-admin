@@ -157,7 +157,6 @@ export const asyncRoutes = [
   },
   store1Router,
   store2Router,
-  store3Router,
   statisticRouter,
   // ...demoRouter,
   // 404 page must be placed at the end !!!

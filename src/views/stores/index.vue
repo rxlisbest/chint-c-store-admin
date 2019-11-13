@@ -51,7 +51,7 @@
               {{ $t('messages.stores.button.incomes') }}
             </el-button>
           </router-link>
-          <router-link v-if="parent_module_id == 0" :to="'/stores/' + parent_module_id + '/module_id/' + module_id +'/children/' + row.id">
+          <router-link :to="'/stores/' + parent_module_id + '/module_id/' + module_id +'/children/' + row.id">
             <el-button type="warning" size="mini" style="width: 70px;">
               <svg-icon icon-class="tree-table" />
               {{ $t('messages.stores.button.children') }}

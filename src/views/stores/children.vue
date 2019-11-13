@@ -1,9 +1,6 @@
 <template>
   <div class="app-container">
     <el-card class="box-card" shadow="never">
-      <div slot="header" class="clearfix">
-        <span>专业市场</span>
-      </div>
       <div class="text item">
         <el-row>
           <el-col :span="2">{{$t('messages.stores.input.name')}}</el-col>
@@ -32,7 +29,7 @@
       <el-button v-waves class="filter-item" icon="el-icon-search" @click="handleFilter">
         {{$t('messages.button.search')}}
       </el-button>
-      <router-link :to="'/stores/' + parent_module_id + '/module_id/' + module_id + '/create?parent_id=' + parent_id">
+      <router-link :to="'/stores/' + parent_module_id + '/module_id/' + module_id + '/create?parent_id=' + parent_id + '&parent_module_id=' + store.module_id">
         <el-button class="filter-item" type="primary" icon="el-icon-plus">
           {{ $t('messages.button.create') }}
         </el-button>
@@ -78,6 +75,16 @@
               {{ $t('messages.stores.button.incomes') }}
             </el-button>
           </router-link>
+          <router-link :to="'/stores/' + parent_module_id + '/module_id/' + row.module_id +'/children/' + row.id">
+            <el-button type="warning" size="mini" style="width: 70px;">
+              <svg-icon icon-class="tree-table" />
+              {{ $t('messages.stores.button.children') }}
+            </el-button>
+          </router-link>
+          <el-button size="mini" type="danger" @click="deleteStore(row)" style="width: 70px;">
+            <i class="el-icon-close" />
+            {{ $t('messages.button.delete') }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -87,7 +94,7 @@
 </template>
 
 <script>
-import { indexStore, readStore } from '@/api/store'
+import { indexStore, readStore, deleteStore } from '@/api/store'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -166,6 +173,17 @@ export default {
         })
       }).catch(() => {
 
+      })
+    },
+    deleteStore(image) {
+      this.$confirm(this.$t('messages.confirm.message'), this.$t('messages.confirm.title'), {
+        confirmButtonText: this.$t('messages.confirm.confirmButtonText'),
+        cancelButtonText: this.$t('messages.confirm.cancelButtonText'),
+        type: 'warning'
+      }).then(() => {
+        deleteStore(image.id).then(res => {
+          this.getList()
+        })
       })
     }
   }
