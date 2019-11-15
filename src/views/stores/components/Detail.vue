@@ -134,7 +134,10 @@
           :label="$t('messages.stores.input.lat_lng')"
         >
           <div id="amap-demo1" class="amap-wrapper" />
-          <div class="range-edit" v-if="!(parent_id > 0 || isEdit && postForm.parent_id > 0 || display_module)">
+          <div
+            class="range-edit"
+            v-if="!(parent_id > 0 || isEdit && postForm.parent_id > 0 || display_module)"
+          >
             <div
               class="range-edit-button"
               style="margin-bottom: 5px"
@@ -259,11 +262,7 @@ export default {
     }
 
     this.module_id = this.$route.meta.module_id;
-    console.log(this.$route.meta.parent_module_id)
-    if (this.$route.meta.parent_module_id == 21) {
-      this.display_module = true
-      this.indexModule(this.$route.meta.parent_module_id);
-    }
+    console.log(this.$route.meta.parent_module_id);
     if (
       this.$route.query &&
       this.$route.query.parent_id &&
@@ -275,6 +274,19 @@ export default {
       this.indexModule(this.parent_module_id);
     } else {
       this.postForm.module_id = this.module_id;
+    }
+
+    if (this.$route.meta.parent_module_id == 21) {
+      if (
+        isEdit &&
+        (this.postForm.module_id == 22 || this.postForm.module_id == 31)
+      ) {
+      } else if (!isEdit && !this.$route.query.parent_id && this.$route.meta.parent_module_id == 21) {
+        this.postForm.module_id = this.$route.meta.module_id;
+      } else {
+        this.display_module = true;
+        this.indexModule(this.$route.meta.parent_module_id);
+      }
     }
 
     // Why need to make a copy of this.$route here?
