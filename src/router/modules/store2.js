@@ -64,7 +64,7 @@ export default {
         path: 'module_id/31/edit/:id(\\d+)',
         component: () => import('@/views/stores/edit'),
         name: '编辑二级经销商',
-        meta: { title: '编辑二级经销商', noCache: true, activeMenu: '/stores/21/module_id/31', roles: [2, 31] },
+        meta: { title: '编辑二级经销商', noCache: true, activeMenu: '/stores/21/module_id/31', roles: [21, 31] },
         hidden: true
       },
       {
@@ -78,7 +78,7 @@ export default {
         path: 'module_id/31/images/:store_id(\\d+)',
         component: () => import('@/views/store-images/index'),
         name: '品牌形象',
-        meta: { title: '品牌形象', noCache: true, activeMenu: '/stores/21/module_id/31', roles: [2, 31] },
+        meta: { title: '品牌形象', noCache: true, activeMenu: '/stores/21/module_id/31', roles: [21, 31] },
         hidden: true
       },
       {
