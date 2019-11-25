@@ -87,6 +87,13 @@ export default {
         name: '运营状况',
         meta: { title: '运营状况', noCache: true, activeMenu: '/stores/21/module_id/31', roles: [21, 31] },
         hidden: true
-      }
+      },
+      {
+        path: 'module_id/32/incomes/:store_id(\\d+)',
+        component: () => import('@/views/store-incomes/index'),
+        name: '运营状况',
+        meta: { title: '运营状况', noCache: true, activeMenu: '/stores/21/module_id/31', roles: [21, 31] },
+        hidden: true
+      },
     ]
   }
