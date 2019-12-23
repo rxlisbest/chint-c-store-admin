@@ -10,6 +10,7 @@ export default {
     {
       path: 'module_id/2',
       name: '一级经销商',
+      alwaysShow: true,
       redirect: '/stores/1/module_id/2/index/2',
       meta: { title: '一级经销商', noCache: true, roles: [2] },
       redirectAndCollapse: true,
@@ -17,6 +18,8 @@ export default {
         {
           path: '3',
           name: '门店',
+          alwaysShow: true,
+          redirect: 'noRedirect',
           component: () => import('@/views/stores/index'),
           meta: { title: '门店', noCache: true, roles: [3] },
           children: [
@@ -55,6 +58,8 @@ export default {
         {
           path: '8',
           name: '媒体广告',
+          alwaysShow: true,
+          redirect: 'noRedirect',
           component: () => import('@/views/stores/index'),
           meta: { title: '媒体广告', noCache: true, roles: [8] },
           children: [
@@ -77,6 +82,7 @@ export default {
     {
       path: 'module_id/11',
       name: '二级分销商',
+      alwaysShow: true,
       redirect: '/stores/1/module_id/11/index/11',
       meta: { title: '二级分销商', noCache: true, roles: [11] },
       redirectAndCollapse: true,

@@ -18,18 +18,16 @@
 
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
-        <router-link v-if='item.redirectAndCollapse != undefined && item.redirectAndCollapse == true && item.redirect != undefined' :to="item.redirect" :class="{'parentmenu-hover': parentMenuHover(item.redirect)}" @click.native="showRouter">
-          <item
-            v-if="item.meta"
-            :icon="item.meta && item.meta.icon"
-            :title="item.meta.title"
-          />
+        <router-link
+          v-if="item.redirectAndCollapse != undefined && item.redirectAndCollapse == true && item.redirect != undefined"
+          :to="item.redirect"
+          :class="{'parentmenu-hover': parentMenuHover(item.redirect)}"
+          class="parentmenu"
+          @click.native="showRouter"
+        >
+          <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
         </router-link>
-        <item
-            v-else
-            :icon="item.meta && item.meta.icon"
-            :title="item.meta.title"
-          />
+        <item v-else :icon="item.meta && item.meta.icon" :title="item.meta.title" />
         <!-- <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title + 'title'" /> -->
       </template>
       <sidebar-item
@@ -111,11 +109,11 @@ export default {
       return path.resolve(this.basePath, routePath);
     },
     parentMenuHover(path) {
-      return this.$route.path == path
+      return this.$route.path == path;
     },
-    showRouter () {
+    showRouter() {
       // 调用reload方法，刷新整个页面
-      this.$router.go(0)
+      this.$router.go(0);
     }
   }
 };
@@ -123,5 +121,9 @@ export default {
 <style scoped>
 .parentmenu-hover {
   color: rgb(64, 158, 255);
+  width: 100px;
+}
+.parentmenu {
+  width: 70% !important;
 }
 </style>

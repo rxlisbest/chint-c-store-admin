@@ -3,11 +3,13 @@ import Layout from '@/layout'
 export default {
   path: '/stores/21',
   component: Layout,
+  redirect: 'noRedirect',
   meta: { title: '正泰门店', icon: 'list', noCache: true, roles: [21] },
   children: [
     {
       path: 'module_id/22',
       name: '一级经销商',
+      alwaysShow: true,
       redirect: '/stores/21/module_id/22/index/22',
       meta: { title: '一级经销商', noCache: true, roles: [22] },
       redirectAndCollapse: true,
@@ -15,6 +17,8 @@ export default {
         {
           path: '23',
           name: '门店',
+          alwaysShow: true,
+          redirect: 'noRedirect',
           component: () => import('@/views/stores/index'),
           meta: { title: '门店', noCache: true, roles: [23] },
           children: [
@@ -53,6 +57,8 @@ export default {
         {
           path: '28',
           name: '媒体广告',
+          alwaysShow: true,
+          redirect: 'noRedirect',
           component: () => import('@/views/stores/index'),
           meta: { title: '媒体广告', noCache: true, roles: [28] },
           children: [
@@ -75,6 +81,7 @@ export default {
     {
       path: 'module_id/31',
       name: '二级分销商',
+      alwaysShow: true,
       redirect: '/stores/21/module_id/31/index/31',
       meta: { title: '二级分销商', noCache: true, roles: [31] },
       redirectAndCollapse: true,

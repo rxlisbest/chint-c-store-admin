@@ -54,7 +54,6 @@ export default {
       return !this.sidebar.opened;
     },
     defaultOpeneds() {
-      console.log(this.isChildHas(this.permission_routes));
       return this.isChildHas(this.permission_routes);
     }
   },
@@ -72,7 +71,7 @@ export default {
           v.redirect == this.$route.path
         ) {
           return true;
-        } else {
+        } else { 
           if (v.children != undefined && v.children.length > 0) {
             let r = this.isChildHas(v.children, parentPath + v.path);
             if (r === true) {
