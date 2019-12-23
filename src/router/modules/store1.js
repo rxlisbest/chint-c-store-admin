@@ -3,6 +3,8 @@ import Layout from '@/layout'
 export default {
   path: '/stores/0',
   component: Layout,
+  name: '专业市场',
+  meta: { title: '专业市场', icon: 'list', noCache: true, parent_module_id: 0, module_id: 1, roles: [1] },
   children: [
     {
       path: 'module_id/1',

@@ -10,6 +10,7 @@ import Layout from '@/layout'
 import store1Router from './modules/store1'
 import store2Router from './modules/store2'
 import store3Router from './modules/store3'
+import store4Router from './modules/store4'
 import statisticRouter from './modules/statistic'
 import demoRouter from './modules/demo'
 
@@ -155,9 +156,10 @@ export const asyncRoutes = [
       }
     ]
   },
-  store1Router,
+  // store1Router,
   store2Router,
-  statisticRouter,
+  store4Router,
+  // statisticRouter,
   // ...demoRouter,
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
