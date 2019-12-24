@@ -109,7 +109,7 @@ export default {
       return path.resolve(this.basePath, routePath);
     },
     parentMenuHover(path) {
-      return this.$route.path == path;
+      return this.$route.path.indexOf(path.substring(0, path.lastIndexOf('/'))) === 0;
     },
     showRouter() {
       // 调用reload方法，刷新整个页面

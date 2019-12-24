@@ -68,7 +68,7 @@ export default {
         if (
           v.redirectAndCollapse != undefined &&
           v.redirectAndCollapse === true &&
-          v.redirect == this.$route.path
+          this.$route.path.indexOf(v.redirect.substring(0, v.redirect.lastIndexOf('/'))) === 0
         ) {
           return true;
         } else { 

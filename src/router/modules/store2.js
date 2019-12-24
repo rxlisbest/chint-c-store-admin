@@ -1,9 +1,206 @@
 import Layout from '@/layout'
 
+const rootPath = '/'
+
+const menu = [
+  {
+    id: 1,
+    name: '专业市场',
+    children: [
+      {
+        id: 2,
+        name: '一级经销商',
+        children: [
+          {
+            id: 3,
+            name: '门店',
+            children: [
+              { id: 4, name: 'SI专卖店' },
+              { id: 5, name: '电器工业超市旗舰店' },
+              { id: 6, name: '电器工业超市标准店' },
+              { id: 7, name: '电器工业超市单体店' },
+              { id: 15, name: '品牌体验馆' },
+            ]
+          },
+          {
+            id: 8,
+            name: '媒体广告',
+            children: [
+              { id: 9, name: '户外广告' },
+              { id: 10, name: '正泰岗亭' },
+            ]
+          }
+        ]
+      },
+      {
+        id: 11,
+        name: '二级分销商',
+        children: [
+          { id: 12, name: '二级形象店' },
+          { id: 13, name: '二级门招' },
+          { id: 14, name: '二级货架' },
+        ]
+      }
+    ]
+  }
+]
+
+// 新建
+const storeCreate = (module_id, activeMenu, component) => {
+  return {
+    path: 'create',
+    name: '新建',
+    component: () => import(`@/views/stores/${component}.vue`),
+    meta: { title: '新建', noCache: true, module_id: module_id, activeMenu: activeMenu, roles: [module_id] },
+    hidden: true,
+  }
+}
+
+// 编辑
+const storeEdit = (module_id, activeMenu) => {
+  return {
+    path: 'images/:store_id(\\d+)',
+    name: '编辑',
+    component: () => import('@/views/stores/index'),
+    meta: { title: '编辑', noCache: true, module_id: module_id, activeMenu: activeMenu, roles: [module_id] },
+    hidden: true,
+  }
+}
+
+// 品牌形象
+const storeImages = (module_id, activeMenu) => {
+  return {
+    path: 'images/:store_id(\\d+)',
+    name: '品牌形象',
+    component: () => import('@/views/store-images/index'),
+    meta: { title: '品牌形象', noCache: true, module_id: module_id, activeMenu: activeMenu, roles: [module_id] },
+    hidden: true,
+  }
+}
+
+// 运营状况
+const storeIncomes = (module_id, activeMenu) => {
+  return {
+    path: 'incomes/:store_id(\\d+)',
+    name: '运营状况',
+    component: () => import('@/views/store-incomes/index'),
+    meta: { title: '运营状况', noCache: true, module_id: module_id, activeMenu: activeMenu, roles: [module_id] },
+    hidden: true,
+  }
+}
+
+// 竞争对手
+const storeCompetitors = (module_id, activeMenu) => {
+  return {
+    path: 'competitors/:store_id(\\d+)',
+    name: '竞争对手',
+    component: () => import('@/views/store-competitors/index'),
+    meta: { title: '竞争对手', noCache: true, module_id: module_id, activeMenu: activeMenu, roles: [module_id] },
+    hidden: true,
+  }
+}
+
+// 门店下级导航的展示
+const shop = [
+  [
+    { id: 4, name: 'SI专卖店', module_id: [2, 3] },
+    { id: 5, name: '电器工业超市旗舰店', module_id: [2, 3] },
+    { id: 6, name: '电器工业超市标准店', module_id: [2, 3] },
+    { id: 7, name: '电器工业超市单体店', module_id: [2, 3] },
+    { id: 15, name: '品牌体验馆', module_id: [2, 3] },
+  ],
+  [
+    { id: 9, name: '户外广告', module_id: [2, 8] },
+    { id: 10, name: '正泰岗亭', module_id: [2, 8] },
+  ],
+  [
+    { id: 12, name: '二级形象店', module_id: [11] },
+    { id: 13, name: '二级门招', module_id: [11] },
+    { id: 14, name: '二级货架', module_id: [11] },
+  ],
+]
+
+let shopArray = []
+for (let v of shop) {
+  let content = []
+  for (let item of v) {
+    let activeMenu = rootPath + 'module_id/' + item.module_id.join('/') + '/index/' + item.id + '/list'
+    let o = {
+      path: 'index/' + item.id,
+      name: item.name,
+      component: () => import('@/views/stores/empty'),
+      children: [
+        {
+          path: 'list',
+          name: item.name,
+          component: () => import('@/views/stores/marketShop'),
+          meta: { title: item.name, noCache: true, module_id: item.id, roles: [item.id] },
+        },
+        storeImages(item.id, activeMenu),
+      ]
+    }
+    content.push(o)
+  }
+  shopArray.push(content)
+}
+
+// 一级经销商、二级分销商导航展示
+const agent = [
+  { id: 2, name: '一级经销商', module_id: [2] },
+  { id: 11, name: '二级分销商', module_id: [11] }
+]
+let agentArray = []
+for (let item of agent) {
+  let activeMenu = rootPath + 'module_id/' + item.module_id.join('/') + '/index/' + item.id + '/list'
+  let o = {
+    path: 'module_id/' + item.id + '/index/' + item.id,
+    name: item.name,
+    component: () => import('@/views/stores/empty'),
+    hidden: true,
+    children: [
+      {
+        path: 'list',
+        name: item.name,
+        component: () => import('@/views/stores/marketAgent'),
+        meta: { title: item.name, noCache: true, module_id: item.id, roles: [item.id] },
+      },
+      storeImages(item.id, activeMenu),
+    ]
+  }
+  agentArray.push(o)
+}
+
+// 专业市场导航展示
+const market = [
+  { id: 1, name: '专业市场', module_id: [1] },
+]
+let marketArray = []
+for (let item of market) {
+  let activeMenu = rootPath + 'module_id/' + item.module_id.join('/') + '/index/' + item.id + '/list'
+  console.log(activeMenu)
+  let o = {
+    path: 'module_id/' + item.id + '/index/' + item.id,
+    name: item.name,
+    component: () => import('@/views/stores/empty'),
+    hidden: true,
+    children: [
+      {
+        path: 'list',
+        name: item.name,
+        component: () => import('@/views/stores/marketIndex'),
+        meta: { title: item.name, noCache: true, module_id: item.id, roles: [item.id] },
+      },
+      storeCreate(item.id, activeMenu, 'editMarketIndex'),
+      storeImages(item.id, activeMenu),
+    ]
+  }
+  marketArray.push(o)
+}
+
 export default {
-  path: '/stores/1',
+  path: rootPath,
   component: Layout,
-  redirect: '/stores/1/module_id/1/index/1',
+  redirect: rootPath + 'module_id/1/index/1/list',
   redirectAndCollapse: true,
   meta: { title: '专业市场', icon: 'list', noCache: true, roles: [1] },
   children: [
@@ -11,71 +208,28 @@ export default {
       path: 'module_id/2',
       name: '一级经销商',
       alwaysShow: true,
-      redirect: '/stores/1/module_id/2/index/2',
+      redirect: rootPath + 'module_id/2/index/2/list',
       meta: { title: '一级经销商', noCache: true, roles: [2] },
       redirectAndCollapse: true,
+      component: () => import('@/views/stores/empty'),
       children: [
         {
           path: '3',
           name: '门店',
           alwaysShow: true,
           redirect: 'noRedirect',
-          component: () => import('@/views/stores/index'),
           meta: { title: '门店', noCache: true, roles: [3] },
-          children: [
-            {
-              path: 'index/4',
-              name: 'SI专卖店',
-              component: () => import('@/views/stores/index'),
-              meta: { title: 'SI专卖店', noCache: true, module_id: 4, roles: [4] }
-            },
-            {
-              path: 'index/5',
-              name: '电器工业超市旗舰店',
-              component: () => import('@/views/stores/index'),
-              meta: { title: '电器工业超市旗舰店', noCache: true, module_id: 5, roles: [5] }
-            },
-            {
-              path: 'index/6',
-              name: '电器工业超市标准店',
-              component: () => import('@/views/stores/index'),
-              meta: { title: '电器工业超市标准店', noCache: true, module_id: 6, roles: [6] }
-            },
-            {
-              path: 'index/7',
-              name: '电器工业超市单体店',
-              component: () => import('@/views/stores/index'),
-              meta: { title: '电器工业超市单体店', noCache: true, module_id: 7, roles: [7] }
-            },
-            {
-              path: 'index/15',
-              name: '品牌体验馆',
-              component: () => import('@/views/stores/index'),
-              meta: { title: '品牌体验馆', noCache: true, module_id: 15, roles: [15] }
-            }
-          ]
+          component: () => import('@/views/stores/empty'),
+          children: shopArray[0]
         },
         {
           path: '8',
           name: '媒体广告',
           alwaysShow: true,
           redirect: 'noRedirect',
-          component: () => import('@/views/stores/index'),
           meta: { title: '媒体广告', noCache: true, roles: [8] },
-          children: [
-            {
-              path: 'index/9',
-              name: '户外广告',
-              component: () => import('@/views/stores/index'),
-              meta: { title: '户外广告', noCache: true, parent_module_id: 21, module_id: 31, roles: [9] }
-            },
-            {
-              path: 'index/10',
-              name: '正泰岗亭',
-              component: () => import('@/views/stores/index'),
-              meta: { title: '正泰岗亭', noCache: true, parent_module_id: 21, module_id: 31, roles: [10] }
-            }
-          ]
+          component: () => import('@/views/stores/empty'),
+          children: shopArray[1]
         }
       ]
     },
@@ -83,50 +237,13 @@ export default {
       path: 'module_id/11',
       name: '二级分销商',
       alwaysShow: true,
-      redirect: '/stores/1/module_id/11/index/11',
+      redirect: rootPath + 'module_id/11/index/11/list',
       meta: { title: '二级分销商', noCache: true, roles: [11] },
       redirectAndCollapse: true,
-      children: [
-        {
-          path: 'index/12',
-          name: '二级形象店',
-          component: () => import('@/views/stores/index'),
-          meta: { title: '二级形象店', noCache: true, module_id: 12, roles: [12] },
-        },
-        {
-          path: 'index/13',
-          name: '二级门招',
-          component: () => import('@/views/stores/index'),
-          meta: { title: '二级门招', noCache: true, module_id: 13, roles: [13] },
-        },
-        {
-          path: 'index/14',
-          name: '二级货架',
-          component: () => import('@/views/stores/index'),
-          meta: { title: '二级货架', noCache: true, module_id: 14, roles: [14] },
-        }
-      ]
+      component: () => import('@/views/stores/empty'),
+      children: shopArray[2]
     },
-    {
-      path: 'module_id/1/index/1',
-      name: '专业市场',
-      component: () => import('@/views/stores/index'),
-      meta: { title: '专业市场', noCache: true, module_id: 1, roles: [1] },
-      hidden: true,
-    },
-    {
-      path: 'module_id/2/index/2',
-      name: '一级经销商',
-      component: () => import('@/views/stores/index'),
-      meta: { title: '一级经销商', noCache: true, module_id: 2, roles: [2] },
-      hidden: true,
-    },
-    {
-      path: 'module_id/11/index/11',
-      name: '二级分销商',
-      component: () => import('@/views/stores/index'),
-      meta: { title: '二级分销商', noCache: true, module_id: 11, roles: [11] },
-      hidden: true,
-    },
+    ...marketArray,
+    ...agentArray,
   ]
 }

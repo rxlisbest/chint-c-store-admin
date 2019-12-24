@@ -2,6 +2,9 @@ export const messages = {
   title: {
     success: '成功'
   },
+  column: {
+    actions: '操作',
+  },
   nav: {
     profile: '个人中心',
     dashboard: '工作台',
@@ -66,6 +69,14 @@ export const messages = {
       status_on: '通过',
       status_off: '不通过'
     }
+  },
+  store_market: {
+    column: {
+      name: '名称',
+      establishment_time: '建店时间',
+      sales_area: '销售范围',
+      create_time: '创建时间'
+    },
   },
   stores: {
     input: {
