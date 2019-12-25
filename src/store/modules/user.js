@@ -7,7 +7,8 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  user_id: 0,
 }
 
 const mutations = {
@@ -25,7 +26,13 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
-  }
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
+  },
+  SET_USER_ID: (state, user_id) => {
+    state.user_id = user_id
+  },
 }
 
 const actions = {
@@ -56,7 +63,7 @@ const actions = {
 
         console.log(data)
 
-        const { roles, name, headimg_url } = data
+        const { roles, name, headimg_url, id } = data
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
@@ -67,6 +74,7 @@ const actions = {
         commit('SET_NAME', name)
         commit('SET_AVATAR', headimg_url)
         commit('SET_INTRODUCTION', '')
+        commit('SET_USER_ID', id)
         resolve(data)
       }).catch(error => {
         reject(error)

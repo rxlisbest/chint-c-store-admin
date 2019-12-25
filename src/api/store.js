@@ -77,3 +77,43 @@ export function storeUpdateIntroduce(id, data) {
     data
   })
 }
+
+export function storeSaveAgent(data) {
+  return request({
+    url: '/index/stores/saveAgent',
+    method: 'post',
+    data
+  })
+}
+
+export function storeUpdateAgent(id, data) {
+  return request({
+    url: `/index/stores/updateAgent/id/${id}`,
+    method: 'put',
+    data
+  })
+}
+
+export function storeAll(listQuery) {
+  return request({
+    url: '/index/stores/all',
+    method: 'get',
+    params: listQuery
+  })
+}
+
+export function storeSaveShop(data) {
+  return request({
+    url: '/index/stores/saveShop',
+    method: 'post',
+    data
+  })
+}
+
+export function storeUpdateShop(id, data) {
+  return request({
+    url: `/index/stores/updateShop/id/${id}`,
+    method: 'put',
+    data
+  })
+}

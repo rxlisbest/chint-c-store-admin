@@ -93,7 +93,11 @@ for (let v of shop) {
           component: () => import('@/views/stores/marketShop'),
           meta: { title: item.name, noCache: true, module_id: item.id, roles: [item.id] },
         },
+        storeEdit(item.id, activeMenu, 'editMarketShop'),
+        storeCreate(item.id, activeMenu, 'createMarketShop'),
         storeImages(item.id, activeMenu),
+        storeIncomes(item.id, activeMenu),
+        storeCompetitors(item.id, activeMenu),
       ]
     }
     content.push(o)
@@ -121,7 +125,8 @@ for (let item of agent) {
         component: () => import('@/views/stores/marketAgent'),
         meta: { title: item.name, noCache: true, module_id: item.id, roles: [item.id] },
       },
-      storeImages(item.id, activeMenu),
+      storeEdit(item.id, activeMenu, 'editMarketAgent'),
+      storeCreate(item.id, activeMenu, 'createMarketAgent'),
     ]
   }
   agentArray.push(o)
@@ -149,8 +154,8 @@ for (let item of market) {
       },
       storeEdit(item.id, activeMenu, 'editMarketIndex'),
       storeCreate(item.id, activeMenu, 'createMarketIndex'),
-      storeImages(item.id, activeMenu),
-      storeIncomes(item.id, activeMenu),
+      // storeImages(item.id, activeMenu),
+      // storeIncomes(item.id, activeMenu),
       storeCompetitors(item.id, activeMenu),
     ]
   }

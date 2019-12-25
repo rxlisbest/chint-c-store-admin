@@ -57,7 +57,7 @@
         width="380"
         class-name="small-padding fixed-width"
       >
-        <template slot-scope="{row}">
+        <template slot-scope="{row}" v-if="user_id == row.user_id">
           <el-button
             size="mini"
             type="primary"
@@ -129,11 +129,15 @@ import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 import { MessageBox, Message } from "element-ui";
+import { mapGetters } from "vuex";
 
 export default {
   name: "stores-index",
   components: { Pagination },
   directives: { waves },
+  computed: {
+    ...mapGetters(["user_id"])
+  },
   data() {
     return {
       parent_module_id: 0,
@@ -158,6 +162,7 @@ export default {
     };
   },
   created() {
+    console.log(this.user_id, "a");
     this.parent_module_id = this.$route.meta.parent_module_id;
     if (this.$route.meta.module_id !== undefined) {
       this.module_id = this.listQuery.module_id = this.$route.meta.module_id;
