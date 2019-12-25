@@ -1,5 +1,5 @@
 <template>
-  <detail-market-index :is-edit="true" />
+  <detail-market-index :is-edit="false" />
 </template>
 
 <script>

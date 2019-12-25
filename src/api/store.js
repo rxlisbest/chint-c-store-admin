@@ -53,3 +53,19 @@ export function statisticNow(query) {
     params: query
   })
 }
+
+export function storeSaveMarket(data) {
+  return request({
+    url: '/index/stores/saveMarket',
+    method: 'post',
+    data
+  })
+}
+
+export function storeUpdateMarket(id, data) {
+  return request({
+    url: `/index/stores/updateMarket/id/${id}`,
+    method: 'put',
+    data
+  })
+}

@@ -2,49 +2,6 @@ import Layout from '@/layout'
 
 const rootPath = '/'
 
-const menu = [
-  {
-    id: 1,
-    name: '专业市场',
-    children: [
-      {
-        id: 2,
-        name: '一级经销商',
-        children: [
-          {
-            id: 3,
-            name: '门店',
-            children: [
-              { id: 4, name: 'SI专卖店' },
-              { id: 5, name: '电器工业超市旗舰店' },
-              { id: 6, name: '电器工业超市标准店' },
-              { id: 7, name: '电器工业超市单体店' },
-              { id: 15, name: '品牌体验馆' },
-            ]
-          },
-          {
-            id: 8,
-            name: '媒体广告',
-            children: [
-              { id: 9, name: '户外广告' },
-              { id: 10, name: '正泰岗亭' },
-            ]
-          }
-        ]
-      },
-      {
-        id: 11,
-        name: '二级分销商',
-        children: [
-          { id: 12, name: '二级形象店' },
-          { id: 13, name: '二级门招' },
-          { id: 14, name: '二级货架' },
-        ]
-      }
-    ]
-  }
-]
-
 // 新建
 const storeCreate = (module_id, activeMenu, component) => {
   return {
@@ -57,11 +14,11 @@ const storeCreate = (module_id, activeMenu, component) => {
 }
 
 // 编辑
-const storeEdit = (module_id, activeMenu) => {
+const storeEdit = (module_id, activeMenu, component) => {
   return {
-    path: 'images/:store_id(\\d+)',
+    path: 'edit/:store_id(\\d+)',
     name: '编辑',
-    component: () => import('@/views/stores/index'),
+    component: () => import(`@/views/stores/${component}.vue`),
     meta: { title: '编辑', noCache: true, module_id: module_id, activeMenu: activeMenu, roles: [module_id] },
     hidden: true,
   }
@@ -190,8 +147,11 @@ for (let item of market) {
         component: () => import('@/views/stores/marketIndex'),
         meta: { title: item.name, noCache: true, module_id: item.id, roles: [item.id] },
       },
-      storeCreate(item.id, activeMenu, 'editMarketIndex'),
+      storeEdit(item.id, activeMenu, 'editMarketIndex'),
+      storeCreate(item.id, activeMenu, 'createMarketIndex'),
       storeImages(item.id, activeMenu),
+      storeIncomes(item.id, activeMenu),
+      storeCompetitors(item.id, activeMenu),
     ]
   }
   marketArray.push(o)

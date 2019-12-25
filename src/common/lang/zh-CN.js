@@ -92,7 +92,16 @@ export const messages = {
       range_edit: '开始编辑范围',
       range_save: '保存编辑范围',
       introduce: '简介',
-      business_scope: '经营范围'
+      business_scope: '经营范围',
+      plan_file_id: '市场平面',
+      establishment_time: '建店时间',
+      sales_area: '销售范围',
+      competitors: '竞争对手',
+      competitors_children: {
+        name: '请输入竞争对手名称',
+        money: '请输入预估销售额',
+        introduce: '请输入竞争对手情况介绍',
+      }
     },
     column: {
       name: '名称',
@@ -106,7 +115,8 @@ export const messages = {
       incomes: '运营状况',
       children: '下级',
       statistic_create: '新增统计',
-      statistic_now: '现有统计'
+      statistic_now: '现有统计',
+      competitors: '竞争对手',
     }
   },
   store_images: {

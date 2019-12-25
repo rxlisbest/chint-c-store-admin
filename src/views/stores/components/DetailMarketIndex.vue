@@ -23,7 +23,7 @@
           >{{ $t('messages.stores.input.name') }}</MDinput>
         </el-form-item>
 
-        <el-form-item
+        <!-- <el-form-item
           v-if="parent_id > 0 || isEdit && postForm.parent_id > 0 || display_module"
           prop="cover_file_id"
           label-width="72px"
@@ -52,23 +52,23 @@
               ></el-option>
             </el-option-group>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item style="margin-bottom: 40px;" prop="title" />
-        <el-form-item
+        <!-- <el-form-item
           prop="cover_file_id"
           label-width="72px"
           :label="$t('messages.stores.input.cover_file_id')"
           style="margin-bottom: 30px;"
         >
           <Upload v-model="postForm.cover_file_id" />
-        </el-form-item>
+        </el-form-item> -->
 
         <!-- <el-form-item v-if="module_id == 1" prop="location_file_id" label-width="72px" :label="$t('messages.stores.input.location_file_id')" style="margin-bottom: 30px;">
           <Upload v-model="postForm.location_file_id" />
         </el-form-item>-->
 
-        <el-form-item
+        <!-- <el-form-item
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.business_hours')"
@@ -81,9 +81,9 @@
             autosize
             placeholder="Please enter the content"
           />
-        </el-form-item>
+        </el-form-item> -->
 
-        <el-form-item
+        <!-- <el-form-item
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.phone')"
@@ -96,7 +96,7 @@
             autosize
             placeholder="Please enter the content"
           />
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item
           style="margin-bottom: 40px;"
@@ -165,7 +165,7 @@
           />
         </el-form-item>
 
-        <el-form-item
+        <!-- <el-form-item
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.business_scope')"
@@ -178,6 +178,51 @@
             autosize
             placeholder="Please enter the content"
           />
+        </el-form-item> -->
+
+        <el-form-item
+          prop="plan_file_id"
+          label-width="72px"
+          :label="$t('messages.stores.input.plan_file_id')"
+          style="margin-bottom: 30px;"
+        >
+          <Upload v-model="postForm.plan_file_id" />
+        </el-form-item>
+
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="72px"
+          :label="$t('messages.stores.input.establishment_time')"
+        >
+          <el-date-picker
+            value-format="timestamp"
+            v-model="postForm.establishment_time"
+            type="datetime"
+            placeholder="选择日期时间"
+          ></el-date-picker>
+        </el-form-item>
+
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="72px"
+          :label="$t('messages.stores.input.sales_area')"
+        >
+          <el-input
+            v-model="postForm.sales_area"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+            placeholder="Please enter the content"
+          />
+        </el-form-item>
+
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="72px"
+          :label="$t('messages.stores.input.competitors')"
+        >
+          <Competitors v-model="postForm.competitors" />
         </el-form-item>
       </div>
     </el-form>
@@ -189,9 +234,10 @@ import Upload from "@/components/Upload/SingleImage4";
 import MDinput from "@/components/MDinput";
 import Sticky from "@/components/Sticky"; // 粘性header组件
 // import { validURL } from '@/utils/validate'
-import { saveStore, updateStore, readStore } from "@/api/store";
+import { storeSaveMarket, storeUpdateMarket, readStore } from "@/api/store";
 import { searchUser } from "@/api/remote-search";
 import Warning from "./Warning";
+import Competitors from "./Competitors";
 import { lazyAMapApiLoaderInstance } from "vue-amap";
 import { Message } from "element-ui";
 
@@ -214,13 +260,18 @@ const defaultForm = {
   address: "",
   introduce: "",
   business_scope: "",
-  range: []
+  range: [],
+  sales_area: "",
+  plan_file_id: undefined,
+  establishment_time: undefined,
+  sales_area: '',
+  competitors: [],
 };
 
 // const id = 0
 export default {
   name: "DetailMarketIndex",
-  components: { MDinput, Upload, Sticky },
+  components: { MDinput, Upload, Sticky, Competitors },
   props: {
     isEdit: {
       type: Boolean,
@@ -255,39 +306,15 @@ export default {
   created() {
     this.center = [121.59996, 31.197646];
     if (this.isEdit) {
-      const id = this.$route.params && this.$route.params.id;
+      const id = this.$route.params && this.$route.params.store_id;
       this.fetchData(id);
     } else {
       this.postForm = Object.assign({}, defaultForm);
     }
 
     this.module_id = this.$route.meta.module_id;
-    console.log(this.$route.meta.parent_module_id);
-    if (
-      this.$route.query &&
-      this.$route.query.parent_id &&
-      this.$route.query.parent_module_id
-    ) {
-      this.parent_id = this.postForm.parent_id =
-        this.$route.query && this.$route.query.parent_id;
-      this.parent_module_id = this.$route.query.parent_module_id;
-      this.indexModule(this.parent_module_id);
-    } else {
-      this.postForm.module_id = this.module_id;
-    }
 
-    if (this.$route.meta.parent_module_id == 21) {
-      if (
-        isEdit &&
-        (this.postForm.module_id == 22 || this.postForm.module_id == 31)
-      ) {
-      } else if (!isEdit && !this.$route.query.parent_id && this.$route.meta.parent_module_id == 21) {
-        this.postForm.module_id = this.$route.meta.module_id;
-      } else {
-        this.display_module = true;
-        this.indexModule(this.$route.meta.parent_module_id);
-      }
-    }
+    this.postForm.module_id = this.module_id;
 
     // Why need to make a copy of this.$route here?
     // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
@@ -387,6 +414,7 @@ export default {
       readStore(id)
         .then(response => {
           this.postForm = response.data;
+          this.postForm.establishment_time *= 1000;
           if (this.postForm.parent_id > 0) {
             this.indexModule(1);
           }
@@ -409,8 +437,10 @@ export default {
     },
     submitForm() {
       this.loading = true;
+      let postData = Object.assign({}, this.postForm);
+      postData.establishment_time /= 1000;
       if (this.isEdit) {
-        updateStore(this.postForm.id, this.postForm)
+        storeUpdateMarket(postData.id, postData)
           .then(response => {
             if (response.code == 1) {
               this.$notify({
@@ -429,7 +459,7 @@ export default {
             this.loading = false;
           });
       } else {
-        saveStore(this.postForm)
+        storeSaveMarket(postData)
           .then(response => {
             if (response.code == 1) {
               this.$notify({
