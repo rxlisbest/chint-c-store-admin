@@ -1,6 +1,6 @@
 import Layout from '@/layout'
 
-const rootPath = '/store/1/'
+const rootPath = '/store/'
 
 // 新建
 const storeCreate = (module_id, activeMenu, component) => {
