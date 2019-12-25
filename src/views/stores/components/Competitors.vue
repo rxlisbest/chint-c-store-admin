@@ -1,93 +1,56 @@
 <template>
   <div class="competitors-container">
-    <el-row v-if="value.length === 0">
-      <el-col :span="4">
-        <el-input
-          v-model="v.name"
-          :rows="3"
-          type="textarea"
-          class="article-textarea"
-          autosize
-          :placeholder="$t('messages.stores.input.competitors_children.name')"
-        />
-      </el-col>
-      <el-col :span="4" :offset="1">
-        <el-input
-          v-model="v.money"
-          :rows="3"
-          type="textarea"
-          class="article-textarea"
-          autosize
-          :placeholder="$t('messages.stores.input.competitors_children.money')"
-        />
-      </el-col>
-      <el-col :span="10" :offset="1">
-        <el-input
-          v-model="v.introduce"
-          :rows="3"
-          type="textarea"
-          class="article-textarea"
-          autosize
-          :placeholder="$t('messages.stores.input.competitors_children.introduce')"
-        />
-      </el-col>
-    </el-row>
-    <template v-else>
-      <template v-for="(v, k) in value">
-        <el-row>
-          <el-col :span="4">
-            <el-input
-              v-model="v.name"
-              :rows="3"
-              type="textarea"
-              class="article-textarea"
-              autosize
-              :placeholder="$t('messages.stores.input.competitors_children.name')"
-            />
-          </el-col>
-          <el-col :span="4" :offset="1">
-            <el-input
-              v-model="v.money"
-              :rows="3"
-              type="textarea"
-              class="article-textarea"
-              autosize
-              :placeholder="$t('messages.stores.input.competitors_children.money')"
-            />
-          </el-col>
-          <el-col :span="10" :offset="1">
-            <el-input
-              v-model="v.introduce"
-              :rows="3"
-              type="textarea"
-              class="article-textarea"
-              autosize
-              :placeholder="$t('messages.stores.input.competitors_children.introduce')"
-            />
-          </el-col>
-          <el-col :span="1" :offset="1" v-if="k > 0">
-            <el-button @click="removeItem(v)">
-              <i class="el-icon-delete"></i>
-            </el-button>
-          </el-col>
-        </el-row>
-      </template>
+    <template v-for="(v, k) in value">
+      <el-row>
+        <el-col :span="4">
+          <el-input
+            v-model="v.name"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+            :placeholder="$t('messages.stores.input.competitors_children.name')"
+          />
+        </el-col>
+        <el-col :span="4" :offset="1">
+          <el-input
+            v-model="v.money"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+            :placeholder="$t('messages.stores.input.competitors_children.money')"
+          />
+        </el-col>
+        <el-col :span="10" :offset="1">
+          <el-input
+            v-model="v.introduce"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+            :placeholder="$t('messages.stores.input.competitors_children.introduce')"
+          />
+        </el-col>
+        <el-col :span="1" :offset="1" v-if="k > 0">
+          <el-button @click="removeItem(v)">
+            <i class="el-icon-delete"></i>
+          </el-button>
+        </el-col>
+      </el-row>
     </template>
 
     <el-row :gutter="50">
       <el-col :span="10">
-        <el-button @click="addItem">新增域名</el-button>
+        <el-button
+          @click="addItem"
+        >{{ $t('messages.button.create') }}{{$t('messages.stores.input.competitors')}}</el-button>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import { getToken } from "@/utils/auth";
-import { saveFile, getInfo } from "@/api/file";
-
-const domain = process.env.VUE_APP_BASE_API;
-
 const defaultItem = {
   name: "",
   money: "",
@@ -101,15 +64,18 @@ export default {
   props: {
     value: {
       type: Array,
-      default: []
+      default: undefined
     }
   },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {},
-  created() {},
+  created() {
+    if (!this.value) {
+      this.emitInput(defaultList);
+    }
+  },
   watch: {},
   methods: {
     removeItem(item) {
@@ -127,7 +93,7 @@ export default {
     },
     emitInput(val) {
       this.$emit("input", val);
-    },
+    }
   }
 };
 </script>
@@ -146,6 +112,9 @@ export default {
       border-radius: 0px;
       border-bottom: 1px solid #bfcbd9;
     }
+  }
+  .el-row {
+    margin-top: 10px;
   }
 }
 </style>

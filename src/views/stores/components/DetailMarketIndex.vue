@@ -52,7 +52,7 @@
               ></el-option>
             </el-option-group>
           </el-select>
-        </el-form-item> -->
+        </el-form-item>-->
 
         <el-form-item style="margin-bottom: 40px;" prop="title" />
         <!-- <el-form-item
@@ -62,7 +62,7 @@
           style="margin-bottom: 30px;"
         >
           <Upload v-model="postForm.cover_file_id" />
-        </el-form-item> -->
+        </el-form-item>-->
 
         <!-- <el-form-item v-if="module_id == 1" prop="location_file_id" label-width="72px" :label="$t('messages.stores.input.location_file_id')" style="margin-bottom: 30px;">
           <Upload v-model="postForm.location_file_id" />
@@ -81,7 +81,7 @@
             autosize
             placeholder="Please enter the content"
           />
-        </el-form-item> -->
+        </el-form-item>-->
 
         <!-- <el-form-item
           style="margin-bottom: 40px;"
@@ -96,20 +96,14 @@
             autosize
             placeholder="Please enter the content"
           />
-        </el-form-item> -->
+        </el-form-item>-->
 
         <el-form-item
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.area_code')"
         >
-          <el-cascader
-            v-model="postForm.area_code"
-            :options="area_options"
-            :props="area_props"
-            @active-item-change="handleAreaItemChange"
-            @change="handleAreaChange"
-          />
+          <Area v-model="postForm.area_code" ref="area"></Area>
         </el-form-item>
 
         <el-form-item
@@ -133,21 +127,7 @@
           label-width="72px"
           :label="$t('messages.stores.input.lat_lng')"
         >
-          <div id="amap-demo1" class="amap-wrapper" />
-          <div
-            class="range-edit"
-            v-if="!(parent_id > 0 || isEdit && postForm.parent_id > 0 || display_module)"
-          >
-            <div
-              class="range-edit-button"
-              style="margin-bottom: 5px"
-              @click="polyEditor.open()"
-            >{{ $t('messages.stores.input.range_edit') }}</div>
-            <div
-              class="range-save-button"
-              @click="polyEditor.close()"
-            >{{ $t('messages.stores.input.range_save') }}</div>
-          </div>
+          <Map v-model="mapData" id="map" ref="map" :is-edit="isEdit"></Map>
         </el-form-item>
 
         <el-form-item
@@ -178,7 +158,7 @@
             autosize
             placeholder="Please enter the content"
           />
-        </el-form-item> -->
+        </el-form-item>-->
 
         <el-form-item
           prop="plan_file_id"
@@ -238,6 +218,8 @@ import { storeSaveMarket, storeUpdateMarket, readStore } from "@/api/store";
 import { searchUser } from "@/api/remote-search";
 import Warning from "./Warning";
 import Competitors from "./Competitors";
+import Map from "./Map";
+import Area from "./Area";
 import { lazyAMapApiLoaderInstance } from "vue-amap";
 import { Message } from "element-ui";
 
@@ -264,14 +246,14 @@ const defaultForm = {
   sales_area: "",
   plan_file_id: undefined,
   establishment_time: undefined,
-  sales_area: '',
-  competitors: [],
+  sales_area: "",
+  competitors: undefined
 };
 
 // const id = 0
 export default {
   name: "DetailMarketIndex",
-  components: { MDinput, Upload, Sticky, Competitors },
+  components: { MDinput, Upload, Sticky, Competitors, Map, Area, },
   props: {
     isEdit: {
       type: Boolean,
@@ -298,7 +280,8 @@ export default {
       },
       area_options: [],
       module_options: [],
-      display_module: false
+      display_module: false,
+      mapData: undefined
     };
   },
   computed: {},
@@ -322,83 +305,7 @@ export default {
     this.tempRoute = Object.assign({}, this.$route);
   },
   mounted() {
-    const _this = this;
-    setTimeout(function() {
-      lazyAMapApiLoaderInstance.load().then(() => {
-        if (_this.isEdit) {
-          this.map = new AMap.Map("amap-demo1", {
-            center: [_this.postForm.lng, _this.postForm.lat],
-            zoom: 16
-          });
-        } else {
-          this.map = new AMap.Map("amap-demo1", {
-            resizeEnable: true,
-            zoom: 16
-          });
-          AMap.plugin("AMap.Geolocation", function() {
-            var geolocation = new AMap.Geolocation({
-              enableHighAccuracy: true, // 是否使用高精度定位，默认:true
-              timeout: 10000, // 超过10秒后停止定位，默认：5s
-              buttonPosition: "RB", // 定位按钮的停靠位置
-              buttonOffset: new AMap.Pixel(10, 20), // 定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-              zoomToAccuracy: true // 定位成功后是否自动调整地图视野到定位点
-            });
-            setTimeout(() => {
-              map.addControl(geolocation);
-            }, 0);
-            geolocation.getCurrentPosition(function(status, result) {
-              if (status == "complete") {
-                onComplete(result);
-              } else {
-                onError(result);
-              }
-            });
-          });
-        }
-        // this.map = new AMap.Map('amap-demo1', {
-        //   center: [121.59996, 31.197646],
-        //   zoom: 16
-        // })
-        // 解析定位结果
-        function onComplete(data) {}
-        // 解析定位错误信息
-        function onError(data) {
-          Message(data.message);
-        }
-
-        const map = (_this.map = this.map);
-
-        if (_this.isEdit) {
-          var marker = new AMap.Marker({
-            icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
-            position: [_this.postForm.lng, _this.postForm.lat]
-          });
-          map.add(marker);
-          _this.setRange(
-            _this.map,
-            _this.postForm.lng,
-            _this.postForm.lat,
-            _this.postForm.range
-          );
-        }
-
-        this.map.on("click", function(e) {
-          var marker = new AMap.Marker({
-            icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
-            position: [e.lnglat.getLng(), e.lnglat.getLat()]
-          });
-          map.clearMap();
-          map.add(marker);
-          const lng = e.lnglat.getLng();
-          const lat = e.lnglat.getLat();
-          _this.postForm.lng = lng;
-          _this.postForm.lat = lat;
-
-          _this.setRange(map, lng, lat);
-        });
-      });
-    }, 1000);
-    this.initArea();
+    // this.initArea();
   },
   methods: {
     indexModule(parent_id) {
@@ -415,29 +322,20 @@ export default {
         .then(response => {
           this.postForm = response.data;
           this.postForm.establishment_time *= 1000;
-          if (this.postForm.parent_id > 0) {
-            this.indexModule(1);
-          }
-          this.initEditArea();
+          this.mapData = {
+            lat: response.data.lat, 
+            lng: response.data.lng,
+            range: response.data.range,
+          };
+          this.$refs.area.initEditArea(this.postForm.area_code);
         })
         .catch(err => {
           console.log(err);
         });
     },
-    setTagsViewTitle() {
-      const title = "Edit Article";
-      const route = Object.assign({}, this.tempRoute, {
-        title: `${title}-${this.postForm.id}`
-      });
-      this.$store.dispatch("tagsView/updateVisitedView", route);
-    },
-    setPageTitle() {
-      const title = "Edit Article";
-      document.title = `${title} - ${this.postForm.id}`;
-    },
     submitForm() {
       this.loading = true;
-      let postData = Object.assign({}, this.postForm);
+      let postData = Object.assign({}, {...this.postForm, ...this.mapData});
       postData.establishment_time /= 1000;
       if (this.isEdit) {
         storeUpdateMarket(postData.id, postData)
@@ -479,192 +377,11 @@ export default {
           });
       }
     },
-    // draftForm() {
-    //   if (this.postForm.content.length === 0 || this.postForm.title.length === 0) {
-    //     this.$message({
-    //       message: '请填写必要的标题和内容',
-    //       type: 'warning'
-    //     })
-    //     return
-    //   }
-    //   this.$message({
-    //     message: '保存成功',
-    //     type: 'success',
-    //     showClose: true,
-    //     duration: 1000
-    //   })
-    //   this.postForm.status = 'draft'
-    // },
-    getRemoteUserList(query) {
-      searchUser(query).then(response => {
-        if (!response.data.items) return;
-        this.userListOptions = response.data.items.map(v => v.name);
-      });
-    },
-    handleAreaChange(val) {
-      this.getAreaName(val);
-    },
-    handleAreaItemChange(val) {
-      const _this = this;
-      const params = {};
-      params.code = val[val.length - 1];
-      indexArea(params)
-        .then(res => {
-          _this.setAreaChildren(val[val.length - 1], res.data);
-        })
-        .catch(err => {});
-    },
-    initArea() {
-      const _this = this;
-      indexArea()
-        .then(res => {
-          const data = res.data;
-          data.forEach((v, k) => {
-            data[k].children = [];
-          });
-          _this.area_options = data;
-        })
-        .catch(err => {});
-    },
-    initEditArea() {
-      const _this = this;
-      if (_this.postForm.area_code && _this.postForm.area_code.length == 3) {
-        const params = {};
-        params.code = _this.postForm.area_code[0];
-        indexArea(params)
-          .then(res => {
-            _this.setAreaChildren(_this.postForm.area_code[0], res.data);
-            params.code = _this.postForm.area_code[1];
-            indexArea(params)
-              .then(res => {
-                _this.setAreaChildren(_this.postForm.area_code[1], res.data);
-              })
-              .catch(err => {});
-          })
-          .catch(err => {});
-      }
-    },
-    setAreaChildren(code, children) {
-      const _this = this;
-      const area_options = this.area_options;
-      _this.area_options.forEach((v, k) => {
-        // console.log(v)
-        if (v.code == code) {
-          children.forEach((vv, kk) => {
-            children[kk].children = [];
-          });
-          _this.area_options[k].children = children;
-        } else {
-          v.children.forEach((vv, kk) => {
-            if (vv.code == code) {
-              _this.area_options[k].children[kk].children = children;
-            }
-          });
-        }
-      });
-    },
-    getAreaName(value) {
-      const _this = this;
-      const area_options = this.area_options;
-      const name = [];
-      _this.area_options.forEach((v, k) => {
-        // console.log(v)
-        if (v.code == value[0]) {
-          name.push(v.name);
-          v.children.forEach((vv, kk) => {
-            if (vv.code == value[1]) {
-              name.push(vv.name);
-              vv.children.forEach((vvv, kkk) => {
-                if (vvv.code == value[2]) {
-                  name.push(vvv.name);
-                }
-                return true;
-              });
-            }
-            return true;
-          });
-        }
-        return true;
-      });
-      return name;
-    },
     resetMap() {
-      const _this = this;
-      let area_code = this.getAreaName(this.postForm.area_code);
+      let area_code = this.$refs.area.getAreaName(this.postForm.area_code);
       area_code = area_code.join(" ");
       const address = area_code + " " + this.postForm.address;
-
-      lazyAMapApiLoaderInstance.load().then(() => {
-        AMap.plugin("AMap.Geocoder", function() {
-          const geocoder = new AMap.Geocoder();
-          const marker = new AMap.Marker();
-          geocoder.getLocation(address, (status, result) => {
-            if (status === "complete" && result.geocodes.length) {
-              const lnglat = result.geocodes[0].location;
-              // this.map.add(marker)
-              marker.setPosition(lnglat);
-              _this.map.setFitView(marker);
-            } else {
-              // log.error('根据地址查询位置失败')
-            }
-          });
-        });
-      });
-    },
-    setRange(map, lng, lat, range) {
-      const _this = this;
-      lng = new Decimal(lng);
-      lat = new Decimal(lat);
-      if (!range) {
-        range = [
-          [lng.minus(0.0002).toFixed(6), lat.minus(0.0002).toFixed(6)],
-          [lng.minus(0.0002).toFixed(6), lat.add(0.0002).toFixed(6)],
-          [lng.add(0.0002).toFixed(6), lat.add(0.0002).toFixed(6)],
-          [lng.add(0.0002).toFixed(6), lat.minus(0.0002).toFixed(6)]
-        ];
-      }
-
-      _this.postForm.range = range;
-      // 画范围
-      var path = Object.assign([], range);
-
-      var polygon = new AMap.Polygon({
-        path: path,
-        strokeColor: "#FF33FF",
-        strokeWeight: 6,
-        strokeOpacity: 0.2,
-        fillOpacity: 0.4,
-        fillColor: "#1791fc",
-        zIndex: 50
-      });
-
-      map.add(polygon);
-      map.setFitView([polygon]);
-      var polyEditor = new AMap.PolyEditor(map, polygon);
-
-      polyEditor.on("addnode", function(event) {
-        console.log("触发事件：addnode");
-      });
-
-      polyEditor.on("adjust", function(event) {
-        console.log("触发事件：adjust");
-      });
-
-      polyEditor.on("removenode", function(event) {
-        console.log("触发事件：removenode");
-      });
-
-      polyEditor.on("end", function(event) {
-        console.log("触发事件： end");
-        // event.target 即为编辑后的多边形对象
-        const rangeArr = event.target.toString().split(";");
-        const range = new Array();
-        rangeArr.forEach((v, k) => {
-          range.push(v.split(","));
-        });
-        _this.postForm.range = range;
-      });
-      this.polyEditor = polyEditor;
+      this.$refs.map.resetMap(address);
     }
   }
 };

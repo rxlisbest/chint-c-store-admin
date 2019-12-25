@@ -16,7 +16,9 @@ export const messages = {
     create: '新建',
     edit: '编辑',
     delete: '删除',
-    submit: '保存'
+    submit: '保存',
+    confirm: '确定',
+    cancel: '取消'
   },
   header: {
     title: '测试系统'
@@ -117,6 +119,7 @@ export const messages = {
       statistic_create: '新增统计',
       statistic_now: '现有统计',
       competitors: '竞争对手',
+      market_introduce: '市场介绍',
     }
   },
   store_images: {

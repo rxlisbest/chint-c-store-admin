@@ -69,3 +69,11 @@ export function storeUpdateMarket(id, data) {
     data
   })
 }
+
+export function storeUpdateIntroduce(id, data) {
+  return request({
+    url: `/index/stores/updateIntroduce/id/${id}`,
+    method: 'put',
+    data
+  })
+}
