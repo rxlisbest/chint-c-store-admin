@@ -1,6 +1,6 @@
 import Layout from '@/layout'
 
-const rootPath = '/store/'
+const rootPath = '/store/1'
 
 // 新建
 const storeCreate = (module_id, activeMenu, component) => {
@@ -81,7 +81,7 @@ let shopArray = []
 for (let v of shop) {
   let content = []
   for (let item of v) {
-    let activeMenu = rootPath + 'module_id/' + item.module_id.join('/') + '/index/' + item.id + '/list'
+    let activeMenu = rootPath + '/module_id/' + item.module_id.join('/') + '/index/' + item.id + '/list'
     let o = {
       path: 'index/' + item.id,
       name: item.name,
@@ -112,7 +112,7 @@ const agent = [
 ]
 let agentArray = []
 for (let item of agent) {
-  let activeMenu = rootPath + 'module_id/' + item.module_id.join('/') + '/index/' + item.id + '/list'
+  let activeMenu = rootPath + '/module_id/' + item.module_id.join('/') + '/index/' + item.id + '/list'
   let o = {
     path: 'module_id/' + item.id + '/index/' + item.id,
     name: item.name,
@@ -138,7 +138,7 @@ const market = [
 ]
 let marketArray = []
 for (let item of market) {
-  let activeMenu = rootPath + 'module_id/' + item.module_id.join('/') + '/index/' + item.id + '/list'
+  let activeMenu = rootPath + '/module_id/' + item.module_id.join('/') + '/index/' + item.id + '/list'
   console.log(activeMenu)
   let o = {
     path: 'module_id/' + item.id + '/index/' + item.id,
@@ -165,7 +165,7 @@ for (let item of market) {
 export default {
   path: rootPath,
   component: Layout,
-  redirect: rootPath + 'module_id/1/index/1/list',
+  redirect: rootPath + '/module_id/1/index/1/list',
   redirectAndCollapse: true,
   meta: { title: '专业市场', icon: 'list', noCache: true, roles: [1] },
   children: [
@@ -173,7 +173,7 @@ export default {
       path: 'module_id/2',
       name: '一级经销商',
       alwaysShow: true,
-      redirect: rootPath + 'module_id/2/index/2/list',
+      redirect: rootPath + '/module_id/2/index/2/list',
       meta: { title: '一级经销商', noCache: true, roles: [2] },
       redirectAndCollapse: true,
       component: () => import('@/views/stores/empty'),
@@ -202,7 +202,7 @@ export default {
       path: 'module_id/11',
       name: '二级分销商',
       alwaysShow: true,
-      redirect: rootPath + 'module_id/11/index/11/list',
+      redirect: rootPath + '/module_id/11/index/11/list',
       meta: { title: '二级分销商', noCache: true, roles: [11] },
       redirectAndCollapse: true,
       component: () => import('@/views/stores/empty'),
