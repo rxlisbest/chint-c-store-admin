@@ -23,195 +23,13 @@
           >{{ $t('messages.stores.input.name') }}</MDinput>
         </el-form-item>
 
-        <el-form-item
+        <!-- <el-form-item
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.module_id')"
         >
           <Parent v-model="postForm.parent_id" :module_id="1"></Parent>
-        </el-form-item>
-
-        <!-- <el-form-item
-          v-if="parent_id > 0 || isEdit && postForm.parent_id > 0 || display_module"
-          prop="cover_file_id"
-          label-width="72px"
-          :label="$t('messages.stores.input.module_id')"
-          style="margin-bottom: 30px;"
-        >
-          <el-select v-model="postForm.module_id" placeholder="请选择">
-            <el-option
-              v-for="item in module_options"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-              v-if="item.is_group == 0"
-            />
-            <el-option-group
-              v-for="item in module_options"
-              :key="item.id"
-              :label="item.name"
-              v-if="item.is_group == 1"
-            >
-              <el-option
-                v-for="child in item.children"
-                :key="child.id"
-                :label="child.name"
-                :value="child.id"
-              ></el-option>
-            </el-option-group>
-          </el-select>
-        </el-form-item>-->
-
-        <el-form-item style="margin-bottom: 40px;" prop="title" />
-        <el-form-item
-          prop="cover_file_id"
-          label-width="72px"
-          :label="$t('messages.stores.input.cover_file_id')"
-          style="margin-bottom: 30px;"
-        >
-          <Upload v-model="postForm.cover_file_id" />
-        </el-form-item>
-
-        <!-- <el-form-item v-if="module_id == 1" prop="location_file_id" label-width="72px" :label="$t('messages.stores.input.location_file_id')" style="margin-bottom: 30px;">
-          <Upload v-model="postForm.location_file_id" />
-        </el-form-item>-->
-
-        <!-- <el-form-item
-          style="margin-bottom: 40px;"
-          label-width="72px"
-          :label="$t('messages.stores.input.business_hours')"
-        >
-          <el-input
-            v-model="postForm.business_hours"
-            :rows="3"
-            type="textarea"
-            class="article-textarea"
-            autosize
-            :placeholder="$t('messages.placeholder.common')"
-          />
-        </el-form-item>-->
-
-        <!-- <el-form-item
-          style="margin-bottom: 40px;"
-          label-width="72px"
-          :label="$t('messages.stores.input.phone')"
-        >
-          <el-input
-            v-model="postForm.phone"
-            :rows="3"
-            type="textarea"
-            class="article-textarea"
-            autosize
-            :placeholder="$t('messages.placeholder.common')"
-          />
-        </el-form-item>-->
-
-        <el-form-item
-          style="margin-bottom: 40px;"
-          label-width="72px"
-          :label="$t('messages.stores.input.area_code')"
-        >
-          <Area v-model="postForm.area_code" ref="area"></Area>
-        </el-form-item>
-
-        <el-form-item
-          style="margin-bottom: 40px;"
-          label-width="72px"
-          :label="$t('messages.stores.input.address')"
-        >
-          <el-input
-            v-model="postForm.address"
-            :rows="3"
-            type="textarea"
-            class="article-textarea"
-            autosize
-            :placeholder="$t('messages.placeholder.common')"
-            @blur="resetMap"
-          />
-        </el-form-item>
-
-        <el-form-item
-          style="margin-bottom: 40px;"
-          label-width="72px"
-          :label="$t('messages.stores.input.lat_lng')"
-        >
-          <Map v-model="mapData" id="map" ref="map" :is-edit="isEdit"></Map>
-        </el-form-item>
-
-        <el-form-item
-          style="margin-bottom: 40px;"
-          label-width="72px"
-          :label="$t('messages.stores.input.introduce')"
-        >
-          <el-input
-            v-model="postForm.introduce"
-            :rows="3"
-            type="textarea"
-            class="article-textarea"
-            autosize
-            :placeholder="$t('messages.placeholder.common')"
-          />
-        </el-form-item>
-
-        <!-- <el-form-item
-          style="margin-bottom: 40px;"
-          label-width="72px"
-          :label="$t('messages.stores.input.business_scope')"
-        >
-          <el-input
-            v-model="postForm.business_scope"
-            :rows="3"
-            type="textarea"
-            class="article-textarea"
-            autosize
-            :placeholder="$t('messages.placeholder.common')"
-          />
-        </el-form-item>-->
-
-        <!-- <el-form-item
-          prop="plan_file_id"
-          label-width="72px"
-          :label="$t('messages.stores.input.plan_file_id')"
-          style="margin-bottom: 30px;"
-        >
-          <Upload v-model="postForm.plan_file_id" />
         </el-form-item> -->
-
-        <el-form-item
-          style="margin-bottom: 40px;"
-          label-width="72px"
-          :label="$t('messages.stores.input.establishment_time')"
-        >
-          <el-date-picker
-            value-format="timestamp"
-            v-model="postForm.establishment_time"
-            type="datetime"
-            placeholder="选择日期时间"
-          ></el-date-picker>
-        </el-form-item>
-
-        <el-form-item
-          style="margin-bottom: 40px;"
-          label-width="72px"
-          :label="$t('messages.stores.input.sales_area')"
-        >
-          <el-input
-            v-model="postForm.sales_area"
-            :rows="3"
-            type="textarea"
-            class="article-textarea"
-            autosize
-            :placeholder="$t('messages.placeholder.common')"
-          />
-        </el-form-item>
-
-        <el-form-item
-          style="margin-bottom: 40px;"
-          label-width="72px"
-          :label="$t('messages.stores.input.competitors')"
-        >
-          <Competitors v-model="postForm.competitors" />
-        </el-form-item>
       </div>
     </el-form>
   </div>
@@ -222,7 +40,7 @@ import Upload from "@/components/Upload/SingleImage4";
 import MDinput from "@/components/MDinput";
 import Sticky from "@/components/Sticky"; // 粘性header组件
 // import { validURL } from '@/utils/validate'
-import { storeSaveShop, storeUpdateShop, readStore } from "@/api/store";
+import { storeSaveChintAgent, storeUpdateChintAgent, readStore } from "@/api/store";
 import { searchUser } from "@/api/remote-search";
 import Warning from "./Warning";
 import Competitors from "./Competitors";
@@ -251,17 +69,17 @@ const defaultForm = {
   address: "",
   introduce: "",
   business_scope: "",
-  range: [],
+  range: "",
   sales_area: "",
   plan_file_id: undefined,
-  establishment_time: undefined,
+  establishment_time: 0,
   sales_area: "",
-  competitors: undefined
+  competitors: ""
 };
 
 // const id = 0
 export default {
-  name: "DetailMarketShop",
+  name: "DetailStoreAgent",
   components: { MDinput, Upload, Sticky, Competitors, Map, Area, Parent },
   props: {
     isEdit: {
@@ -329,14 +147,7 @@ export default {
     fetchData(id) {
       readStore(id)
         .then(response => {
-          this.postForm = response.data;
-          this.postForm.establishment_time *= 1000;
-          this.mapData = {
-            lat: response.data.lat,
-            lng: response.data.lng,
-            range: response.data.range
-          };
-          this.$refs.area.initEditArea(this.postForm.area_code);
+          this.postForm = Object.assign({}, {...defaultForm, id: response.data.id, name: response.data.name, parent_id: response.data.parent_id});
         })
         .catch(err => {
           console.log(err);
@@ -345,9 +156,8 @@ export default {
     submitForm() {
       this.loading = true;
       let postData = Object.assign({}, { ...this.postForm, ...this.mapData });
-      postData.establishment_time /= 1000;
       if (this.isEdit) {
-        storeUpdateShop(postData.id, postData)
+        storeUpdateChintAgent(postData.id, postData)
           .then(response => {
             if (response.code == 1) {
               this.$notify({
@@ -366,7 +176,7 @@ export default {
             this.loading = false;
           });
       } else {
-        storeSaveShop(postData)
+        storeSaveChintAgent(postData)
           .then(response => {
             if (response.code == 1) {
               this.$notify({

@@ -33,19 +33,6 @@
       style="width: 100%;"
     >
       <el-table-column :label="$t('messages.store_market.column.name')" prop="name" align="center"></el-table-column>
-      <el-table-column
-        :label="$t('messages.store_market.column.establishment_time')"
-        align="center"
-      >
-        <template slot-scope="scope">
-          <span>{{ scope.row.establishment_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        :label="$t('messages.store_market.column.sales_area')"
-        prop="sales_area"
-        align="center"
-      ></el-table-column>
       <el-table-column :label="$t('messages.store_market.column.create_time')" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
@@ -58,32 +45,14 @@
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{row}" v-if="user_id == row.user_id">
-          <!-- <el-button
-            size="mini"
-            type="primary"
-            @click="handleEdit(row)"
-            icon="el-icon-edit"
-            style="width: 100px;"
-          >{{ $t('messages.stores.button.market_introduce') }}</el-button> -->
           <router-link :to="'edit/' + row.id">
             <el-button
               type="primary"
               size="mini"
               icon="el-icon-edit"
-              style="width: 100px;"
-            >{{ $t('messages.stores.button.market_introduce') }}</el-button>
+              style="width: 70px;"
+            >{{ $t('messages.button.edit') }}</el-button>
           </router-link>
-          <!-- <router-link :to="'images/' + row.id">
-            <el-button type="primary" size="mini" icon="el-icon-picture" style="width: 90px;">
-              {{ $t('messages.stores.button.images') }}
-            </el-button>
-          </router-link>
-          <router-link :to="'incomes/' + row.id">
-            <el-button type="primary" size="mini" style="width: 90px;">
-              <svg-icon icon-class="chart" />
-              {{ $t('messages.stores.button.incomes') }}
-            </el-button>
-          </router-link>-->
           <el-button size="mini" type="danger" @click="deleteStore(row)" style="width: 70px;">
             <i class="el-icon-close" />
             {{ $t('messages.button.delete') }}
@@ -99,32 +68,11 @@
       :limit.sync="listQuery.limit"
       @pagination="getList"
     />
-
-    <el-dialog
-      :title="$t('messages.stores.button.market_introduce')"
-      :visible.sync="dialogFormVisible"
-    >
-      <el-form
-        ref="dataForm"
-        :model="dialogForm"
-        label-position="left"
-        label-width="70px"
-        style="width: 400px; margin-left:50px;"
-      >
-        <el-form-item :label="$t('messages.stores.button.market_introduce')">
-          <el-input type="textarea" v-model="dialogForm.introduce"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">{{ $t('messages.button.cancel') }}</el-button>
-        <el-button type="primary" @click="handleDialogForm()">{{ $t('messages.button.confirm') }}</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { indexStore, deleteStore, storeUpdateIntroduce } from "@/api/store";
+import { indexStore, deleteStore } from "@/api/store";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
@@ -132,7 +80,7 @@ import { MessageBox, Message } from "element-ui";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "stores-index",
+  name: "storeAgent",
   components: { Pagination },
   directives: { waves },
   computed: {
@@ -153,16 +101,16 @@ export default {
         name: undefined
       },
       roles: {},
-      dialogFormVisible: false,
-      dialogForm: {
-        id: 0,
-        introduce: undefined
+      auditFormVisible: false,
+      auditForm: {
+        user_id: 0,
+        content: "",
+        status: 2
       },
       row: {}
     };
   },
   created() {
-    console.log(this.user_id, "a");
     this.parent_module_id = this.$route.meta.parent_module_id;
     if (this.$route.meta.module_id !== undefined) {
       this.module_id = this.listQuery.module_id = this.$route.meta.module_id;
@@ -204,18 +152,20 @@ export default {
         })
         .catch(() => {});
     },
-    handleEdit(row) {
-      this.dialogForm.id = row.id;
-      this.dialogForm.introduce = row.introduce;
-      this.dialogFormVisible = true;
+    handleAuditStatus() {
+      let _this = this;
+      saveUserAuditLog(this.auditForm).then(() => {
+        _this.row.audit_status = _this.auditForm.status;
+        _this.auditFormVisible = false;
+      });
     },
-    handleDialogForm() {
-      if (this.dialogForm.id > 0) {
-        storeUpdateIntroduce(this.dialogForm.id, this.dialogForm).then(() => {
-          this.getList();
-          this.dialogFormVisible = false;
-        });
-      }
+    handleAuditForm(row) {
+      console.log(row);
+      this.row = row;
+      this.auditForm.user_id = row.id;
+      this.auditForm.status = Number(row.audit_status) || 2;
+      this.auditForm.content = "";
+      this.auditFormVisible = true;
     },
     deleteStore(image) {
       this.$confirm(

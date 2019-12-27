@@ -23,6 +23,14 @@
           >{{ $t('messages.stores.input.name') }}</MDinput>
         </el-form-item>
 
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="72px"
+          :label="$t('messages.stores.input.module_id')"
+        >
+          <Parent v-model="postForm.parent_id" :module_id="1"></Parent>
+        </el-form-item>
+
         <!-- <el-form-item
           v-if="parent_id > 0 || isEdit && postForm.parent_id > 0 || display_module"
           prop="cover_file_id"
@@ -55,14 +63,14 @@
         </el-form-item>-->
 
         <el-form-item style="margin-bottom: 40px;" prop="title" />
-        <!-- <el-form-item
+        <el-form-item
           prop="cover_file_id"
           label-width="72px"
           :label="$t('messages.stores.input.cover_file_id')"
           style="margin-bottom: 30px;"
         >
           <Upload v-model="postForm.cover_file_id" />
-        </el-form-item>-->
+        </el-form-item>
 
         <!-- <el-form-item v-if="module_id == 1" prop="location_file_id" label-width="72px" :label="$t('messages.stores.input.location_file_id')" style="margin-bottom: 30px;">
           <Upload v-model="postForm.location_file_id" />
@@ -160,14 +168,14 @@
           />
         </el-form-item>-->
 
-        <el-form-item
+        <!-- <el-form-item
           prop="plan_file_id"
           label-width="72px"
           :label="$t('messages.stores.input.plan_file_id')"
           style="margin-bottom: 30px;"
         >
           <Upload v-model="postForm.plan_file_id" />
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item
           style="margin-bottom: 40px;"
@@ -214,12 +222,13 @@ import Upload from "@/components/Upload/SingleImage4";
 import MDinput from "@/components/MDinput";
 import Sticky from "@/components/Sticky"; // 粘性header组件
 // import { validURL } from '@/utils/validate'
-import { storeSaveMarket, storeUpdateMarket, readStore } from "@/api/store";
+import { storeSaveShop, storeUpdateShop, readStore } from "@/api/store";
 import { searchUser } from "@/api/remote-search";
 import Warning from "./Warning";
 import Competitors from "./Competitors";
 import Map from "./Map";
 import Area from "./Area";
+import Parent from "./Parent";
 import { lazyAMapApiLoaderInstance } from "vue-amap";
 import { Message } from "element-ui";
 
@@ -230,7 +239,7 @@ import { Decimal } from "decimal.js";
 const defaultForm = {
   name: "",
   module_id: undefined,
-  parent_id: 0,
+  parent_id: undefined,
   cover_file_id: undefined,
   // location_file_id: undefined,
   area_code: [],
@@ -252,8 +261,8 @@ const defaultForm = {
 
 // const id = 0
 export default {
-  name: "DetailMarketIndex",
-  components: { MDinput, Upload, Sticky, Competitors, Map, Area, },
+  name: "DetailStoreShop",
+  components: { MDinput, Upload, Sticky, Competitors, Map, Area, Parent },
   props: {
     isEdit: {
       type: Boolean,
@@ -323,9 +332,9 @@ export default {
           this.postForm = response.data;
           this.postForm.establishment_time *= 1000;
           this.mapData = {
-            lat: response.data.lat, 
+            lat: response.data.lat,
             lng: response.data.lng,
-            range: response.data.range,
+            range: response.data.range
           };
           this.$refs.area.initEditArea(this.postForm.area_code);
         })
@@ -335,10 +344,10 @@ export default {
     },
     submitForm() {
       this.loading = true;
-      let postData = Object.assign({}, {...this.postForm, ...this.mapData});
+      let postData = Object.assign({}, { ...this.postForm, ...this.mapData });
       postData.establishment_time /= 1000;
       if (this.isEdit) {
-        storeUpdateMarket(postData.id, postData)
+        storeUpdateShop(postData.id, postData)
           .then(response => {
             if (response.code == 1) {
               this.$notify({
@@ -357,7 +366,7 @@ export default {
             this.loading = false;
           });
       } else {
-        storeSaveMarket(postData)
+        storeSaveShop(postData)
           .then(response => {
             if (response.code == 1) {
               this.$notify({

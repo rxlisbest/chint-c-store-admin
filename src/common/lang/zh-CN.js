@@ -5,6 +5,9 @@ export const messages = {
   column: {
     actions: '操作',
   },
+  placeholder: {
+    common: '请输入',
+  },
   nav: {
     profile: '个人中心',
     dashboard: '工作台',

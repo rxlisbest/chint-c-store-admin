@@ -65,25 +65,25 @@
             icon="el-icon-edit"
             style="width: 100px;"
           >{{ $t('messages.stores.button.market_introduce') }}</el-button> -->
+          <router-link :to="'images/' + row.id">
+            <el-button type="success" size="mini" icon="el-icon-picture" style="width: 90px;">
+              {{ $t('messages.stores.button.images') }}
+            </el-button>
+          </router-link>
+          <router-link :to="'incomes/' + row.id">
+            <el-button type="success" size="mini" style="width: 90px;">
+              <svg-icon icon-class="chart" />
+              {{ $t('messages.stores.button.incomes') }}
+            </el-button>
+          </router-link>
           <router-link :to="'edit/' + row.id">
             <el-button
               type="primary"
               size="mini"
               icon="el-icon-edit"
-              style="width: 100px;"
-            >{{ $t('messages.stores.button.market_introduce') }}</el-button>
+              style="width: 70px;"
+            >{{ $t('messages.button.edit') }}</el-button>
           </router-link>
-          <!-- <router-link :to="'images/' + row.id">
-            <el-button type="primary" size="mini" icon="el-icon-picture" style="width: 90px;">
-              {{ $t('messages.stores.button.images') }}
-            </el-button>
-          </router-link>
-          <router-link :to="'incomes/' + row.id">
-            <el-button type="primary" size="mini" style="width: 90px;">
-              <svg-icon icon-class="chart" />
-              {{ $t('messages.stores.button.incomes') }}
-            </el-button>
-          </router-link>-->
           <el-button size="mini" type="danger" @click="deleteStore(row)" style="width: 70px;">
             <i class="el-icon-close" />
             {{ $t('messages.button.delete') }}
@@ -132,7 +132,7 @@ import { MessageBox, Message } from "element-ui";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "stores-index",
+  name: "storeShop",
   components: { Pagination },
   directives: { waves },
   computed: {

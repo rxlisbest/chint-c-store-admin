@@ -117,3 +117,19 @@ export function storeUpdateShop(id, data) {
     data
   })
 }
+
+export function storeSaveChintAgent(data) {
+  return request({
+    url: '/index/stores/saveChintAgent',
+    method: 'post',
+    data
+  })
+}
+
+export function storeUpdateChintAgent(id, data) {
+  return request({
+    url: `/index/stores/updateChintAgent/id/${id}`,
+    method: 'put',
+    data
+  })
+}
