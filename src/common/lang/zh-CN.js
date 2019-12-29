@@ -106,7 +106,9 @@ export const messages = {
         name: '请输入竞争对手名称',
         money: '请输入预估销售额',
         introduce: '请输入竞争对手情况介绍',
-      }
+      },
+      terminal_construction: '终端化建设',
+      business_product: '经营产品',
     },
     column: {
       name: '名称',

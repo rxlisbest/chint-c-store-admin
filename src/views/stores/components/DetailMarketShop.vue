@@ -25,7 +25,7 @@
 
         <el-form-item
           style="margin-bottom: 40px;"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.module_id')"
         >
           <Parent v-model="postForm.parent_id" :module_id="1"></Parent>
@@ -34,7 +34,7 @@
         <!-- <el-form-item
           v-if="parent_id > 0 || isEdit && postForm.parent_id > 0 || display_module"
           prop="cover_file_id"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.module_id')"
           style="margin-bottom: 30px;"
         >
@@ -65,20 +65,20 @@
         <el-form-item style="margin-bottom: 40px;" prop="title" />
         <el-form-item
           prop="cover_file_id"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.cover_file_id')"
           style="margin-bottom: 30px;"
         >
           <Upload v-model="postForm.cover_file_id" />
         </el-form-item>
 
-        <!-- <el-form-item v-if="module_id == 1" prop="location_file_id" label-width="72px" :label="$t('messages.stores.input.location_file_id')" style="margin-bottom: 30px;">
+        <!-- <el-form-item v-if="module_id == 1" prop="location_file_id" label-width="100px" :label="$t('messages.stores.input.location_file_id')" style="margin-bottom: 30px;">
           <Upload v-model="postForm.location_file_id" />
         </el-form-item>-->
 
         <!-- <el-form-item
           style="margin-bottom: 40px;"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.business_hours')"
         >
           <el-input
@@ -93,7 +93,7 @@
 
         <!-- <el-form-item
           style="margin-bottom: 40px;"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.phone')"
         >
           <el-input
@@ -108,7 +108,7 @@
 
         <el-form-item
           style="margin-bottom: 40px;"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.area_code')"
         >
           <Area v-model="postForm.area_code" ref="area"></Area>
@@ -116,7 +116,7 @@
 
         <el-form-item
           style="margin-bottom: 40px;"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.address')"
         >
           <el-input
@@ -132,7 +132,7 @@
 
         <el-form-item
           style="margin-bottom: 40px;"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.lat_lng')"
         >
           <Map v-model="mapData" id="map" ref="map" :is-edit="isEdit"></Map>
@@ -140,7 +140,7 @@
 
         <el-form-item
           style="margin-bottom: 40px;"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.introduce')"
         >
           <el-input
@@ -155,7 +155,7 @@
 
         <!-- <el-form-item
           style="margin-bottom: 40px;"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.business_scope')"
         >
           <el-input
@@ -170,16 +170,16 @@
 
         <!-- <el-form-item
           prop="plan_file_id"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.plan_file_id')"
           style="margin-bottom: 30px;"
         >
           <Upload v-model="postForm.plan_file_id" />
-        </el-form-item> -->
+        </el-form-item>-->
 
         <el-form-item
           style="margin-bottom: 40px;"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.establishment_time')"
         >
           <el-date-picker
@@ -192,7 +192,7 @@
 
         <el-form-item
           style="margin-bottom: 40px;"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.sales_area')"
         >
           <el-input
@@ -207,10 +207,40 @@
 
         <el-form-item
           style="margin-bottom: 40px;"
-          label-width="72px"
+          label-width="100px"
           :label="$t('messages.stores.input.competitors')"
         >
           <Competitors v-model="postForm.competitors" />
+        </el-form-item>
+
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="100px"
+          :label="$t('messages.stores.input.terminal_construction')"
+        >
+          <el-input
+            v-model="postForm.terminal_construction"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+            :placeholder="$t('messages.placeholder.common')"
+          />
+        </el-form-item>
+
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="100px"
+          :label="$t('messages.stores.input.business_product')"
+        >
+          <el-input
+            v-model="postForm.business_product"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+            :placeholder="$t('messages.placeholder.common')"
+          />
         </el-form-item>
       </div>
     </el-form>
@@ -256,7 +286,9 @@ const defaultForm = {
   plan_file_id: undefined,
   establishment_time: undefined,
   sales_area: "",
-  competitors: undefined
+  competitors: undefined,
+  terminal_construction: "",
+  business_product: ""
 };
 
 // const id = 0

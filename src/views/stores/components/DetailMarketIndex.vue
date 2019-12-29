@@ -247,7 +247,9 @@ const defaultForm = {
   plan_file_id: undefined,
   establishment_time: undefined,
   sales_area: "",
-  competitors: undefined
+  competitors: undefined,
+  terminal_construction: "",
+  business_product: "",
 };
 
 // const id = 0
