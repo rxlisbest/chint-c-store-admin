@@ -28,7 +28,7 @@
           label-width="100px"
           :label="$t('messages.stores.input.module_id')"
         >
-          <Parent v-model="postForm.parent_id" :module_id="1"></Parent>
+          <Parent v-model="postForm.parent_id" :module_id="parent_module_id"></Parent>
         </el-form-item>
 
         <!-- <el-form-item
@@ -339,6 +339,8 @@ export default {
     this.module_id = this.$route.meta.module_id;
 
     this.postForm.module_id = this.module_id;
+
+    this.parent_module_id = this.$route.meta.parent_module_id;
 
     // Why need to make a copy of this.$route here?
     // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page

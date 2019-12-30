@@ -3,23 +3,23 @@ import Layout from '@/layout'
 const rootPath = '/store/1'
 
 // 新建
-const storeCreate = (module_id, activeMenu, component) => {
+const storeCreate = (module_id, activeMenu, component, parent_module_id) => {
   return {
     path: 'create',
     name: '新建',
     component: () => import(`@/views/stores/${component}.vue`),
-    meta: { title: '新建', noCache: true, module_id: module_id, activeMenu: activeMenu, roles: [module_id] },
+    meta: { title: '新建', noCache: true, module_id: module_id, parent_module_id: parent_module_id, activeMenu: activeMenu, roles: [module_id] },
     hidden: true,
   }
 }
 
 // 编辑
-const storeEdit = (module_id, activeMenu, component) => {
+const storeEdit = (module_id, activeMenu, component, parent_module_id) => {
   return {
     path: 'edit/:store_id(\\d+)',
     name: '编辑',
     component: () => import(`@/views/stores/${component}.vue`),
-    meta: { title: '编辑', noCache: true, module_id: module_id, activeMenu: activeMenu, roles: [module_id] },
+    meta: { title: '编辑', noCache: true, module_id: module_id, parent_module_id: parent_module_id, activeMenu: activeMenu, roles: [module_id] },
     hidden: true,
   }
 }
@@ -80,10 +80,10 @@ for (let v of shop) {
           path: 'list',
           name: item.name,
           component: () => import('@/views/stores/marketShop'),
-          meta: { title: item.name, noCache: true, module_id: item.id, roles: [item.id] },
+          meta: { title: item.name, noCache: true, module_id: item.id, parent_module_id: item.module_id[0], roles: [item.id] },
         },
-        storeEdit(item.id, activeMenu, 'editMarketShop'),
-        storeCreate(item.id, activeMenu, 'createMarketShop'),
+        storeEdit(item.id, activeMenu, 'editMarketShop', item.module_id[0]),
+        storeCreate(item.id, activeMenu, 'createMarketShop', item.module_id[0]),
         storeImages(item.id, activeMenu),
         storeIncomes(item.id, activeMenu),
       ]
