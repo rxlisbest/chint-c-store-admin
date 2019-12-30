@@ -150,5 +150,15 @@ export const messages = {
       about_me: '关于我',
       account: '账号'
     }
-  }
+  },
+  role: {
+    column: {
+      id: 'ID',
+      name: '名称'
+    },
+    input: {
+      name: '名称',
+      module_id: '权限'
+    },
+  },
 }

@@ -112,17 +112,17 @@
         <el-col :span="4" class="other-role">
           <el-row :gutter="20">
             <el-col :span="24">
-              <el-checkbox v-model="marketObject.market100">市场介绍</el-checkbox>
+              <el-checkbox v-model="marketObject.market50" @change="changeStatus('market', 50)">市场介绍</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="24">
-              <el-checkbox v-model="marketObject.market100">市场分布</el-checkbox>
+              <el-checkbox v-model="marketObject.market51" @change="changeStatus('market', 51)">市场分布</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="24">
-              <el-checkbox v-model="marketObject.market100">级别区分</el-checkbox>
+              <el-checkbox v-model="marketObject.market52" @change="changeStatus('market', 52)">级别区分</el-checkbox>
             </el-col>
           </el-row>
         </el-col>
@@ -246,19 +246,43 @@
         <el-col :span="4" class="other-role">
           <el-row :gutter="20">
             <el-col :span="24">
-              <el-checkbox v-model="marketObject.market100">市场介绍</el-checkbox>
+              <el-checkbox v-model="marketObject.market53" @change="changeStatus('market', 53)">简介</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="24">
-              <el-checkbox v-model="marketObject.market100">市场分布</el-checkbox>
+              <el-checkbox v-model="marketObject.market54" @change="changeStatus('market', 54)">品牌形象</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="24">
-              <el-checkbox v-model="marketObject.market100">级别区分</el-checkbox>
+              <el-checkbox v-model="marketObject.market55" @change="changeStatus('market', 55)">运营状况</el-checkbox>
             </el-col>
           </el-row>
+          <el-row :gutter="20">
+            <el-col :span="24">
+              <el-checkbox v-model="marketObject.market56" @change="changeStatus('market', 56)">开发统计</el-checkbox>
+            </el-col>
+          </el-row>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="statistics-container">
+      <el-row>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market40" @change="changeStatus('market', 40)">开发统计</el-checkbox>
+        </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market41" @change="changeStatus('market', 41)">市场开发统计</el-checkbox>
+        </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market42" @change="changeStatus('market', 42)">新增门店排名</el-checkbox>
+        </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market43" @change="changeStatus('market', 43)">销售额统计</el-checkbox>
+        </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market44" @change="changeStatus('market', 44)">竞争对手统计</el-checkbox>
         </el-col>
       </el-row>
     </div>
@@ -360,6 +384,16 @@ const market = [
         ]
       }
     ]
+  },
+  {
+    id: 40,
+    name: "开发统计",
+    children: [
+      { id: 41, name: "市场开发统计" },
+      { id: 42, name: "新增门店排名" },
+      { id: 43, name: "销售额统计" },
+      { id: 44, name: "竞争对手统计" }
+    ]
   }
 ];
 
@@ -409,25 +443,37 @@ export default {
         market33: false,
         market34: false,
         market35: false,
-        market36: false
+        market36: false,
+        market40: false,
+        market41: false,
+        market42: false,
+        market43: false,
+        market44: false,
+        market50: false,
+        market51: false,
+        market52: false,
+        market53: false,
+        market54: false,
+        market55: false,
+        market56: false
       }
     };
   },
   computed: {},
   created() {},
   mounted() {
-      for (let i in this.marketObject) {
-        this.marketObject[i] = false
-      }
-      for (let v of this.value) {
-        let key = "market" + v;
-        this.marketObject[`${key}`] = true;
-      }
+    for (let i in this.marketObject) {
+      this.marketObject[i] = false;
+    }
+    for (let v of this.value) {
+      let key = "market" + v;
+      this.marketObject[`${key}`] = true;
+    }
   },
   watch: {
     value(val) {
       for (let i in this.marketObject) {
-        this.marketObject[i] = false
+        this.marketObject[i] = false;
       }
       for (let v of val) {
         let key = "market" + v;
@@ -510,7 +556,6 @@ export default {
       let newValue = [];
       for (let i in this.marketObject) {
         if (this.marketObject[i] == true) {
-          console.log(i.substring(6))
           newValue.push(Number(i.substring(6)));
         }
         this.emitInput(newValue);
@@ -527,6 +572,9 @@ export default {
   position: relative;
   @include clearfix;
   .store-container {
+    border-top: 1px solid #dcdcdc;
+    margin-top: 20px;
+    padding-top: 10px;
     /deep/ .el-checkbox__input.is-checked .el-checkbox__inner {
       background-color: #ffa500;
       border-color: #ffa500;
@@ -539,6 +587,18 @@ export default {
     background-color: #dcdcdc;
     border: 1px solid #c0c0c0;
     padding-left: 2%;
+  }
+  .statistics-container {
+    border-top: 1px solid #dcdcdc;
+    margin-top: 20px;
+    padding-top: 10px;
+    /deep/ .el-checkbox__input.is-checked .el-checkbox__inner {
+      background-color: #9acd32;
+      border-color: #9acd32;
+    }
+    /deep/ .el-checkbox__input.is-checked + .el-checkbox__label {
+      color: #9acd32;
+    }
   }
 }
 </style>

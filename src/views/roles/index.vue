@@ -3,13 +3,13 @@
     <!-- <el-button type="primary" @click="handleAddRole">New Role</el-button> -->
 
     <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
-      <el-table-column align="center" label="Role Key" width="220">
+      <el-table-column align="center" :label="$t('messages.role.column.id')" width="220">
         <template slot-scope="scope">{{ scope.row.id }}</template>
       </el-table-column>
-      <el-table-column align="center" label="Role Name">
+      <el-table-column align="center" :label="$t('messages.role.column.name')">
         <template slot-scope="scope">{{ scope.row.name }}</template>
       </el-table-column>
-      <el-table-column align="center" label="Operations">
+      <el-table-column align="center" :label="$t('messages.column.actions')">
         <template slot-scope="scope">
           <el-button
             type="primary"
@@ -26,13 +26,13 @@
     <el-dialog
       width="80%"
       :visible.sync="dialogVisible"
-      :title="dialogType==='edit'?'Edit Role':'New Role'"
+      :title="$t('messages.role.input.module_id')"
     >
       <el-form :model="role" label-width="80px" label-position="left">
-        <el-form-item label="Name">
-          <el-input v-model="role.name" placeholder="Role Name" />
+        <el-form-item :label="$t('messages.role.input.name')">
+          <el-input v-model="role.name" :placeholder="$t('messages.placeholder.common')" />
         </el-form-item>
-        <el-form-item label="Menus">
+        <el-form-item :label="$t('messages.role.input.module_id')">
           <!-- <el-tree
             ref="tree"
             :check-strictly="checkStrictly"
@@ -46,8 +46,8 @@
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
-        <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
-        <el-button type="primary" @click="confirmRole">Confirm</el-button>
+        <el-button type="danger" @click="dialogVisible=false">{{ $t('messages.button.cancel') }}</el-button>
+        <el-button type="primary" @click="confirmRole">{{ $t('messages.button.confirm') }}</el-button>
       </div>
     </el-dialog>
   </div>
