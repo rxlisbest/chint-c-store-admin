@@ -1,0 +1,262 @@
+<template>
+  <div :id="id" :class="className" :style="{height:height,width:width}" />
+</template>
+
+<script>
+import echarts from "echarts";
+import resize from "./mixins/resize";
+
+const colorArray = [
+  "rgba(252,230,48,1)",
+  "rgba(255,182,193,1)",
+  "rgba(238,130,238,1)",
+  "rgba(123,104,238,1)",
+  "rgba(0,0,255,1)",
+  "rgba(0,255,255,1)",
+  "rgba(0,250,154,1)",
+  "rgba(255,69,0,1)",
+  "rgba(30,144,255,1)",
+  "rgba(0,128,0,1)"
+];
+
+export default {
+  mixins: [resize],
+  props: {
+    list: {
+      type: Object,
+      default: {}
+    },
+    className: {
+      type: String,
+      default: "chart"
+    },
+    id: {
+      type: String,
+      default: "chart"
+    },
+    width: {
+      type: String,
+      default: "200px"
+    },
+    height: {
+      type: String,
+      default: "200px"
+    },
+    title: {
+      type: String,
+      default: "统计"
+    },
+    label: {
+      type: String,
+      default: ""
+    }
+  },
+  data() {
+    return {
+      chart: null
+    };
+  },
+  watch: {
+    list() {
+      this.initChart();
+    }
+  },
+  mounted() {
+    this.initChart();
+  },
+  beforeDestroy() {
+    if (!this.chart) {
+      return;
+    }
+    this.chart.dispose();
+    this.chart = null;
+  },
+  methods: {
+    initChart() {
+      let _this = this;
+      this.chart = echarts.init(document.getElementById(this.id));
+
+      const series = (function() {
+        const data = [];
+        _this.list.series.forEach((v, k) => {
+          let s = {
+            name: v.name,
+            type: "bar",
+            symbolSize: 10,
+            symbol: "circle",
+            itemStyle: {
+              normal: {
+                color: colorArray[k],
+                barBorderRadius: 0,
+                label: {
+                  show: true,
+                  position: "top",
+                  formatter(p) {
+                    return p.value > 0 ? p.value : "";
+                  }
+                }
+              }
+            },
+            data: v.yData
+          };
+          data.push(s);
+        });
+        return data;
+      })();
+
+var colors = ['#5793f3', '#d14a61', '#675bba'];
+      this.chart.setOption({
+        color: colors,
+
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross"
+          }
+        },
+        grid: {
+          right: "20%"
+        },
+        toolbox: {
+          feature: {
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        legend: {
+          data: ["蒸发量", "降水量", "平均温度"]
+        },
+        xAxis: [
+          {
+            type: "category",
+            axisTick: {
+              alignWithLabel: true
+            },
+            data: [
+              "1月",
+              "2月",
+              "3月",
+              "4月",
+              "5月",
+              "6月",
+              "7月",
+              "8月",
+              "9月",
+              "10月",
+              "11月",
+              "12月"
+            ]
+          }
+        ],
+        yAxis: [
+          {
+            type: "value",
+            name: "蒸发量",
+            min: 0,
+            max: 250,
+            position: "right",
+            axisLine: {
+              lineStyle: {
+                color: colors[0]
+              }
+            },
+            axisLabel: {
+              formatter: "{value} ml"
+            }
+          },
+          {
+            type: "value",
+            name: "降水量",
+            min: 0,
+            max: 250,
+            position: "right",
+            offset: 80,
+            axisLine: {
+              lineStyle: {
+                color: colors[1]
+              }
+            },
+            axisLabel: {
+              formatter: "{value} ml"
+            }
+          },
+          {
+            type: "value",
+            name: "温度",
+            min: 0,
+            max: 25,
+            position: "left",
+            axisLine: {
+              lineStyle: {
+                color: colors[2]
+              }
+            },
+            axisLabel: {
+              formatter: "{value} °C"
+            }
+          }
+        ],
+        series: [
+          {
+            name: "蒸发量",
+            type: "bar",
+            data: [
+              2.0,
+              4.9,
+              7.0,
+              23.2,
+              25.6,
+              76.7,
+              135.6,
+              162.2,
+              32.6,
+              20.0,
+              6.4,
+              3.3
+            ]
+          },
+          {
+            name: "降水量",
+            type: "bar",
+            yAxisIndex: 1,
+            data: [
+              2.6,
+              5.9,
+              9.0,
+              26.4,
+              28.7,
+              70.7,
+              175.6,
+              182.2,
+              48.7,
+              18.8,
+              6.0,
+              2.3
+            ]
+          },
+          {
+            name: "平均温度",
+            type: "line",
+            yAxisIndex: 2,
+            data: [
+              2.0,
+              2.2,
+              3.3,
+              4.5,
+              6.3,
+              10.2,
+              20.3,
+              23.4,
+              23.0,
+              16.5,
+              12.0,
+              6.2
+            ]
+          }
+        ]
+      });
+    }
+  }
+};
+</script>

@@ -3,64 +3,32 @@ import Layout from '@/layout'
 export default {
     path: '/statistics',
     component: Layout,
-    name: '统计',
-    meta: { title: '统计', icon: 'chart', noCache: true, roles: [1, 2, 3] },
+    name: '开发统计',
+    meta: { title: '开发统计', icon: 'chart', noCache: true, roles: [40] },
     children: [
       {
-        path: 'module_id/1',
-        name: '专业市场',
-        meta: { title: '专业市场', noCache: true, roles: [1]},
-        component: () => import('@/views/stores/statistics/index'),
-        redirect: '/statistics/module_id/1/create',
-        children: [
-          {
-            path: 'create',
-            name: '新增统计',
-            component: () => import('@/views/stores/statistics/create'),
-            meta: { title: '新增统计', noCache: true, parent_module_id: 0, module_id: 1, roles: [1]}
-          },
-          {
-            path: 'children/create',
-            name: '新增统计',
-            component: () => import('@/views/stores/statistics/create'),
-            meta: { title: '新增统计', noCache: true, parent_module_id: 1, module_id: 0, activeMenu: '/stores/0/module_id/1', roles: [1]},
-            hidden: true
-          },
-          {
-            path: 'now',
-            name: '现有统计',
-            component: () => import('@/views/stores/statistics/now'),
-            meta: { title: '现有统计', noCache: true, parent_module_id: 0, module_id: 1, roles: [1]}
-          },
-          {
-            path: 'children/now',
-            name: '现有统计',
-            component: () => import('@/views/stores/statistics/now'),
-            meta: { title: '现有统计', noCache: true, parent_module_id: 1, module_id: 0, activeMenu: '/stores/0/module_id/1', roles: [1]},
-            hidden: true
-          }
-        ]
+        path: '41',
+        name: '市场开发统计',
+        component: () => import('@/views/statistics/MarketDevelopment'),
+        meta: { title: '市场开发统计', noCache: true, roles: [41]}
       },
       {
-        path: 'module_id/2',
-        name: '正泰门店',
-        meta: { title: '正泰门店', noCache: true, roles: [2]},
-        component: () => import('@/views/stores/statistics/index'),
-        redirect: '/statistics/module_id/1/create',
-        children: [
-          {
-            path: 'create',
-            name: '新增统计',
-            component: () => import('@/views/stores/statistics/create'),
-            meta: { title: '新增统计', noCache: true, parent_module_id: 21, module_id: 0, roles: [2]}
-          },
-          {
-            path: 'now',
-            name: '现有统计',
-            component: () => import('@/views/stores/statistics/now'),
-            meta: { title: '现有统计', noCache: true, parent_module_id: 21, module_id: 0, roles: [2]}
-          }
-        ]
+        path: '42',
+        name: '新增门店排名',
+        component: () => import('@/views/statistics/NewStore'),
+        meta: { title: '新增门店排名', noCache: true, roles: [42]},
+      },
+      {
+        path: '43',
+        name: '销售额统计',
+        component: () => import('@/views/statistics/Sale'),
+        meta: { title: '销售额统计', noCache: true, roles: [43]}
+      },
+      {
+        path: '44',
+        name: '竞争对手统计',
+        component: () => import('@/views/statistics/Competitor'),
+        meta: { title: '竞争对手统计', noCache: true, roles: [44]},
       }
     ]
   }

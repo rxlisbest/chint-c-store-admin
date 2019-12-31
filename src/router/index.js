@@ -161,7 +161,7 @@ export const asyncRoutes = [
   store2Router,
   store5Router,
   // store4Router,
-  // statisticRouter,
+  statisticRouter,
   // ...demoRouter,
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
