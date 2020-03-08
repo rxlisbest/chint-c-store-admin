@@ -161,4 +161,24 @@ export const messages = {
       module_id: '权限'
     },
   },
+  agency: {
+    title: '办事处管理',
+    input: {
+      name: '名称'
+    },
+    button: {
+      search: '搜索',
+    },
+    column: {
+      name: '名称',
+      create_time: '创建时间',
+    },
+    dialog: {
+      title: '审核',
+      content: '备注',
+      status: '审核结果',
+      status_on: '通过',
+      status_off: '不通过'
+    }
+  },
 }
