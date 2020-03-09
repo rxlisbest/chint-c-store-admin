@@ -184,4 +184,21 @@ export const messages = {
       status_off: '不通过'
     }
   },
+  area: {
+    title: '区域管理',
+    input: {
+      name: '名称'
+    },
+    button: {
+      search: '搜索',
+    },
+    column: {
+      name: '名称',
+      agency_name: '办事处',
+    },
+    dialog: {
+      title: '办事处',
+      agency_id: '办事处',
+    }
+  },
 }

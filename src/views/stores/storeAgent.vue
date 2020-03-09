@@ -160,7 +160,6 @@ export default {
       });
     },
     handleAuditForm(row) {
-      console.log(row);
       this.row = row;
       this.auditForm.user_id = row.id;
       this.auditForm.status = Number(row.audit_status) || 2;

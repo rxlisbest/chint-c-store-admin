@@ -97,7 +97,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      indexAgency(listQuery).then(response => {
+      indexAgency(this.listQuery).then(response => {
         this.list = response.data.data
         this.total = response.data.total
         this.listQuery.limit = Number(response.data.per_page)

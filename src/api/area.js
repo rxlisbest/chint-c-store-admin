@@ -7,3 +7,19 @@ export function indexArea(listQuery) {
     params: listQuery
   })
 }
+
+export function provinceArea(listQuery) {
+  return request({
+    url: '/index/areas/province',
+    method: 'get',
+    params: listQuery
+  })
+}
+
+export function updateAgencyId(data) {
+  return request({
+    url: '/index/areas/updateAgencyId/id/' + data.id,
+    method: 'post',
+    data
+  })
+}
