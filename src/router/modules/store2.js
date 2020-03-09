@@ -154,7 +154,7 @@ export default {
   component: Layout,
   redirect: rootPath + '/module_id/1/index/1/list',
   redirectAndCollapse: true,
-  meta: { title: '专业市场', icon: 'list', noCache: true, roles: [1] },
+  meta: { title: '专业市场', icon: 'market', noCache: true, roles: [1] },
   children: [
     {
       path: 'module_id/2',

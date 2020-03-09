@@ -154,7 +154,7 @@ export default {
   // redirect: rootPath + '/module_id/1/index/1/list',
   // redirectAndCollapse: true,
   redirect: 'noRedirect',
-  meta: { title: '正泰门店', icon: 'list', noCache: true, roles: [21] },
+  meta: { title: '正泰门店', icon: 'shop', noCache: true, roles: [21] },
   children: [
     {
       path: 'module_id/22',

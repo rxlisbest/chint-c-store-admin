@@ -8,7 +8,7 @@ export default {
       path: 'index',
       component: () => import('@/views/area/index'),
       name: '区域管理',
-      meta: { title: '区域管理', icon: 'tree-table', noCache: true, roles: ['admin'] }
+      meta: { title: '区域管理', icon: 'map', noCache: true, roles: ['admin'] }
     }
   ]
 }

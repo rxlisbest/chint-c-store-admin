@@ -7,8 +7,8 @@ export default {
     {
       path: 'index',
       component: () => import('@/views/agency/index'),
-      name: '办事处管理',
-      meta: { title: '办事处管理', icon: 'Buildings', noCache: true, roles: ['admin'] }
+      name: '经销商信息',
+      meta: { title: '经销商信息', icon: 'tree-table', noCache: true, roles: ['admin'] }
     }
   ]
 }

@@ -14,13 +14,13 @@
         icon="el-icon-search"
         @click="handleFilter"
       >{{$t('messages.button.search')}}</el-button>
-      <el-button
+      <!-- <el-button
         v-waves
         class="filter-item"
         type="primary"
         icon="el-icon-plus"
         @click="handleAdd"
-      >{{$t('messages.button.create')}}</el-button>
+      >{{$t('messages.button.create')}}</el-button> -->
     </div>
 
     <el-table
@@ -91,6 +91,7 @@ import Pagination from "@/components/Pagination"; // secondary package based on 
 import { MessageBox, Message } from "element-ui";
 
 const listQuery = {
+  name: undefined,
   page: 1,
   limit: undefined
 };

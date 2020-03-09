@@ -64,7 +64,7 @@
               <el-checkbox
                 v-model="marketObject.market16"
                 @change="changeStatus('market', 16)"
-              >电气工业超市</el-checkbox>
+              >电器工业超市</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
@@ -89,7 +89,7 @@
               <el-checkbox
                 v-model="marketObject.market5"
                 @change="changeStatus('market', 5)"
-              >电气工业超市旗舰店</el-checkbox>
+              >电器工业超市旗舰店</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
@@ -97,7 +97,7 @@
               <el-checkbox
                 v-model="marketObject.market6"
                 @change="changeStatus('market', 6)"
-              >电气工业超市标准店</el-checkbox>
+              >电器工业超市标准店</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
@@ -105,7 +105,7 @@
               <el-checkbox
                 v-model="marketObject.market7"
                 @change="changeStatus('market', 7)"
-              >电气工业超市单体店</el-checkbox>
+              >电器工业超市单体店</el-checkbox>
             </el-col>
           </el-row>
         </el-col>
@@ -195,7 +195,7 @@
               <el-checkbox
                 v-model="marketObject.market36"
                 @change="changeStatus('market', 36)"
-              >电气工业超市</el-checkbox>
+              >电器工业超市</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
@@ -223,7 +223,7 @@
               <el-checkbox
                 v-model="marketObject.market25"
                 @change="changeStatus('market', 25)"
-              >电气工业超市旗舰店</el-checkbox>
+              >电器工业超市旗舰店</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
@@ -231,7 +231,7 @@
               <el-checkbox
                 v-model="marketObject.market26"
                 @change="changeStatus('market', 26)"
-              >电气工业超市标准店</el-checkbox>
+              >电器工业超市标准店</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
@@ -239,7 +239,7 @@
               <el-checkbox
                 v-model="marketObject.market27"
                 @change="changeStatus('market', 27)"
-              >电气工业超市单体店</el-checkbox>
+              >电器工业超市单体店</el-checkbox>
             </el-col>
           </el-row>
         </el-col>
