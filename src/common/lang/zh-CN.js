@@ -63,6 +63,7 @@ export const messages = {
       phone: '手机号',
       address: '地址',
       email: '邮箱',
+      agency_name: '办事处',
       create_time: '注册时间',
       role_id: '权限',
       audit_status: '审核状态',

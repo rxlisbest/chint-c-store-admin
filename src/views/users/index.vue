@@ -47,6 +47,7 @@
       <el-table-column :label="$t('messages.users.column.phone')" prop="phone" align="center"></el-table-column>
       <el-table-column :label="$t('messages.users.column.email')" prop="email" align="center"></el-table-column>
       <el-table-column :label="$t('messages.users.column.address')" prop="address" align="center"></el-table-column>
+      <el-table-column :label="$t('messages.users.column.agency_name')" prop="agency_name" align="center"></el-table-column>
       <el-table-column :label="$t('messages.users.column.create_time')" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
