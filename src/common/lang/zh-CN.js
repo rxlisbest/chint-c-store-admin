@@ -51,7 +51,8 @@ export const messages = {
       search: '搜索',
       audit_status: '审核',
       status_on: '启用',
-      status_off: '禁用'
+      status_off: '禁用',
+      agency_id: '办事处'
     },
     select: {
       role_id: '权限',
@@ -72,7 +73,8 @@ export const messages = {
       content: '备注',
       status: '审核结果',
       status_on: '通过',
-      status_off: '不通过'
+      status_off: '不通过',
+      agency: '办事处',
     }
   },
   store_market: {

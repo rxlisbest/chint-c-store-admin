@@ -62,3 +62,11 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function updateAgencyId(data) {
+  return request({
+    url: '/index/users/updateAgencyId/id/' + data.id,
+    method: 'post',
+    data
+  })
+}

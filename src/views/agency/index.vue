@@ -113,6 +113,7 @@ export default {
       this.getList()
     },
     handleEdit(row) {
+      this.dialogForm.name = row.name
       this.dialogFormVisible = true
       this.id = row.id
     },

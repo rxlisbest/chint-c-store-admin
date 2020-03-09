@@ -37,3 +37,11 @@ export function deleteAgency(id) {
     method: 'delete'
   })
 }
+
+export function allAgency(listQuery) {
+  return request({
+    url: '/index/agencies/all',
+    method: 'get',
+    params: listQuery
+  })
+}
