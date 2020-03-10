@@ -14,6 +14,7 @@ import store4Router from './modules/store4'
 import store5Router from './modules/store5'
 import agencyRouter from './modules/agency'
 import areaRouter from './modules/area'
+import configRouter from './modules/config'
 import statisticRouter from './modules/statistic'
 import demoRouter from './modules/demo'
 
@@ -160,6 +161,7 @@ export const asyncRoutes = [
     ]
   },
   // store1Router,
+  configRouter,
   areaRouter,
   agencyRouter,
   store2Router,

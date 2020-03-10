@@ -201,4 +201,7 @@ export const messages = {
       agency_id: '办事处',
     }
   },
+  config: {
+    title: '经销商信息'
+  }
 }
