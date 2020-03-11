@@ -158,7 +158,8 @@ export default {
     fetchData(id) {
       readStore(id)
         .then(response => {
-          this.postForm = Object.assign({}, {...defaultForm, id: response.data.id, name: response.data.name, parent_id: response.data.parent_id});
+          this.postForm = Object.assign({}, {...defaultForm, id: response.data.id, name: response.data.name, parent_id: response.data.parent_id, area_code: response.data.area_code});
+          this.$refs.area.initEditArea(this.postForm.area_code);
         })
         .catch(err => {
           console.log(err);
