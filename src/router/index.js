@@ -16,6 +16,7 @@ import agencyRouter from './modules/agency'
 import areaRouter from './modules/area'
 import configRouter from './modules/config'
 import statisticRouter from './modules/statistic'
+import dataRouter from './modules/data'
 import demoRouter from './modules/demo'
 
 
@@ -168,6 +169,7 @@ export const asyncRoutes = [
   store5Router,
   // store4Router,
   statisticRouter,
+  dataRouter,
   // ...demoRouter,
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
