@@ -30,6 +30,15 @@
         >
           <Parent v-model="postForm.parent_id" :module_id="1"></Parent>
         </el-form-item>
+
+
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="72px"
+          :label="$t('messages.stores.input.area_code')"
+        >
+          <Area v-model="postForm.area_code" ref="area"></Area>
+        </el-form-item>
       </div>
     </el-form>
   </div>
