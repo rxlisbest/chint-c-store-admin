@@ -46,6 +46,17 @@ const storeIncomes = (module_id, activeMenu) => {
   }
 }
 
+// 业绩指标
+const storeKpi = (module_id, activeMenu) => {
+  return {
+    path: 'kpi/:store_id(\\d+)',
+    name: '业绩指标',
+    component: () => import('@/views/store-kpi/index'),
+    meta: { title: '业绩指标', noCache: true, module_id: module_id, activeMenu: activeMenu, roles: [module_id] },
+    hidden: true,
+  }
+}
+
 // 门店下级导航的展示
 const shop = [
   [
@@ -86,6 +97,7 @@ for (let v of shop) {
         storeCreate(item.id, activeMenu, 'createMarketShop', item.module_id[0]),
         storeImages(item.id, activeMenu),
         storeIncomes(item.id, activeMenu),
+        storeKpi(item.id, activeMenu),
       ]
     }
     content.push(o)

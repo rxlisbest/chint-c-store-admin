@@ -54,7 +54,7 @@
       <el-table-column
         :label="$t('messages.column.actions')"
         align="center"
-        width="380"
+        width="500"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{row}" v-if="user_id == row.user_id">
@@ -74,6 +74,12 @@
             <el-button type="success" size="mini" style="width: 90px;">
               <svg-icon icon-class="chart" />
               {{ $t('messages.stores.button.incomes') }}
+            </el-button>
+          </router-link>
+          <router-link :to="'kpi/' + row.id">
+            <el-button type="success" size="mini" style="width: 90px;">
+              <svg-icon icon-class="chart" />
+              {{ $t('messages.stores.button.kpi') }}
             </el-button>
           </router-link>
           <router-link :to="'edit/' + row.id">

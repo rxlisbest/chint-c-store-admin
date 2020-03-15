@@ -123,6 +123,7 @@ export const messages = {
       submit: '保存',
       images: '品牌形象',
       incomes: '运营状况',
+      kpi: '业绩指标',
       children: '下级',
       statistic_create: '新增统计',
       statistic_now: '现有统计',
@@ -139,6 +140,12 @@ export const messages = {
     }
   },
   store_incomes: {
+    column: {
+      month: '月份',
+      money: '金额'
+    }
+  },
+  store_kpi: {
     column: {
       month: '月份',
       money: '金额'

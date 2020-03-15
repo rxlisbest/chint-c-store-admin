@@ -27,12 +27,12 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column :label="$t('messages.store_incomes.column.month')" align="center">
+      <el-table-column :label="$t('messages.store_kpi.column.month')" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.month | parseTime('{y}-{m}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('messages.store_incomes.column.money')" prop="money" align="center">
+      <el-table-column :label="$t('messages.store_kpi.column.money')" prop="money" align="center">
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
@@ -47,7 +47,7 @@
 
     <el-dialog :title="$t('messages.users.dialog.title')" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :model="dialogForm" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item :label="$t('messages.store_incomes.column.month')" prop="resource">
+        <el-form-item :label="$t('messages.store_kpi.column.month')" prop="resource">
           <el-date-picker
             v-model="dialogForm.month"
             type="month"
@@ -55,7 +55,7 @@
             placeholder="选择月">
           </el-date-picker>
         </el-form-item>
-        <el-form-item :label="$t('messages.store_incomes.column.money')">
+        <el-form-item :label="$t('messages.store_kpi.column.money')">
           <el-input-number v-model="dialogForm.money" :precision="2" :step="1"></el-input-number>
         </el-form-item>
       </el-form>
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { indexStoreIncome, saveStoreIncome, updateStoreIncome } from '@/api/store_income'
+import { indexStoreKpi, saveStoreKpi, updateStoreKpi } from '@/api/store_kpi'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -117,7 +117,7 @@ export default {
         listQuery.month[1] = listQuery.month[1] / 1000
       }
       this.listLoading = true
-      indexStoreIncome(listQuery).then(response => {
+      indexStoreKpi(listQuery).then(response => {
         this.list = response.data.data
         this.total = response.data.total
         this.listQuery.limit = Number(response.data.per_page)
@@ -144,13 +144,13 @@ export default {
       data.month = this.dialogForm.month / 1000
       data.money = this.dialogForm.money
       if (this.id > 0) {
-        updateStoreIncome(this.id, data)
+        updateStoreKpi(this.id, data)
         .then(() => {
           this.getList()
           this.dialogFormVisible = false
         })
       } else {
-        saveStoreIncome(data)
+        saveStoreKpi(data)
         .then(() => {
           this.getList()
           this.dialogFormVisible = false
