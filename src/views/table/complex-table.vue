@@ -126,10 +126,10 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
-          Cancel
+          {{ $t('messages.button.cancel') }}
         </el-button>
         <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
-          Confirm
+          {{ $t('messages.button.confirm') }}
         </el-button>
       </div>
     </el-dialog>
@@ -140,7 +140,7 @@
         <el-table-column prop="pv" label="Pv" />
       </el-table>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
+        <el-button type="primary" @click="dialogPvVisible = false">{{ $t('messages.button.confirm') }}</el-button>
       </span>
     </el-dialog>
   </div>

@@ -77,8 +77,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="handleDialogForm()">Confirm</el-button>
+        <el-button @click="dialogFormVisible = false">{{ $t('messages.button.cancel') }}</el-button>
+        <el-button type="primary" @click="handleDialogForm()">{{ $t('messages.button.confirm') }}</el-button>
       </div>
     </el-dialog>
   </div>

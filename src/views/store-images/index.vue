@@ -51,10 +51,10 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
-          Cancel
+          {{ $t('messages.button.cancel') }}
         </el-button>
         <el-button type="primary" @click="saveStoreImage()">
-          Confirm
+          {{ $t('messages.button.confirm') }}
         </el-button>
       </div>
     </el-dialog>

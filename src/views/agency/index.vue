@@ -85,8 +85,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="handleDialogForm()">Confirm</el-button>
+        <el-button @click="dialogFormVisible = false">{{ $t('messages.button.cancel') }}</el-button>
+        <el-button type="primary" @click="handleDialogForm()">{{ $t('messages.button.confirm') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -148,17 +148,23 @@ export default {
     },
     async handleEdit(row) {
       let res = await provinceArea();
+
+      let hasProvince = [];
+      row.province.forEach(v => {
+        hasProvince.push(v.id);
+      });
+
       let province = [];
       res.data.forEach(v => {
-        province.push({ key: v.id, label: v.name });
+        let disabled = false;
+        if (v.agency_id > 0 && hasProvince.indexOf(v.id) < 0) {
+          disabled = true;
+        }
+        province.push({ key: v.id, label: v.name, disabled: disabled });
       });
-      this.province = province
+      this.province = province;
       this.dialogForm.name = row.name;
-      province = []
-      row.province.forEach(v => {
-        province.push(v.id)
-      })
-      this.dialogForm.province = province;
+      this.dialogForm.province = hasProvince;
       this.dialogFormVisible = true;
       this.id = row.id;
     },
@@ -179,9 +185,13 @@ export default {
       let res = await provinceArea();
       let province = [];
       res.data.forEach(v => {
-        province.push({ key: v.id, label: v.name });
+        let disabled = false;
+        if (v.agency_id > 0) {
+          disabled = true;
+        }
+        province.push({ key: v.id, label: v.name, disabled: disabled });
       });
-      this.province = province
+      this.province = province;
       this.dialogForm.name = undefined;
       this.dialogForm.province = [];
       this.dialogFormVisible = true;

@@ -128,8 +128,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="auditFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="handleAuditStatus()">Confirm</el-button>
+        <el-button @click="auditFormVisible = false">{{ $t('messages.button.cancel') }}</el-button>
+        <el-button type="primary" @click="handleAuditStatus()">{{ $t('messages.button.confirm') }}</el-button>
       </div>
     </el-dialog>
 
@@ -146,8 +146,8 @@
         </el-select>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="agencyFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="handleAgencyId()">Confirm</el-button>
+        <el-button @click="agencyFormVisible = false">{{ $t('messages.button.cancel') }}</el-button>
+        <el-button type="primary" @click="handleAgencyId()">{{ $t('messages.button.confirm') }}</el-button>
       </div>
     </el-dialog>
   </div>
