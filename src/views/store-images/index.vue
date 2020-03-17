@@ -22,6 +22,8 @@
       </el-table-column>
       <el-table-column :label="$t('messages.store_images.column.url')" prop="url" align="center">
       </el-table-column>
+      <el-table-column :label="$t('messages.store_images.column.description')" prop="description" align="center" width="180px">
+      </el-table-column>
       <el-table-column :label="$t('messages.store_images.column.sort')" prop="sort" align="center" width="180px">
       </el-table-column>
       <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
@@ -44,6 +46,9 @@
         </el-form-item>
         <el-form-item :label="$t('messages.store_images.column.url')">
           <el-input v-model="dialogForm.url"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('messages.store_images.column.description')">
+          <el-input v-model="dialogForm.description"></el-input>
         </el-form-item>
         <el-form-item :label="$t('messages.store_images.column.sort')">
           <el-input-number v-model="dialogForm.sort" :min="0" :max="100"></el-input-number>

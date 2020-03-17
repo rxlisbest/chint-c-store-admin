@@ -106,9 +106,23 @@ export const messages = {
       sales_area: '销售范围',
       competitors: '竞争对手',
       competitors_children: {
-        name: '请输入竞争对手名称',
-        money: '请输入预估销售额',
-        introduce: '请输入竞争对手情况介绍',
+        name: '名称',
+        money: '预估销售额',
+        introduce: '情况介绍',
+        one_count: '一级数量',
+        two_count: '二级数量',
+        percent: '该市场份额',
+        content: '终端形象建设及可以填写内容',
+        outdoor: '户外广告',
+        
+        // name: '请输入',
+        // money: '请输入',
+        // introduce: '请输入',
+        // one_count: '请输入',
+        // two_count: '请输入',
+        // percent: '请输入',
+        // content: '请输入',
+        // outdoor: '请输入',
       },
       terminal_construction: '终端化建设',
       business_product: '经营产品',
@@ -121,7 +135,7 @@ export const messages = {
     },
     button: {
       submit: '保存',
-      images: '品牌形象',
+      images: '建设案例',
       incomes: '运营状况',
       kpi: '业绩指标',
       children: '下级',
@@ -136,7 +150,8 @@ export const messages = {
       file_url: '预览',
       url: '链接',
       sort: '排序号',
-      file_id: '图片'
+      file_id: '图片',
+      description: '文字说明'
     }
   },
   store_incomes: {

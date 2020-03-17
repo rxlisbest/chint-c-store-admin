@@ -251,7 +251,7 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="24">
-              <el-checkbox v-model="marketObject.market54" @change="changeStatus('market', 54)">品牌形象</el-checkbox>
+              <el-checkbox v-model="marketObject.market54" @change="changeStatus('market', 54)">建设案例</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">

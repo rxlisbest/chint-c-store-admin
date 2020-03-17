@@ -91,7 +91,7 @@
           />
         </el-form-item>-->
 
-        <!-- <el-form-item
+        <el-form-item
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.phone')"
@@ -104,7 +104,7 @@
             autosize
             :placeholder="$t('messages.placeholder.common')"
           />
-        </el-form-item>-->
+        </el-form-item>
 
         <el-form-item
           style="margin-bottom: 40px;"
@@ -153,7 +153,7 @@
           />
         </el-form-item>
 
-        <!-- <el-form-item
+        <el-form-item
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.business_scope')"
@@ -166,7 +166,7 @@
             autosize
             :placeholder="$t('messages.placeholder.common')"
           />
-        </el-form-item>-->
+        </el-form-item>
 
         <!-- <el-form-item
           prop="plan_file_id"
@@ -256,6 +256,7 @@ import { storeSaveShop, storeUpdateShop, readStore } from "@/api/store";
 import { searchUser } from "@/api/remote-search";
 import Warning from "./Warning";
 import Competitors from "./Competitors";
+import TerminalConstruction from "./TerminalConstruction";
 import Map from "./Map";
 import Area from "./Area";
 import Parent from "./Parent";
@@ -288,14 +289,23 @@ const defaultForm = {
   establishment_time: undefined,
   sales_area: "",
   competitors: undefined,
-  terminal_construction: "",
+  terminal_construction: undefined,
   business_product: ""
 };
 
 // const id = 0
 export default {
   name: "DetailMarketShop",
-  components: { MDinput, Upload, Sticky, Competitors, Map, Area, Parent },
+  components: {
+    MDinput,
+    Upload,
+    Sticky,
+    Competitors,
+    Map,
+    Area,
+    Parent,
+    TerminalConstruction
+  },
   props: {
     isEdit: {
       type: Boolean,
@@ -342,7 +352,7 @@ export default {
     this.postForm.module_id = this.module_id;
 
     this.parent_module_id = this.$route.meta.parent_module_id;
-    
+
     // Why need to make a copy of this.$route here?
     // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
     // https://github.com/PanJiaChen/vue-element-admin/issues/1221

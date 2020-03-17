@@ -29,8 +29,8 @@ export default {
       {
         path: 'module_id/16/images/:store_id(\\d+)',
         component: () => import('@/views/store-images/index'),
-        name: '品牌形象',
-        meta: { title: '品牌形象', noCache: true, activeMenu: '/stores/1/module_id/16', roles: [2, 16] },
+        name: '建设案例',
+        meta: { title: '建设案例', noCache: true, activeMenu: '/stores/1/module_id/16', roles: [2, 16] },
         hidden: true
       },
       {
@@ -63,8 +63,8 @@ export default {
       {
         path: 'module_id/17/images/:store_id(\\d+)',
         component: () => import('@/views/store-images/index'),
-        name: '品牌形象',
-        meta: { title: '品牌形象', noCache: true, activeMenu: '/stores/1/module_id/17', roles: [2, 17] },
+        name: '建设案例',
+        meta: { title: '建设案例', noCache: true, activeMenu: '/stores/1/module_id/17', roles: [2, 17] },
         hidden: true
       },
       {
@@ -97,8 +97,8 @@ export default {
       {
         path: 'module_id/18/images/:store_id(\\d+)',
         component: () => import('@/views/store-images/index'),
-        name: '品牌形象',
-        meta: { title: '品牌形象', noCache: true, activeMenu: '/stores/1/module_id/18', roles: [2, 18] },
+        name: '建设案例',
+        meta: { title: '建设案例', noCache: true, activeMenu: '/stores/1/module_id/18', roles: [2, 18] },
         hidden: true
       },
       {
@@ -131,8 +131,8 @@ export default {
       {
         path: 'module_id/19/images/:store_id(\\d+)',
         component: () => import('@/views/store-images/index'),
-        name: '品牌形象',
-        meta: { title: '品牌形象', noCache: true, activeMenu: '/stores/1/module_id/19', roles: [2, 19] },
+        name: '建设案例',
+        meta: { title: '建设案例', noCache: true, activeMenu: '/stores/1/module_id/19', roles: [2, 19] },
         hidden: true
       },
       {
@@ -165,8 +165,8 @@ export default {
       {
         path: 'module_id/20/images/:store_id(\\d+)',
         component: () => import('@/views/store-images/index'),
-        name: '品牌形象',
-        meta: { title: '品牌形象', noCache: true, activeMenu: '/stores/1/module_id/20', roles: [2, 20] },
+        name: '建设案例',
+        meta: { title: '建设案例', noCache: true, activeMenu: '/stores/1/module_id/20', roles: [2, 20] },
         hidden: true
       },
       {
@@ -199,8 +199,8 @@ export default {
       {
         path: 'module_id/21/images/:store_id(\\d+)',
         component: () => import('@/views/store-images/index'),
-        name: '品牌形象',
-        meta: { title: '品牌形象', noCache: true, activeMenu: '/stores/1/module_id/21', roles: [2, 21] },
+        name: '建设案例',
+        meta: { title: '建设案例', noCache: true, activeMenu: '/stores/1/module_id/21', roles: [2, 21] },
         hidden: true
       },
       {
@@ -233,8 +233,8 @@ export default {
       {
         path: 'module_id/22/images/:store_id(\\d+)',
         component: () => import('@/views/store-images/index'),
-        name: '品牌形象',
-        meta: { title: '品牌形象', noCache: true, activeMenu: '/stores/1/module_id/22', roles: [2, 22] },
+        name: '建设案例',
+        meta: { title: '建设案例', noCache: true, activeMenu: '/stores/1/module_id/22', roles: [2, 22] },
         hidden: true
       },
       {
@@ -267,8 +267,8 @@ export default {
       {
         path: 'module_id/23/images/:store_id(\\d+)',
         component: () => import('@/views/store-images/index'),
-        name: '品牌形象',
-        meta: { title: '品牌形象', noCache: true, activeMenu: '/stores/1/module_id/23', roles: [2, 23] },
+        name: '建设案例',
+        meta: { title: '建设案例', noCache: true, activeMenu: '/stores/1/module_id/23', roles: [2, 23] },
         hidden: true
       },
       {

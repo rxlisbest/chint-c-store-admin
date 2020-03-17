@@ -91,7 +91,7 @@
           />
         </el-form-item>-->
 
-        <!-- <el-form-item
+        <el-form-item
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.phone')"
@@ -104,7 +104,7 @@
             autosize
             :placeholder="$t('messages.placeholder.common')"
           />
-        </el-form-item>-->
+        </el-form-item>
 
         <el-form-item
           style="margin-bottom: 40px;"
@@ -153,7 +153,7 @@
           />
         </el-form-item>
 
-        <!-- <el-form-item
+        <el-form-item
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.business_scope')"
@@ -166,7 +166,7 @@
             autosize
             :placeholder="$t('messages.placeholder.common')"
           />
-        </el-form-item>-->
+        </el-form-item>
 
         <!-- <el-form-item
           prop="plan_file_id"
@@ -175,7 +175,7 @@
           style="margin-bottom: 30px;"
         >
           <Upload v-model="postForm.plan_file_id" />
-        </el-form-item> -->
+        </el-form-item>-->
 
         <el-form-item
           style="margin-bottom: 40px;"
@@ -218,14 +218,7 @@
           label-width="100px"
           :label="$t('messages.stores.input.terminal_construction')"
         >
-          <el-input
-            v-model="postForm.terminal_construction"
-            :rows="3"
-            type="textarea"
-            class="article-textarea"
-            autosize
-            :placeholder="$t('messages.placeholder.common')"
-          />
+          <terminal-construction v-model="postForm.terminal_construction"></terminal-construction>
         </el-form-item>
 
         <el-form-item
@@ -256,6 +249,7 @@ import { storeSaveShop, storeUpdateShop, readStore } from "@/api/store";
 import { searchUser } from "@/api/remote-search";
 import Warning from "./Warning";
 import Competitors from "./Competitors";
+import TerminalConstruction from "./TerminalConstruction";
 import Map from "./Map";
 import Area from "./Area";
 import Parent from "./Parent";
@@ -287,14 +281,23 @@ const defaultForm = {
   establishment_time: undefined,
   sales_area: "",
   competitors: undefined,
-  terminal_construction: "",
-  business_product: "",
+  terminal_construction: undefined,
+  business_product: ""
 };
 
 // const id = 0
 export default {
   name: "DetailStoreShop",
-  components: { MDinput, Upload, Sticky, Competitors, Map, Area, Parent },
+  components: {
+    MDinput,
+    Upload,
+    Sticky,
+    Competitors,
+    Map,
+    Area,
+    Parent,
+    TerminalConstruction
+  },
   props: {
     isEdit: {
       type: Boolean,

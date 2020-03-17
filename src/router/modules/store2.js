@@ -24,13 +24,13 @@ const storeEdit = (module_id, activeMenu, component, parent_module_id) => {
   }
 }
 
-// 品牌形象
+// 建设案例
 const storeImages = (module_id, activeMenu) => {
   return {
     path: 'images/:store_id(\\d+)',
-    name: '品牌形象',
+    name: '建设案例',
     component: () => import('@/views/store-images/index'),
-    meta: { title: '品牌形象', noCache: true, module_id: module_id, activeMenu: activeMenu, roles: [module_id] },
+    meta: { title: '建设案例', noCache: true, module_id: module_id, activeMenu: activeMenu, roles: [module_id] },
     hidden: true,
   }
 }

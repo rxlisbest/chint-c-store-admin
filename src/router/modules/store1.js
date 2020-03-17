@@ -34,8 +34,8 @@ export default {
     {
       path: 'module_id/:parent_id(\\d+)/images/:store_id(\\d+)',
       component: () => import('@/views/store-images/index'),
-      name: '品牌形象',
-      meta: { title: '品牌形象', noCache: true, activeMenu: '/stores/0/module_id/1', roles: [1] },
+      name: '建设案例',
+      meta: { title: '建设案例', noCache: true, activeMenu: '/stores/0/module_id/1', roles: [1] },
       hidden: true
     },
     {
