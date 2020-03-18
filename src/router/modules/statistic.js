@@ -14,9 +14,9 @@ export default {
       },
       {
         path: '42',
-        name: '新增门店排名',
+        name: '新增客户数量',
         component: () => import('@/views/statistics/NewStore'),
-        meta: { title: '新增门店排名', noCache: true, roles: [42]},
+        meta: { title: '新增客户数量', noCache: true, roles: [42]},
       },
       {
         path: '43',

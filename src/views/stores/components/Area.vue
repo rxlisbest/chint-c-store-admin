@@ -6,7 +6,8 @@
       :props="area_props"
       @active-item-change="handleAreaItemChange"
       @change="handleAreaChange"
-    />
+    ></el-cascader>
+    <span>所属办事处：{{agency_name}}</span>
   </div>
 </template>
 
@@ -31,7 +32,9 @@ export default {
         label: "name",
         children: "children"
       },
-      valueData: this.value
+      valueData: this.value,
+      agency_name: "办事处",
+      province: []
     };
   },
   computed: {},
@@ -45,7 +48,7 @@ export default {
     },
     value(val) {
       this.valueData = val;
-    },
+    }
   },
   methods: {
     emitInput(val) {
@@ -62,6 +65,11 @@ export default {
         .catch(err => {});
     },
     handleAreaChange(val) {
+      this.province.forEach((v, k) => {
+        if (v.code == val[0]) {
+          this.agency_name = v.agency_name;
+        }
+      });
       this.getAreaName(val);
     },
     getAreaName(value) {
@@ -93,11 +101,12 @@ export default {
       const _this = this;
       indexArea()
         .then(res => {
-          const data = res.data;
+          let data = res.data;
           data.forEach((v, k) => {
             data[k].children = [];
           });
           _this.area_options = data;
+          this.province = data;
         })
         .catch(err => {});
     },
@@ -119,6 +128,12 @@ export default {
           });
         }
       });
+
+      // this.province.forEach((v, k) => {
+      //   if (v.code == val[0]) {
+      //     this.agency_name = v.agency_name;
+      //   }
+      // });
     },
     initEditArea(area_code) {
       const _this = this;
