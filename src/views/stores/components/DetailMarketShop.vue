@@ -26,6 +26,17 @@
         <el-form-item
           style="margin-bottom: 40px;"
           label-width="100px"
+          :label="$t('messages.stores.input.is_one')"
+        >
+          <el-radio-group v-model="postForm.is_one">
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="100px"
           :label="$t('messages.stores.input.module_id')"
         >
           <Parent v-model="postForm.parent_id" :module_id="parent_module_id"></Parent>
@@ -269,6 +280,7 @@ import { Decimal } from "decimal.js";
 
 const defaultForm = {
   name: "",
+  is_one: 0,
   module_id: undefined,
   parent_module_id: undefined,
   parent_id: undefined,

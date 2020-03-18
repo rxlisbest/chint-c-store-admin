@@ -27,9 +27,9 @@ export default {
     this.getList()
     if (!this.value) {
       this.emitInput(defaultList);
-    } else {
-      this.has = this.value
     }
+  },
+  mounted() {
   },
   watch: {
     has(val) {
@@ -45,6 +45,7 @@ export default {
         list.push({ key: v.id, label: v.name, disabled: disabled });
       });
       this.list = list
+      this.has = this.value
     },
     emitInput(val) {
       this.$emit("input", val);

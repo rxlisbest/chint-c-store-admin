@@ -89,6 +89,7 @@ export const messages = {
   stores: {
     input: {
       name: '名称',
+      is_one: '是否一级经销商',
       module_id: '所属上级',
       cover_file_id: '封面',
       business_hours: '营业时间',
