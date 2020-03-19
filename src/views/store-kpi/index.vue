@@ -19,7 +19,7 @@
     </div>
 
     <el-table
-      :key="tableKey"®
+      :key="tableKey"
       v-loading="listLoading"
       :data="list"
       border

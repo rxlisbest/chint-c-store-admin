@@ -229,6 +229,14 @@
           label-width="100px"
           :label="$t('messages.stores.input.terminal_construction')"
         >
+          <terminal-construction v-model="postForm.terminal_construction"></terminal-construction>
+        </el-form-item>
+
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="100px"
+          :label="$t('messages.stores.input.terminal_construction')"
+        >
           <el-input
             v-model="postForm.terminal_construction"
             :rows="3"
