@@ -64,7 +64,7 @@
               <el-checkbox
                 v-model="marketObject.market16"
                 @change="changeStatus('market', 16)"
-              >电器工业超市</el-checkbox>
+              >电气工业超市</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
@@ -89,7 +89,7 @@
               <el-checkbox
                 v-model="marketObject.market5"
                 @change="changeStatus('market', 5)"
-              >电器工业超市旗舰店</el-checkbox>
+              >电气工业超市旗舰店</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
@@ -97,7 +97,7 @@
               <el-checkbox
                 v-model="marketObject.market6"
                 @change="changeStatus('market', 6)"
-              >电器工业超市标准店</el-checkbox>
+              >电气工业超市标准店</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
@@ -105,7 +105,7 @@
               <el-checkbox
                 v-model="marketObject.market7"
                 @change="changeStatus('market', 7)"
-              >电器工业超市单体店</el-checkbox>
+              >电气工业超市单体店</el-checkbox>
             </el-col>
           </el-row>
         </el-col>
@@ -195,7 +195,7 @@
               <el-checkbox
                 v-model="marketObject.market36"
                 @change="changeStatus('market', 36)"
-              >电器工业超市</el-checkbox>
+              >电气工业超市</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
@@ -223,7 +223,7 @@
               <el-checkbox
                 v-model="marketObject.market25"
                 @change="changeStatus('market', 25)"
-              >电器工业超市旗舰店</el-checkbox>
+              >电气工业超市旗舰店</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
@@ -231,7 +231,7 @@
               <el-checkbox
                 v-model="marketObject.market26"
                 @change="changeStatus('market', 26)"
-              >电器工业超市标准店</el-checkbox>
+              >电气工业超市标准店</el-checkbox>
             </el-col>
           </el-row>
           <el-row :gutter="20">
@@ -239,7 +239,7 @@
               <el-checkbox
                 v-model="marketObject.market27"
                 @change="changeStatus('market', 27)"
-              >电器工业超市单体店</el-checkbox>
+              >电气工业超市单体店</el-checkbox>
             </el-col>
           </el-row>
         </el-col>
@@ -308,11 +308,11 @@ const market = [
               { id: 4, name: "SI专卖店" },
               {
                 id: 16,
-                name: "电器工业超市",
+                name: "电气工业超市",
                 children: [
-                  { id: 5, name: "电器工业超市旗舰店" },
-                  { id: 6, name: "电器工业超市标准店" },
-                  { id: 7, name: "电器工业超市单体店" }
+                  { id: 5, name: "电气工业超市旗舰店" },
+                  { id: 6, name: "电气工业超市标准店" },
+                  { id: 7, name: "电气工业超市单体店" }
                 ]
               },
               { id: 15, name: "品牌体验馆" }
@@ -354,11 +354,11 @@ const market = [
               { id: 24, name: "SI专卖店" },
               {
                 id: 36,
-                name: "电器工业超市",
+                name: "电气工业超市",
                 children: [
-                  { id: 25, name: "电器工业超市旗舰店" },
-                  { id: 26, name: "电器工业超市标准店" },
-                  { id: 27, name: "电器工业超市单体店" }
+                  { id: 25, name: "电气工业超市旗舰店" },
+                  { id: 26, name: "电气工业超市标准店" },
+                  { id: 27, name: "电气工业超市单体店" }
                 ]
               },
               { id: 35, name: "品牌体验馆" }

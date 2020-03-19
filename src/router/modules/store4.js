@@ -30,21 +30,21 @@ export default {
             },
             {
               path: 'index/25',
-              name: '电器工业超市旗舰店',
+              name: '电气工业超市旗舰店',
               component: () => import('@/views/stores/index'),
-              meta: { title: '电器工业超市旗舰店', noCache: true, module_id: 25, roles: [25] }
+              meta: { title: '电气工业超市旗舰店', noCache: true, module_id: 25, roles: [25] }
             },
             {
               path: 'index/26',
-              name: '电器工业超市标准店',
+              name: '电气工业超市标准店',
               component: () => import('@/views/stores/index'),
-              meta: { title: '电器工业超市标准店', noCache: true, module_id: 26, roles: [26] }
+              meta: { title: '电气工业超市标准店', noCache: true, module_id: 26, roles: [26] }
             },
             {
               path: 'index/27',
-              name: '电器工业超市单体店',
+              name: '电气工业超市单体店',
               component: () => import('@/views/stores/index'),
-              meta: { title: '电器工业超市单体店', noCache: true, module_id: 27, roles: [27] }
+              meta: { title: '电气工业超市单体店', noCache: true, module_id: 27, roles: [27] }
             },
             {
               path: 'index/35',
