@@ -127,6 +127,7 @@ export const messages = {
       },
       terminal_construction: '终端化建设',
       business_product: '经营产品',
+      no: '客户编号',
     },
     column: {
       name: '名称',

@@ -26,6 +26,21 @@
         <el-form-item
           style="margin-bottom: 40px;"
           label-width="100px"
+          :label="$t('messages.stores.input.no')"
+        >
+          <el-input
+            v-model="postForm.no"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+            :placeholder="$t('messages.placeholder.common')"
+          />
+        </el-form-item>
+
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="100px"
           :label="$t('messages.stores.input.is_one')"
         >
           <el-radio-group v-model="postForm.is_one">
@@ -294,7 +309,8 @@ const defaultForm = {
   sales_area: "",
   competitors: undefined,
   terminal_construction: undefined,
-  business_product: ""
+  business_product: "",
+  no: undefined,
 };
 
 // const id = 0
