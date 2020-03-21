@@ -34,6 +34,7 @@ export default {
   watch: {
     has(val) {
       this.$emit("input", val);
+      console.log(val)
     }
   },
   methods: {

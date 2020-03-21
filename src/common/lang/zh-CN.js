@@ -156,6 +156,15 @@ export const messages = {
       description: '文字说明'
     }
   },
+  index_images: {
+    column: {
+      file_url: '预览',
+      url: '链接',
+      sort: '排序号',
+      file_id: '图片',
+      description: '文字说明'
+    }
+  },
   store_incomes: {
     column: {
       month: '月份',

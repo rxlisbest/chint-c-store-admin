@@ -18,6 +18,7 @@ import areaRouter from './modules/area'
 import configRouter from './modules/config'
 import statisticRouter from './modules/statistic'
 import dataRouter from './modules/data'
+import indexRouter from './modules/index'
 import demoRouter from './modules/demo'
 
 
@@ -163,6 +164,7 @@ export const asyncRoutes = [
     ]
   },
   // store1Router,
+  indexRouter,
   configRouter,
   // areaRouter,
   tagendRouter,
