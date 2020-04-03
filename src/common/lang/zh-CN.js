@@ -156,6 +156,15 @@ export const messages = {
       description: '文字说明'
     }
   },
+  competitor: {
+    column: {
+      file_url: '预览',
+      item: '终端建设项目',
+      promotion: '促销活动',
+      file_id: '图片',
+      other: '其他内容'
+    }
+  },
   index_images: {
     column: {
       file_url: '预览',

@@ -19,6 +19,7 @@ import configRouter from './modules/config'
 import statisticRouter from './modules/statistic'
 import dataRouter from './modules/data'
 import indexRouter from './modules/index'
+import competitorRouter from './modules/competitor'
 import demoRouter from './modules/demo'
 
 
@@ -174,6 +175,7 @@ export const asyncRoutes = [
   // store4Router,
   statisticRouter,
   dataRouter,
+  // competitorRouter,
   // ...demoRouter,
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
