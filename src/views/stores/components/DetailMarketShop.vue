@@ -52,6 +52,17 @@
         <el-form-item
           style="margin-bottom: 40px;"
           label-width="100px"
+          :label="'运营状态'"
+        >
+          <el-radio-group v-model="postForm.operate_status">
+            <el-radio :label="1">运营中</el-radio>
+            <el-radio :label="0">停滞</el-radio>
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="100px"
           :label="$t('messages.stores.input.module_id')"
         >
           <Parent v-model="postForm.parent_id" :module_id="parent_module_id"></Parent>
@@ -265,6 +276,14 @@
         <el-form-item
           style="margin-bottom: 40px;"
           label-width="100px"
+          :label="'项目建设费用'"
+        >
+          <project-build-fee v-model="postForm.project_build_fee"></project-build-fee>
+        </el-form-item>
+
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="100px"
           :label="$t('messages.stores.input.business_product')"
         >
           <el-input
@@ -291,6 +310,7 @@ import { searchUser } from "@/api/remote-search";
 import Warning from "./Warning";
 import Competitors from "./Competitors";
 import TerminalConstruction from "./TerminalConstruction";
+import ProjectBuildFee from "./ProjectBuildFee";
 import Map from "./Map";
 import Area from "./Area";
 import Parent from "./Parent";
@@ -325,8 +345,9 @@ const defaultForm = {
   sales_area: "",
   competitors: undefined,
   terminal_construction: undefined,
+  project_build_fee: undefined,
   business_product: "",
-  no: undefined,
+  no: undefined
 };
 
 // const id = 0
@@ -340,7 +361,8 @@ export default {
     Map,
     Area,
     Parent,
-    TerminalConstruction
+    TerminalConstruction,
+    ProjectBuildFee
   },
   props: {
     isEdit: {
