@@ -1,5 +1,9 @@
 <template>
   <div class="app-container">
+    <div class="block">
+      <el-button type="primary" @click="download()">下载模板</el-button>
+    </div>
+    <br />
     <upload-excel-component
       :on-success="handleSuccess"
       :before-upload="beforeUpload"
@@ -43,6 +47,9 @@ export default {
       saveRegionContrast(results).then(res => {
         this.tableData = res.data;
       });
+    },
+    download() {
+      window.location.href = process.env.VUE_APP_BASE_API + '/downloads/强弱区域对比导入模板.xlsx'
     }
   }
 };

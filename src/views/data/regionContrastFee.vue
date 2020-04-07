@@ -3,6 +3,7 @@
     <div class="block">
       <span class="demonstration">请选择导入年份</span>
       <el-date-picker v-model="date" type="year" format="yyyy" placeholder="选择年"></el-date-picker>
+      <el-button type="primary" @click="download()">下载模板</el-button>
     </div>
     <br />
     <upload-excel-component
@@ -50,6 +51,9 @@ export default {
       saveRegionContrastFee({ data: results, year: this.date.getFullYear() }).then(res => {
         this.tableData = res.data;
       });
+    },
+    download() {
+      window.location.href = process.env.VUE_APP_BASE_API + '/downloads/强弱区域费用导入模版.xlsx'
     }
   }
 };
