@@ -60,11 +60,11 @@ const storeKpi = (module_id, activeMenu) => {
 // 门店下级导航的展示
 const shop = [
   [
-    { id: 24, name: 'SI专卖店', module_id: [22, 23] },
-    { id: 25, name: '电气工业超市旗舰店', module_id: [22, 23] },
-    { id: 26, name: '电气工业超市标准店', module_id: [22, 23] },
-    { id: 27, name: '电气工业超市单体店', module_id: [22, 23] },
     { id: 35, name: '品牌体验馆', module_id: [22, 23] },
+    { id: 24, name: 'SI专卖店', module_id: [22, 23] },
+    // { id: 26, name: '电气工业超市标准店', module_id: [22, 23] },
+    // { id: 25, name: '电气工业超市旗舰店', module_id: [22, 23] },
+    // { id: 27, name: '电气工业超市单体店', module_id: [22, 23] },
   ],
   [
     { id: 29, name: '户外广告', module_id: [22, 28] },
@@ -166,7 +166,7 @@ export default {
   // redirect: rootPath + '/module_id/1/index/1/list',
   // redirectAndCollapse: true,
   redirect: 'noRedirect',
-  meta: { title: '正泰门店', icon: 'shop', noCache: true, roles: [21] },
+  meta: { title: '专业市场外门店', icon: 'shop', noCache: true, roles: [21] },
   children: [
     {
       path: 'module_id/22',

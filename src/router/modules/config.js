@@ -7,8 +7,8 @@ export default {
     {
       path: 'index',
       component: () => import('@/views/config/index'),
-      name: '经销商信息',
-      meta: { title: '经销商信息', icon: 'data', noCache: true, roles: ['admin'] }
+      name: '关键数据',
+      meta: { title: '关键数据', icon: 'data', noCache: true, roles: ['admin'] }
     }
   ]
 }

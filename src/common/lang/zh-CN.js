@@ -115,7 +115,7 @@ export const messages = {
         percent: '该市场份额',
         content: '终端形象建设及可以填写内容',
         outdoor: '户外广告',
-        
+
         // name: '请输入',
         // money: '请输入',
         // introduce: '请输入',
@@ -159,10 +159,10 @@ export const messages = {
   competitor: {
     column: {
       file_url: '预览',
-      item: '终端建设项目',
-      promotion: '促销活动',
+      item: '信息主题',
+      promotion: '信息内容',
       file_id: '图片',
-      other: '其他内容'
+      other: '发生区域'
     }
   },
   index_images: {

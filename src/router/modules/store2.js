@@ -60,11 +60,11 @@ const storeKpi = (module_id, activeMenu) => {
 // 门店下级导航的展示
 const shop = [
   [
-    { id: 4, name: 'SI专卖店', module_id: [2, 3] },
-    { id: 5, name: '电气工业超市旗舰店', module_id: [2, 3] },
-    { id: 6, name: '电气工业超市标准店', module_id: [2, 3] },
-    { id: 7, name: '电气工业超市单体店', module_id: [2, 3] },
     { id: 15, name: '品牌体验馆', module_id: [2, 3] },
+    { id: 4, name: 'SI专卖店', module_id: [2, 3] },
+    // { id: 6, name: '电气工业超市标准店', module_id: [2, 3] },
+    // { id: 5, name: '电气工业超市旗舰店', module_id: [2, 3] },
+    // { id: 7, name: '电气工业超市单体店', module_id: [2, 3] },
   ],
   [
     { id: 9, name: '户外广告', module_id: [2, 8] },
@@ -134,7 +134,7 @@ for (let item of agent) {
 
 // 专业市场导航展示
 const market = [
-  { id: 1, name: '专业市场', module_id: [1] },
+  { id: 1, name: '专业市场内门店', module_id: [1] },
 ]
 let marketArray = []
 for (let item of market) {
