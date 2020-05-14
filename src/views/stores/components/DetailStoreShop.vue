@@ -222,7 +222,7 @@
           <el-date-picker
             value-format="timestamp"
             v-model="postForm.establishment_time"
-            type="datetime"
+            type="date"
             placeholder="选择日期时间"
           ></el-date-picker>
         </el-form-item>

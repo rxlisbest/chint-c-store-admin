@@ -44,9 +44,9 @@
         <el-form-item prop="image_uri" label-width="72px" :label="$t('messages.store_images.column.file_id')" style="margin-bottom: 30px;">
           <Upload v-model="dialogForm.file_id" :previewWidth="192" :previewHeight="320" />
         </el-form-item>
-        <el-form-item :label="$t('messages.store_images.column.url')">
+        <!-- <el-form-item :label="$t('messages.store_images.column.url')">
           <el-input v-model="dialogForm.url"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item :label="$t('messages.store_images.column.description')">
           <el-input v-model="dialogForm.description"></el-input>
         </el-form-item>
