@@ -5,7 +5,7 @@ export default {
   component: Layout,
   name: '数据导入',
   meta: {
-    title: '数据导入', icon: 'excel'
+    title: '数据导入', icon: 'excel', roles: ['admin']
   },
   children: [
     {
