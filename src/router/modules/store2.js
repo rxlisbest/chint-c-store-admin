@@ -61,8 +61,8 @@ const storeKpi = (module_id, activeMenu) => {
 const shop = [
   [
     { id: 15, name: '品牌体验馆', module_id: [2, 3] },
-    { id: 6, name: '电气工业超市标准店', module_id: [2, 3] },
     { id: 5, name: '电气工业超市旗舰店', module_id: [2, 3] },
+    { id: 6, name: '电气工业超市标准店', module_id: [2, 3] },
     { id: 4, name: 'SI专卖店', module_id: [2, 3] },
     // { id: 7, name: '电气工业超市单体店', module_id: [2, 3] },
   ],

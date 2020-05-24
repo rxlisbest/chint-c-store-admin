@@ -39,6 +39,14 @@
         >
           <Area v-model="postForm.area_code" ref="area"></Area>
         </el-form-item>
+
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="72px"
+          :label="$t('messages.stores.input.competitors')"
+        >
+          <CompetitorsAgent v-model="postForm.competitors" />
+        </el-form-item>
       </div>
     </el-form>
   </div>
@@ -52,7 +60,7 @@ import Sticky from "@/components/Sticky"; // 粘性header组件
 import { storeSaveChintAgent, storeUpdateChintAgent, readStore } from "@/api/store";
 import { searchUser } from "@/api/remote-search";
 import Warning from "./Warning";
-import Competitors from "./Competitors";
+import CompetitorsAgent from "./CompetitorsAgent";
 import Map from "./Map";
 import Area from "./Area";
 import Parent from "./Parent";
@@ -91,7 +99,7 @@ const defaultForm = {
 // const id = 0
 export default {
   name: "DetailStoreAgent",
-  components: { MDinput, Upload, Sticky, Competitors, Map, Area, Parent },
+  components: { MDinput, Upload, Sticky, CompetitorsAgent, Map, Area, Parent },
   props: {
     isEdit: {
       type: Boolean,

@@ -227,7 +227,7 @@
           ></el-date-picker>
         </el-form-item>
 
-        <el-form-item
+        <!-- <el-form-item
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.sales_area')"
@@ -240,7 +240,7 @@
             autosize
             :placeholder="$t('messages.placeholder.common')"
           />
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item
           style="margin-bottom: 40px;"
@@ -281,7 +281,7 @@
           <project-build-fee v-model="postForm.project_build_fee"></project-build-fee>
         </el-form-item>
 
-        <el-form-item
+        <!-- <el-form-item
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.business_product')"
@@ -294,7 +294,7 @@
             autosize
             :placeholder="$t('messages.placeholder.common')"
           />
-        </el-form-item>
+        </el-form-item> -->
       </div>
     </el-form>
   </div>

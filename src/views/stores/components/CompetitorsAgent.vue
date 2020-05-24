@@ -2,19 +2,55 @@
   <div class="competitors-container">
     <template v-for="(v, k) in value">
       <el-row>
-        <el-col :span="8">项目</el-col>
-        <el-col :span="6">费用（元）</el-col>
-        <el-col :span="8">时间</el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="8">
-          <el-input v-model="v.name" :rows="3" type="textarea" class="article-textarea" autosize />
+        <el-col :span="4">
+          {{$t('messages.stores.input.competitors_children.name')}}
+        </el-col>
+        <el-col :span="4">
+          {{$t('messages.stores.input.competitors_children.money')}}
         </el-col>
         <el-col :span="6">
-          <el-input v-model="v.money" :rows="3" type="textarea" class="article-textarea" autosize />
+          {{$t('messages.stores.input.competitors_children.introduce')}}
         </el-col>
         <el-col :span="8">
-          <el-date-picker v-model="v.date" type="date" placeholder="选择日期"></el-date-picker>
+          {{$t('messages.stores.input.competitors_children.content')}}
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">
+          <el-input
+            v-model="v.name"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+          />
+        </el-col>
+        <el-col :span="4">
+          <el-input
+            v-model="v.money"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+          />
+        </el-col>
+        <el-col :span="6">
+          <el-input
+            v-model="v.introduce"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+          />
+        </el-col>
+        <el-col :span="8">
+          <el-input
+            v-model="v.content"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+          />
         </el-col>
         <el-col :span="1" :offset="1" v-if="k > 0">
           <el-button @click="removeItem(v)">
@@ -26,7 +62,9 @@
 
     <el-row :gutter="50">
       <el-col :span="10">
-        <el-button @click="addItem">{{ $t('messages.button.create') }}项目建设费用</el-button>
+        <el-button
+          @click="addItem"
+        >{{ $t('messages.button.create') }}{{$t('messages.stores.input.competitors')}}</el-button>
       </el-col>
     </el-row>
   </div>
@@ -42,7 +80,7 @@ const defaultItem = {
 const defaultList = [Object.assign({}, defaultItem)];
 
 export default {
-  name: "ProjectBuildFee",
+  name: "CompetitorsAgent",
   props: {
     value: {
       type: Array,

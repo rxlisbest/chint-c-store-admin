@@ -2,18 +2,33 @@
   <div class="competitors-container">
     <template v-for="(v, k) in value">
       <el-row>
-        <el-col :span="6">
+        <el-col :span="2">
           {{$t('messages.stores.input.competitors_children.name')}}
         </el-col>
-        <el-col :span="8">
+        <el-col :span="2">
           {{$t('messages.stores.input.competitors_children.money')}}
         </el-col>
-        <el-col :span="8">
+        <el-col :span="2">
+          {{$t('messages.stores.input.competitors_children.introduce')}}
+        </el-col>
+        <el-col :span="2">
+          {{$t('messages.stores.input.competitors_children.one_count')}}
+        </el-col>
+        <el-col :span="2">
+          {{$t('messages.stores.input.competitors_children.two_count')}}
+        </el-col>
+        <el-col :span="2">
+          {{$t('messages.stores.input.competitors_children.percent')}}
+        </el-col>
+        <el-col :span="6">
           {{$t('messages.stores.input.competitors_children.content')}}
+        </el-col>
+        <el-col :span="2">
+          {{$t('messages.stores.input.competitors_children.outdoor')}}
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="6">
+        <el-col :span="2">
           <el-input
             v-model="v.name"
             :rows="3"
@@ -22,7 +37,7 @@
             autosize
           />
         </el-col>
-        <el-col :span="8">
+        <el-col :span="2">
           <el-input
             v-model="v.money"
             :rows="3"
@@ -31,9 +46,55 @@
             autosize
           />
         </el-col>
-        <el-col :span="8">
+        <el-col :span="2">
+          <el-input
+            v-model="v.introduce"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+          />
+        </el-col>
+
+        <el-col :span="2">
+          <el-input
+            v-model="v.one_count"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+          />
+        </el-col>
+        <el-col :span="2">
+          <el-input
+            v-model="v.two_count"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+          />
+        </el-col>
+        <el-col :span="2">
+          <el-input
+            v-model="v.percent"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+          />
+        </el-col>
+        <el-col :span="6">
           <el-input
             v-model="v.content"
+            :rows="3"
+            type="textarea"
+            class="article-textarea"
+            autosize
+          />
+        </el-col>
+        <el-col :span="2">
+          <el-input
+            v-model="v.outdoor"
             :rows="3"
             type="textarea"
             class="article-textarea"

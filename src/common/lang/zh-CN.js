@@ -107,13 +107,13 @@ export const messages = {
       sales_area: '销售范围',
       competitors: '竞争对手',
       competitors_children: {
-        name: '名称',
+        name: '品牌',
         money: '预估销售额',
         introduce: '情况介绍',
         one_count: '一级数量',
         two_count: '二级数量',
         percent: '该市场份额',
-        content: '终端形象建设及可以填写内容',
+        content: '终端推广类型',
         outdoor: '户外广告',
 
         // name: '请输入',
