@@ -9,7 +9,7 @@
           {{$t('messages.stores.input.competitors_children.money')}}
         </el-col>
         <el-col :span="2">
-          {{$t('messages.stores.input.competitors_children.introduce')}}
+          {{$t('messages.stores.input.competitors_children.percent')}}
         </el-col>
         <el-col :span="2">
           {{$t('messages.stores.input.competitors_children.one_count')}}
@@ -17,14 +17,11 @@
         <el-col :span="2">
           {{$t('messages.stores.input.competitors_children.two_count')}}
         </el-col>
-        <el-col :span="2">
-          {{$t('messages.stores.input.competitors_children.percent')}}
+        <el-col :span="4">
+          {{$t('messages.stores.input.competitors_children.introduce')}}
         </el-col>
         <el-col :span="6">
           {{$t('messages.stores.input.competitors_children.content')}}
-        </el-col>
-        <el-col :span="2">
-          {{$t('messages.stores.input.competitors_children.outdoor')}}
         </el-col>
       </el-row>
       <el-row>
@@ -48,7 +45,7 @@
         </el-col>
         <el-col :span="2">
           <el-input
-            v-model="v.introduce"
+            v-model="v.percent"
             :rows="3"
             type="textarea"
             class="article-textarea"
@@ -74,9 +71,9 @@
             autosize
           />
         </el-col>
-        <el-col :span="2">
+        <el-col :span="4">
           <el-input
-            v-model="v.percent"
+            v-model="v.introduce"
             :rows="3"
             type="textarea"
             class="article-textarea"
@@ -92,7 +89,7 @@
             autosize
           />
         </el-col>
-        <el-col :span="2">
+        <!-- <el-col :span="2">
           <el-input
             v-model="v.outdoor"
             :rows="3"
@@ -100,7 +97,7 @@
             class="article-textarea"
             autosize
           />
-        </el-col>
+        </el-col> -->
         <el-col :span="1" :offset="1" v-if="k > 0">
           <el-button @click="removeItem(v)">
             <i class="el-icon-delete"></i>

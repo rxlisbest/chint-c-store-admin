@@ -108,7 +108,7 @@ export const messages = {
       competitors: '竞争对手',
       competitors_children: {
         name: '品牌',
-        money: '预估销售额',
+        money: '预估销售额(万元)',
         introduce: '情况介绍',
         one_count: '一级数量',
         two_count: '二级数量',
