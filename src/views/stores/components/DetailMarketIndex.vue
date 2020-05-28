@@ -202,7 +202,7 @@
           label-width="72px"
           :label="$t('messages.stores.input.competitors')"
         >
-          <Competitors v-model="postForm.competitors" />
+          <CompetitorsMarket v-model="postForm.competitors" />
         </el-form-item>
       </div>
     </el-form>
@@ -217,7 +217,7 @@ import Sticky from "@/components/Sticky"; // 粘性header组件
 import { storeSaveMarket, storeUpdateMarket, readStore } from "@/api/store";
 import { searchUser } from "@/api/remote-search";
 import Warning from "./Warning";
-import Competitors from "./Competitors";
+import CompetitorsMarket from "./CompetitorsMarket";
 import Map from "./Map";
 import Area from "./Area";
 import { lazyAMapApiLoaderInstance } from "vue-amap";
@@ -325,7 +325,7 @@ export default {
           this.postForm = response.data;
           this.postForm.establishment_time *= 1000;
           this.mapData = {
-            lat: response.data.lat, 
+            lat: response.data.lat,
             lng: response.data.lng,
             range: response.data.range,
           };
