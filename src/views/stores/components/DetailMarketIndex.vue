@@ -255,7 +255,7 @@ const defaultForm = {
 // const id = 0
 export default {
   name: "DetailMarketIndex",
-  components: { MDinput, Upload, Sticky, Competitors, Map, Area, },
+  components: { MDinput, Upload, Sticky, CompetitorsMarket, Map, Area, },
   props: {
     isEdit: {
       type: Boolean,
