@@ -44,7 +44,7 @@
         width="380"
         class-name="small-padding fixed-width"
       >
-        <template slot-scope="{row}" v-if="user_id == row.user_id">
+        <template slot-scope="{row}" v-if="user_id == row.user_id || user_id == 1">
           <router-link :to="'edit/' + row.id">
             <el-button
               type="primary"
