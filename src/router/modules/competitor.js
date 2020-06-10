@@ -5,14 +5,14 @@ export default {
   component: Layout,
   name: '数据导入',
   meta: {
-    title: '数据导入', icon: 'excel', roles: ['admin']
+    title: '数据导入', icon: 'excel', roles: ['admin', 90]
   },
   children: [
     {
       path: 'index',
       component: () => import('@/views/competitor/index'),
       name: '竞品信息',
-      meta: { title: '竞品信息', noCache: true, roles: ['admin'] }
+      meta: { title: '竞品信息', noCache: true, roles: ['admin', 90] }
     },
   ]
 }

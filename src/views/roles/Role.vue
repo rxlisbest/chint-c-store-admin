@@ -286,6 +286,28 @@
         </el-col>
       </el-row>
     </div>
+    <div class="statistics-container">
+      <el-row>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market85" @change="changeStatus('market', 85)">图片管理</el-checkbox>
+        </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market86" @change="changeStatus('market', 86)">终端管理</el-checkbox>
+        </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market87" @change="changeStatus('market', 87)">办事处管理</el-checkbox>
+        </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market88" @change="changeStatus('market', 88)">开发统计</el-checkbox>
+        </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market89" @change="changeStatus('market', 89)">数据导入</el-checkbox>
+        </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market90" @change="changeStatus('market', 90)">竞品信息</el-checkbox>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -455,7 +477,13 @@ export default {
         market53: false,
         market54: false,
         market55: false,
-        market56: false
+        market56: false,
+        market85: false,
+        market86: false,
+        market87: false,
+        market88: false,
+        market89: false,
+        market90: false
       }
     };
   },
