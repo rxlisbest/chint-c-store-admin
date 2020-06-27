@@ -234,14 +234,14 @@
               >电气工业超市标准店</el-checkbox>
             </el-col>
           </el-row>
-          <el-row :gutter="20">
+          <!-- <el-row :gutter="20">
             <el-col :span="24">
               <el-checkbox
                 v-model="marketObject.market27"
                 @change="changeStatus('market', 27)"
               >电气工业超市单体店</el-checkbox>
             </el-col>
-          </el-row>
+          </el-row> -->
         </el-col>
         <el-col :span="4" class="other-role">
           <el-row :gutter="20">
@@ -259,35 +259,56 @@
               <el-checkbox v-model="marketObject.market55" @change="changeStatus('market', 55)">运营状况</el-checkbox>
             </el-col>
           </el-row>
-          <el-row :gutter="20">
+          <!-- <el-row :gutter="20">
             <el-col :span="24">
               <el-checkbox v-model="marketObject.market56" @change="changeStatus('market', 56)">开发统计</el-checkbox>
             </el-col>
-          </el-row>
+          </el-row> -->
         </el-col>
       </el-row>
     </div>
     <div class="statistics-container">
       <el-row>
-        <el-col :span="4">
-          <el-checkbox v-model="marketObject.market40" @change="changeStatus('market', 40)">开发统计</el-checkbox>
+        <el-col :span="2" class="label">
+          <label>报表权限</label>
         </el-col>
+        <!-- <el-col :span="4">
+          <el-checkbox v-model="marketObject.market40" @change="changeStatus('market', 40)">开发统计</el-checkbox>
+        </el-col> -->
         <el-col :span="4">
           <el-checkbox v-model="marketObject.market41" @change="changeStatus('market', 41)">市场开发统计</el-checkbox>
         </el-col>
-        <el-col :span="4">
+        <!-- <el-col :span="4">
           <el-checkbox v-model="marketObject.market42" @change="changeStatus('market', 42)">新增门店排名</el-checkbox>
-        </el-col>
+        </el-col> -->
         <el-col :span="4">
           <el-checkbox v-model="marketObject.market43" @change="changeStatus('market', 43)">销售额统计</el-checkbox>
         </el-col>
         <el-col :span="4">
           <el-checkbox v-model="marketObject.market44" @change="changeStatus('market', 44)">竞争对手统计</el-checkbox>
         </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market91" @change="changeStatus('market', 91)">门店分类统计</el-checkbox>
+        </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market92" @change="changeStatus('market', 92)">运营状况</el-checkbox>
+        </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market93" @change="changeStatus('market', 93)">终端覆盖率统计</el-checkbox>
+        </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market94" @change="changeStatus('market', 94)">办事处历年费用</el-checkbox>
+        </el-col>
+        <el-col :span="4">
+          <el-checkbox v-model="marketObject.market95" @change="changeStatus('market', 95)">强弱区域建设投入比</el-checkbox>
+        </el-col>
       </el-row>
     </div>
     <div class="statistics-container">
       <el-row>
+        <el-col :span="2" class="label">
+          <label>页面权限</label>
+        </el-col>
         <el-col :span="4">
           <el-checkbox v-model="marketObject.market85" @change="changeStatus('market', 85)">图片管理</el-checkbox>
         </el-col>
@@ -483,7 +504,12 @@ export default {
         market87: false,
         market88: false,
         market89: false,
-        market90: false
+        market90: false,
+        market91: false,
+        market92: false,
+        market93: false,
+        market94: false,
+        market95: false
       }
     };
   },
@@ -627,6 +653,11 @@ export default {
     /deep/ .el-checkbox__input.is-checked + .el-checkbox__label {
       color: #9acd32;
     }
+  }
+  .label {
+    width: 80px;
+    padding-left: 20px;
+    margin-left: -100px;
   }
 }
 </style>

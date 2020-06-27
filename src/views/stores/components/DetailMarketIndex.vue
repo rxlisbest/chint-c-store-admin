@@ -102,6 +102,7 @@
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.area_code')"
+          :required="true"
         >
           <Area v-model="postForm.area_code" ref="area"></Area>
         </el-form-item>
@@ -110,6 +111,7 @@
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.address')"
+          :required="true"
         >
           <el-input
             v-model="postForm.address"
@@ -126,6 +128,7 @@
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.lat_lng')"
+          :required="true"
         >
           <Map v-model="mapData" id="map" ref="map" :is-edit="isEdit"></Map>
         </el-form-item>
@@ -134,6 +137,7 @@
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.introduce')"
+          :required="true"
         >
           <el-input
             v-model="postForm.introduce"
@@ -164,6 +168,7 @@
           prop="plan_file_id"
           label-width="72px"
           :label="$t('messages.stores.input.plan_file_id')"
+          :required="true"
           style="margin-bottom: 30px;"
         >
           <Upload v-model="postForm.plan_file_id" />
@@ -173,6 +178,7 @@
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.establishment_time')"
+          :required="true"
         >
           <el-date-picker
             value-format="timestamp"
@@ -186,6 +192,7 @@
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.sales_area')"
+          :required="true"
         >
           <el-input
             v-model="postForm.sales_area"
@@ -201,6 +208,7 @@
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.competitors')"
+          :required="true"
         >
           <CompetitorsMarket v-model="postForm.competitors" />
         </el-form-item>

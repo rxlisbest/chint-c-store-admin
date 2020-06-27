@@ -27,6 +27,7 @@
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.no')"
+          :required="true"
         >
           <el-input
             v-model="postForm.no"
@@ -42,6 +43,7 @@
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.is_one')"
+          :required="true"
         >
           <el-radio-group v-model="postForm.is_one">
             <el-radio :label="1">是</el-radio>
@@ -53,6 +55,7 @@
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="'运营状态'"
+          :required="true"
         >
           <el-radio-group v-model="postForm.operate_status">
             <el-radio :label="1">运营中</el-radio>
@@ -64,6 +67,7 @@
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.module_id')"
+          :required="true"
         >
           <Parent v-model="postForm.parent_id" :module_id="parent_module_id"></Parent>
         </el-form-item>
@@ -104,6 +108,7 @@
           prop="cover_file_id"
           label-width="100px"
           :label="$t('messages.stores.input.cover_file_id')"
+          :required="true"
           style="margin-bottom: 30px;"
         >
           <Upload v-model="postForm.cover_file_id" />
@@ -132,6 +137,7 @@
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.phone')"
+          :required="true"
         >
           <el-input
             v-model="postForm.phone"
@@ -147,6 +153,7 @@
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.area_code')"
+          :required="true"
         >
           <Area v-model="postForm.area_code" ref="area"></Area>
         </el-form-item>
@@ -155,6 +162,7 @@
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.address')"
+          :required="true"
         >
           <el-input
             v-model="postForm.address"
@@ -171,6 +179,7 @@
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.lat_lng')"
+          :required="true"
         >
           <Map v-model="mapData" id="map" ref="map" :is-edit="isEdit"></Map>
         </el-form-item>
@@ -179,6 +188,7 @@
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.introduce')"
+          :required="true"
         >
           <el-input
             v-model="postForm.introduce"
@@ -194,6 +204,7 @@
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.business_scope')"
+          :required="true"
         >
           <el-input
             v-model="postForm.business_scope"
@@ -218,6 +229,7 @@
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.establishment_time')"
+          :required="true"
         >
           <el-date-picker
             value-format="timestamp"
@@ -246,14 +258,16 @@
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="$t('messages.stores.input.competitors')"
+          :required="true"
         >
           <Competitors v-model="postForm.competitors" />
         </el-form-item>
 
         <el-form-item
-          style="margin-bottom: 40px;"
+          style="margin-bottom: 40px; display: none;"
           label-width="100px"
           :label="$t('messages.stores.input.terminal_construction')"
+          :required="true"
         >
           <terminal-construction v-model="postForm.terminal_construction"></terminal-construction>
         </el-form-item>
@@ -262,6 +276,7 @@
           style="margin-bottom: 40px;"
           label-width="100px"
           :label="'项目建设费用'"
+          :required="true"
         >
           <project-build-fee v-model="postForm.project_build_fee"></project-build-fee>
         </el-form-item>

@@ -36,6 +36,7 @@
         <el-form-item
           style="margin-bottom: 40px;"
           :label="$t('messages.stores.input.area_code')"
+          :required="true"
         >
           <Area v-model="postForm.area_code" ref="area"></Area>
         </el-form-item>
@@ -44,6 +45,7 @@
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.competitors')"
+          :required="true"
         >
           <CompetitorsAgent v-model="postForm.competitors" />
         </el-form-item>
