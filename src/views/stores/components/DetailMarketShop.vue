@@ -54,6 +54,12 @@
         <el-form-item
           style="margin-bottom: 40px;"
           label-width="100px"
+          :label="'办事处'"
+        >{{agency.name}}</el-form-item>
+
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="100px"
           :label="'运营状态'"
           :required="true"
         >
@@ -249,7 +255,7 @@
             autosize
             :placeholder="$t('messages.placeholder.common')"
           />
-        </el-form-item> -->
+        </el-form-item>-->
 
         <el-form-item
           style="margin-bottom: 40px;"
@@ -306,7 +312,7 @@
             autosize
             :placeholder="$t('messages.placeholder.common')"
           />
-        </el-form-item> -->
+        </el-form-item>-->
       </div>
     </el-form>
   </div>
@@ -332,6 +338,7 @@ import { Message } from "element-ui";
 import { indexArea } from "@/api/area";
 import { indexModule } from "@/api/module";
 import { Decimal } from "decimal.js";
+import { mapGetters } from "vuex";
 
 const defaultForm = {
   name: "",
@@ -359,7 +366,8 @@ const defaultForm = {
   terminal_construction: undefined,
   project_build_fee: undefined,
   business_product: "",
-  no: undefined
+  no: undefined,
+  agency_id: undefined
 };
 
 // const id = 0
@@ -381,6 +389,9 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  computed: {
+    ...mapGetters(["agency"])
   },
   data() {
     return {
@@ -406,7 +417,6 @@ export default {
       mapData: undefined
     };
   },
-  computed: {},
   watch: {},
   created() {
     this.center = [121.59996, 31.197646];
@@ -460,7 +470,9 @@ export default {
     submitForm() {
       this.loading = true;
       let postData = Object.assign({}, { ...this.postForm, ...this.mapData });
+      postData.agency_id = this.agency.id;
       postData.establishment_time /= 1000;
+      console.log(postData)
       if (this.isEdit) {
         storeUpdateShop(postData.id, postData)
           .then(response => {

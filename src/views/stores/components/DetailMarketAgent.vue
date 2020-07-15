@@ -46,7 +46,7 @@
           style="margin-bottom: 40px;"
           label-width="72px"
           :label="$t('messages.stores.input.competitors')"
-          :required="true"
+          :required="false"
         >
           <CompetitorsAgent v-model="postForm.competitors" />
         </el-form-item>
@@ -73,6 +73,7 @@ import { Message } from "element-ui";
 import { indexArea } from "@/api/area";
 import { indexModule } from "@/api/module";
 import { Decimal } from "decimal.js";
+import { mapGetters } from "vuex";
 
 const defaultForm = {
   name: "",
@@ -97,6 +98,7 @@ const defaultForm = {
   competitors: "",
   terminal_construction: "",
   business_product: "",
+  agency_id: undefined,
 };
 
 // const id = 0
@@ -108,6 +110,9 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  computed: {
+    ...mapGetters(["agency"])
   },
   data() {
     return {
@@ -133,7 +138,6 @@ export default {
       mapData: undefined
     };
   },
-  computed: {},
   watch: {},
   created() {
     this.center = [121.59996, 31.197646];
@@ -179,6 +183,7 @@ export default {
     submitForm() {
       this.loading = true;
       let postData = Object.assign({}, { ...this.postForm, ...this.mapData });
+      postData.agency_id = this.agency.id;
       if (this.isEdit) {
         storeUpdateAgent(postData.id, postData)
           .then(response => {

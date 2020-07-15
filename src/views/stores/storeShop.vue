@@ -38,7 +38,7 @@
         align="center"
       >
         <template slot-scope="scope">
-          <span>{{ scope.row.establishment_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ scope.row.establishment_time * 1000 | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column

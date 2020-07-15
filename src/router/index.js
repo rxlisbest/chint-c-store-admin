@@ -148,7 +148,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/users/index'),
         name: '用户管理',
-        meta: { title: '用户管理', icon: 'peoples', noCache: true, roles: ['admin'] }
+        meta: { title: '用户管理', icon: 'peoples', noCache: true, roles: ['admin', 'role_admin'] }
       }
     ]
   },
@@ -160,7 +160,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/roles/index'),
         name: '权限管理',
-        meta: { title: '权限管理', icon: 'lock', noCache: true, roles: ['admin'] }
+        meta: { title: '权限管理', icon: 'lock', noCache: true, roles: ['admin', 'role_admin'] }
       }
     ]
   },
